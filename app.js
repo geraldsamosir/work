@@ -5,7 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
-var routes = require('./routes/index');
+
+//make controler path ...
+var index = require('./routes/index');
+var user = require('./routes/user');
+
 
 var app = express();
 
@@ -16,8 +20,12 @@ nunjucks.configure('views', {
 });
 app.set('view engine', 'nunjucks');
 
+
+
 // Routes setup
-app.use('/', routes);
+app.use('/', index);
+app.use('/user',user);
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
