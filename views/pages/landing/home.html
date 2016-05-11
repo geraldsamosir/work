@@ -1,0 +1,70 @@
+<div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <a href="/"><h3 class="masthead-brand">BLOGENGINE</h3></a>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li ><a  id="menulogin" tujuan="login" href="#login">Home</a></li>
+                  <li><a id="menulogin" tujuan="feature" href="#feature">Features</a></li>
+                  <li><a id="menulogin" tujuan="contact" href="#contact">Contact</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div  id="panel" class="pannel inner cover login">
+            <h1 class="cover-heading">BLOG ENGINE</h1>
+            <p class="lead">BLOG ENGINE adalah aplikasi blog yang bisa anda manfaat kan untuk saling share dan bersosial . mari berbagi lewat karya tulis</p>
+            <p class="lead">
+              <a id="menulogin" href="#loginform" tujuan="loginform" class="btn btn-lg btn-primary">LOGIN</a>
+              <a id="menulogin" href="#registerform" tujuan="registerform" class="btn btn-lg btn-success">REGISTER</a>
+            </p>
+          </div>
+          <div id="panel" class="pannel inner cover hidden feature" >
+            <h1 class="cover-heading">BLOG ENGINE FEATURE</h1>
+            <p class="lead">
+                Pada aplikasi ini kami menyediakan fasilitas:<br>
+                Single Blog<br>
+                Chat Group<br>
+                Content Publication
+            </p>
+          </div>
+          <div id="panel" class="pannel inner cover hidden contact">
+            <h1 class="cover-heading">CONTACT</h1>
+            <p class="lead">JL THAMRIN MIKROSKIL ...</p>
+            <div class=" lead hidden forcontact">
+                
+            </div>
+          </div>
+           <div id="panel" class="pannel inner cover  hidden loginform">
+              {% include "./componen/login.html" %}
+          </div>
+          <div id="panel" class="pannel inner cover  hidden registerform">
+              {% include "./componen/register.html" %}
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>&copy BLOG ENGINE 2016</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    <script type="text/javascript">
+        $("[id='menulogin']").click(function(){
+            var target = $(this).attr('tujuan');
+            $("[id='panel']").addClass('hidden');
+            $("."+target).removeClass('hidden');
+            $("[id='menulogin']").removeClass('active');
+            $("[tujuan='"+target+"']").addClass('active');
+        });
+    </script>
