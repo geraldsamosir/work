@@ -16,4 +16,5 @@ hanya kalau bisa untuk di frontend  di buat seperti landing page jadi dia beruba
 jadi beranda,single post,search dan profile merupakan satu konten yang dapat di ganti-ganti 
 dan tambahan untuk profil atau blog utama user boleh di tamahkan dulu form untuk post artikel 
 yang akan muncul bila di klik tombol
+dan tambahan semua url sudah bisa di klik jadi untuk mengetahui url bisa liat urlnya dulu baru cek fungsinya 
 apa bila ada yang ingin di tanya atau ada masukkan contact me  gerald halomoan samosir ^_^ 
