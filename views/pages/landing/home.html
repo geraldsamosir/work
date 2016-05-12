@@ -61,7 +61,7 @@
     </div>
     <script type="text/javascript">
         $("[id='menulogin']").click(function(){
-            var target = $( ).attr('tujuan');
+            var target = $(this).attr('tujuan');
             $("[id='panel']").addClass('hidden');
             $("."+target).removeClass('hidden');
             $("[id='menulogin']").removeClass('active');
