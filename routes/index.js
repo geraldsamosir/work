@@ -4,7 +4,7 @@ var router = express.Router();
 /* login page. */
 router.get('/', function(req, res) {
 		res.status(200);
-        res.render('index.html', {
+        res.render('index.ejs', {
         title : "BLOG ENGINE"
         });
 });
