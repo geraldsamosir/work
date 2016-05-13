@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 
 
-//user profil and single blog
+// user profil and single blog
 router.get('/:username', function(req, res) {
         res.render('./user.ejs', {
         title : req.params.username+" Profile" ,
         name : req.params.username
         });
 });
+
 //single post
 router.get('/:username/post/:title', function(req, res) {
     res.render('./singlepost.ejs', {
@@ -37,4 +38,5 @@ router.get('/:username/carikawan',function(req,res){
     });
 
 });
+
 module.exports = router;
