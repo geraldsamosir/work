@@ -14,11 +14,11 @@ var user = require('./routes/user');
 var app = express();
 
 //Nunjucks setup
-nunjucks.configure('views', {
+nunjucks.configure('./public/views', {
 	autoescape: true,
 	express: app
 });
-app.set('view engine', 'nunjucks');
+app.set('view engine', 'html');
 
 
 
