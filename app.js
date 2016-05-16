@@ -6,9 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
 
+
 //make controler path ...
 var index = require('./routes/index');
 var user = require('./routes/user');
+
+//midleware path
+var user_mid =  require('./midleware/user');
 
 
 var app = express();
@@ -21,19 +25,27 @@ nunjucks.configure('./public/views', {
 app.set('view engine', 'html');
 
 
-
-// Routes setup
-app.use('/', index);
-app.use('/user',user);
-
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+
+// Routes setup
+
+app.use('/', index);
+
+///semua yang ada di user harus melewati midleware login saat di 
+//akses ....
+app.use('/user',user_mid.login,user);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -6,12 +6,14 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "body-parser": "^1.10.0",
+    "body-parser": "^1.15.1",
     "cookie-parser": "~1.3.3",
     "debug": "^2.1.0",
     "express": "^4.10.6",
+    "knex": "^0.11.3",
     "morgan": "^1.5.0",
-    "serve-favicon": "^2.2.0",
-    "nunjucks": "*"
+    "mysql": "^2.10.2",
+    "nunjucks": "*",
+    "serve-favicon": "^2.2.0"
   }
 }
