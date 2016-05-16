@@ -16,3 +16,13 @@ body{font-family:Lora,'Times New Roman',serif;font-size:20px;color:#404040}p{lin
 .friend-box>a>.friend-name{font-size:30px;margin-top:30px;margin-bottom:10px}
 
  @media only screen and (min-width:768px){.friend-box>a>.friend-name{font-size:36px}}
+
+.cari-teman .input-group span>button{padding:6px 12px;}
+
+.cari-teman .input-group{margin-bottom: 30px;}
+
+.show-more{text-align: center;}
+
+.show-more>a{color: #0085a1; font-weight: bolder;}
+
+.show-more>a:focus, .show-more>a:visited, .show-more>a:active {text-decoration:none;}

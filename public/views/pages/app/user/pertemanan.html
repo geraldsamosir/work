@@ -37,7 +37,20 @@
                         </div>
                     </div>
                     <div class="cari-teman" ng-class="clsisimenu3">
-                        <p>Test</p>
+                        <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search for..." ng-model="friendSearchBox">
+                          <span class="input-group-btn">
+                            <button class="btn btn-info" type="button" ng-click="search(friendSearchBox)">Search</button>
+                          </span>
+                        </div><!-- /input-group -->
+                        <div class="friends-list">
+                            <div class="row-fluid friend-box" ng-repeat="user in all | filter: searchKeyword">  
+                                <search-friends-list info="user"></friends-list>
+                            </div>
+                        </div>
+                        <div class="show-more">
+                            <a href="" ng-click="showMore()">&darr; Show more &darr;</a>
+                        </div>
                     </div>
                 </div>
             </div>
