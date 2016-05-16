@@ -1,0 +1,45 @@
+<header class="intro-header" style="background-image: url('https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Pertemanan</h1>
+                        <h2 class="subheading">Manusia adalah makhluk sosial.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="nav nav-tabs">
+				  <li role="presentation" ng-class="clsmenu1" ng-click="switchtab(1)"><a href = "">Undangan Pertemanan</a></li>
+				  <li role="presentation" ng-class="clsmenu2" ng-click="switchtab(2)"><a href ="">Daftar Teman</a></li>
+				  <li role="presentation" ng-class="clsmenu3" ng-click="switchtab(3)"><a href ="">Cari Teman</a></li>
+				</ul>
+                <div class="container-fluid well span6">
+                    <div class="undangan-pertemanan" ng-class="clsisimenu1">
+                        <div class="friends-list">
+                            <div class="row-fluid friend-box" ng-repeat="user in unconfirmed">  
+                                <unconfirmed-friends-list info="user"></unconfirmed-friends-list>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="daftar-teman" ng-class="clsisimenu2">
+                        <div class="friends-list">
+                            <div class="row-fluid friend-box" ng-repeat="user in confirmed">  
+                                <friends-list info="user"></friends-list>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cari-teman" ng-class="clsisimenu3">
+                        <p>Test</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

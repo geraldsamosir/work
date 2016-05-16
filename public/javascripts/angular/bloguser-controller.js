@@ -1,5 +1,3 @@
-var app = angular.module('bloguser',['ngRoute']);
-
 app.controller('bloguserCtrl', ['$scope', '$timeout' , function($scope, $timeout) {
 	$scope.posts = [{
 		// id : "id-posting(nomor)"
@@ -103,4 +101,121 @@ app.controller('bloguserCtrl', ['$scope', '$timeout' , function($scope, $timeout
 		author : "Start Bootstrap",
 		date : "24 September 2015"
 	}];
+}]);
+
+app.controller('friendsCtrl', ['$scope', '$timeout' , function($scope, $timeout) {
+     // diatasnya set inisialisasi load DB dari teman yg belom di confirm dan sudah di confirm.
+
+
+     // temporary, rencana nnt all loading dr event saja biar tidak memberatkan koneksi internet user.
+     $scope.unconfirmed = [{
+          nama : "test",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     },
+     {
+          nama : "test2",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     },
+     {
+          nama : "test3",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     }];
+
+
+     // temporary, rencana nnt all loading dr event saja biar tidak memberatkan koneksi internet user.
+     $scope.confirmed = [{
+          nama : "test4",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     },
+     {
+          nama : "test5",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     },
+     {
+          nama : "test6",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     }];
+
+     // temporary, rencana nnt all loading dr event saja biar tidak memberatkan koneksi internet user.
+     $scope.all = [
+     {
+          nama : "test",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     },
+     {
+          nama : "test2",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     },
+     {
+          nama : "test3",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     },
+     {
+          nama : "test4",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     },
+     {
+          nama : "test5",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     },
+     {
+          nama : "test6",
+          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+          fotokronologi : ["https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm", "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm"]
+     }];
+
+     $scope.accept = function(){
+          alert('Accept');
+     };
+     $scope.reject = function(){
+          alert('Reject');
+     };
+     $scope.delete = function(){
+          alert('Delete');
+     };
+
+     $scope.clsmenu1 = "active";
+     $scope.clsisimenu1 = "";
+     $scope.clsmenu2 = "";
+     $scope.clsisimenu2 = "hidden";
+     $scope.clsmenu3 = "";
+     $scope.clsisimenu3 = "hidden";
+
+     $scope.switchtab = function(i){
+          if(i === 1){
+               $scope.clsmenu1 = "active";
+               $scope.clsisimenu1 = "";
+               $scope.clsmenu2 = "";
+               $scope.clsisimenu2 = "hidden";
+               $scope.clsmenu3 = "";
+               $scope.clsisimenu3 = "hidden";
+          }
+          else if (i === 2){
+               $scope.clsmenu1 = "";
+               $scope.clsisimenu1 = "hidden";
+               $scope.clsmenu2 = "active";
+               $scope.clsisimenu2 = "";
+               $scope.clsmenu3 = "";
+               $scope.clsisimenu3 = "hidden";
+          }
+          else if (i === 3){
+               $scope.clsmenu1 = "";
+               $scope.clsisimenu1 = "hidden";
+               $scope.clsmenu2 = "";
+               $scope.clsisimenu2 = "hidden";
+               $scope.clsmenu3 = "active";
+               $scope.clsisimenu3 = "";
+          }
+     }
 }]);

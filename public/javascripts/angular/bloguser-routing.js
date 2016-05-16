@@ -1,5 +1,3 @@
-var app = angular.module('bloguser'); // memakai blog user dr controller, krn itu tidak ada parameter kedua.
-
 app.config(function($routeProvider, $locationProvider) {
         $routeProvider
             // Load main page
@@ -11,9 +9,9 @@ app.config(function($routeProvider, $locationProvider) {
                 templateUrl : '/views/pages/app/user/beranda.html'
                 //controller  : 'aboutController'
             })
-            .when('/carikawan', {
-                templateUrl : '/views/pages/app/user/carikawan.html'
-                //controller  : 'aboutController'
+            .when('/pertemanan', {
+                templateUrl : '/views/pages/app/user/pertemanan.html',
+                controller  : 'friendsCtrl'
             })
             .when('/profil', {
                 templateUrl : '/views/pages/app/user/profil.html'

@@ -1,0 +1,22 @@
+<div class="span2" >
+    <img src="{{ info.fotoprofil }}" class="img-circle">
+</div>
+
+<div class="span8">
+    <a href="#">
+        <h3 class="friend-name">{{ info.nama }}</h2>
+    </a>
+</div>
+
+<div class="span2">
+    <div class="btn-group">
+        <a class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+            Action 
+            <span class="icon-cog icon-white"></span><span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li ng-click="$parent.accept()"><a role="button"><span class="icon-wrench"></span>Accept</a></li>
+            <li ng-click="$parent.reject()"><a role="button"><span class="icon-trash"></span>Reject</a></li>
+        </ul>
+    </div>
+</div>
