@@ -44,12 +44,12 @@
                           </span>
                         </div><!-- /input-group -->
                         <div class="friends-list">
-                            <div class="row-fluid friend-box" ng-repeat="user in all | filter: searchKeyword">  
+                            <div class="row-fluid friend-box" ng-repeat="user in all | filter: searchKeyword | limitTo: paginationLimit()">  
                                 <search-friends-list info="user"></friends-list>
                             </div>
                         </div>
                         <div class="show-more">
-                            <a href="" ng-click="showMore()">&darr; Show more &darr;</a>
+                            <a href="" ng-click="showMoreItems()" ng-class="{hidden: hasMoreItemsToShow() == false}">&darr; Show more &darr;</a>
                         </div>
                     </div>
                 </div>
