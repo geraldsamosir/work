@@ -1,7 +1,63 @@
-{% include "componen/included-login.html" %}
+<html ng-app="landing">
+	<head>
+		<title>{{ title }}</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/stylesheets/cover.css">
+		<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+	</head>
+
+	<body ng-controller="landingCtrl">
 
 	<!-- page home -->
-	{% include "pages/landing/home.html" %}
+	<div class="site-wrapper">
 
+	    <div class="site-wrapper-inner">
 
-{% include "componen/footer.html" %}
+	        <div class="cover-container">
+
+		        <div class="masthead clearfix">
+		            <div class="inner">
+		              	<a href="#home"><h3 class="masthead-brand">BLOGENGINE</h3></a>
+		              	<nav>
+		                	<ul class="nav masthead-nav">
+			                  	<li ng-class="clsmenu1" ng-click="switchmenu(1)"><a href="#home">Home</a></li>
+			                  	<li ng-class="clsmenu2" ng-click="switchmenu(2)"><a href="#features">Features</a></li>
+			                  	<li ng-class="clsmenu3" ng-click="switchmenu(3)"><a href="#contact">Contact</a></li>
+		                	</ul>
+		            	</nav>
+		          	</div>
+		        </div>
+				
+				<div class="ng-view">
+
+				</div>
+
+				<div class="mastfoot">
+					<div class="inner">
+				  		<p>&copy; BLOG ENGINE 2016</p>
+					</div>
+				</div>
+
+	        </div>
+
+	    </div>
+
+    </div>
+
+    <!-- Angular -->
+    <script src="/javascripts/angular/angular.js"></script>
+
+    <!-- Angular Route -->
+    <script src="/javascripts/angular/angular-route.js"></script>
+
+    <!-- Angular Module -->
+    <script src="/javascripts/angular/landing-angular-module.js"></script>
+
+    <!-- Angular Controller -->
+    <script src="/javascripts/angular/landing-controller.js"></script>
+
+    <!-- Angular Routing -->
+    <script src="/javascripts/angular/landing-routing.js"></script>
+
+	</body>
+</html>

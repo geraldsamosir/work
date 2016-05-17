@@ -14,7 +14,7 @@ user.login = function(req,res){
 
 user.profil = function(req, res) {
         res.render('./user.html', {
-        title : req.params.username+"#Profile" ,
+        title : req.params.username+" Profile" ,
         name : req.params.username
     });
 };
