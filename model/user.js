@@ -19,7 +19,7 @@ user.login= function(user){
 }
 
 user.cari =  function(user){
-	return knex.select('id','nama','fotoprofil',)
+	return knex.select('id','nama','fotoprofil')
 		.table('user')
 		.where('nama','like','%'+user.cari+'%');
 }
