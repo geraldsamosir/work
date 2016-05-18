@@ -11,8 +11,6 @@ var nunjucks = require('nunjucks');
 var index = require('./routes/index');
 var user = require('./routes/user');
 
-//midleware path
-var user_mid =  require('./midleware/user');
 
 
 var app = express();
@@ -40,9 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 
-///semua yang ada di user harus melewati midleware login saat di 
-//akses ....
-app.use('/user',user_mid.login,user);
+app.use('/user',user);
 
 
 
