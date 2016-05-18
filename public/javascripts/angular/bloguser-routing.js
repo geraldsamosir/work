@@ -14,8 +14,8 @@ app.config(function($routeProvider, $locationProvider) {
                 controller  : 'friendsCtrl'
             })
             .when('/profil', {
-                templateUrl : '/views/pages/app/user/profil.html'
-                //controller  : 'aboutController'
+                templateUrl : '/views/pages/app/user/profil.html',
+                controller  : 'profileCtrl'
             })
             .when('/post-:postid', {
                 templateUrl : '/views/pages/app/user/artikel.html'
