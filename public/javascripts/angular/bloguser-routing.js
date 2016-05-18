@@ -21,6 +21,10 @@ app.config(function($routeProvider, $locationProvider) {
                 templateUrl : '/views/pages/app/user/artikel.html'
                 //controller  : 'aboutController'
             })
+            .when('/person-:personid', {
+                templateUrl : '/views/pages/app/user/artikel.html'
+                //controller  : 'aboutController'
+            })
             // Load main page if wrong address (probably useless due to back-end)
             .otherwise({
                 redirectTo : '/'

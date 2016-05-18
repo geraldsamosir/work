@@ -389,11 +389,11 @@ body {
 	}
 }
 
-#searchForm span>button {
+.searchForm span>button {
     padding: 6px 12px;
 }
 
-#searchForm {
+.searchForm {
     margin-bottom:  30px;
 }
 
