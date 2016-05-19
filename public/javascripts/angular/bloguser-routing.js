@@ -18,8 +18,8 @@ app.config(function($routeProvider, $locationProvider) {
                 controller  : 'profileCtrl'
             })
             .when('/post-:postid', {
-                templateUrl : '/views/pages/app/user/artikel.html'
-                //controller  : 'aboutController'
+                templateUrl : '/views/pages/app/user/artikel.html',
+                controller  : 'articleCtrl'
             })
             .when('/person-:personid', {
                 templateUrl : '/views/pages/app/user/artikel.html'
