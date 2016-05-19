@@ -722,7 +722,7 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , function($scope, $timeout)
      }
 }]);
 
-app.controller('profileCtrl', ['$scope', '$timeout' , function($scope, $timeout) {
+app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout' , function(articleDataPasser, $scope, $timeout) {
      var pagesShownPosts;
      var pageSizePosts;
      var pagesShownFriends;
@@ -735,7 +735,7 @@ app.controller('profileCtrl', ['$scope', '$timeout' , function($scope, $timeout)
      });
      $scope.namapemilik = "test";
      $scope.fotokronologipemilik = "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm";
-     $scope.posts = [{
+     $scope.userposts = [{
           // id : "id-posting(nomor)"
           // title : "judul",
           // img : ["link1", "link"],
@@ -1208,7 +1208,7 @@ app.controller('profileCtrl', ['$scope', '$timeout' , function($scope, $timeout)
      };
 
      $scope.hasMoreItemsToShowPosts = function() {
-      return pagesShownPosts < ($scope.posts.length / pageSizePosts);
+      return pagesShownPosts < ($scope.userposts.length / pageSizePosts);
      };
 
      $scope.showMorePosts = function() {
@@ -1253,4 +1253,26 @@ app.controller('profileCtrl', ['$scope', '$timeout' , function($scope, $timeout)
           }
      }
 
+     //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
+     $scope.readPost = function(post){
+          alert('overriden');
+          articleDataPasser.setArticle(post);
+     }
+
+     // Profile juga bisa melakukan operasi-operasi yang mirip dengan halaman pertemanan, antara lain :
+     $scope.requestFriend = function(){
+          alert('Requested');
+     };
+     $scope.cancelrequestFriend = function(){
+          alert('Cancelled Request');
+     };
+     $scope.accept = function(){
+          alert('Accept');
+     };
+     $scope.reject = function(){
+          alert('Reject');
+     };
+     $scope.delete = function(){
+          alert('Delete');
+     };
 }]);
