@@ -19,12 +19,12 @@ app.directive('unconfirmedFriendsList', function() {
   }; 
 });
 
-app.directive('searchFriendsList', function() { 
+app.directive('allFriendsList', function() { 
   return { 
     restrict: 'E', 
     scope: { 
       info: '=' 
     }, 
-    templateUrl: '/javascripts/angular/bloguser-directives/search-friends-list.html' 
+    templateUrl: '/javascripts/angular/bloguser-directives/all-friends-list.html' 
   }; 
 });

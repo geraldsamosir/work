@@ -1,5 +1,5 @@
-<div class="template1" ng-if="info.status_add == 0 && info.status_approve == 0">
-<!-- Untuk yang belum add sama sekali -->
+<div ng-show="info.status_add == 0 && info.status_approve == 0">
+<!-- Template 1 : Untuk yang belum add sama sekali -->
     <div class="span2" >
         <img src="{{ info.fotoprofil }}" class="img-circle">
     </div>
@@ -23,8 +23,8 @@
     </div>
 </div>
 
-<div class="template2" ng-if="info.status_add == 1 && info.status_approve == 0">
-<!-- Untuk yg sudah add tapi belum aprrove -->
+<div ng-show="info.status_add == 1 && info.status_approve == 0">
+<!-- Template 2 : Untuk yg sudah add tapi belum aprrove -->
     <div class="span2" >
         <img src="{{ info.fotoprofil }}" class="img-circle">
     </div>
@@ -48,8 +48,8 @@
     </div>
 </div>
 
-<div class="template3" ng-if="info.status_add == 1 && info.status_approve == 1">
-<!-- Untuk yang sudah add dan aprrove -->
+<div ng-show="info.status_add == 1 && info.status_approve == 1">
+<!-- Template 3 : Untuk yang sudah add dan aprrove -->
     <div class="span2" >
         <img src="{{ info.fotoprofil }}" class="img-circle">
     </div>
@@ -68,6 +68,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li ng-click=""><a role="button"><span class="icon-trash"></span>Go to Profile</a></li>
+                <li ng-click="$parent.delete()"><a role="button"><span class="icon-trash"></span>Remove Friend</a></li>
             </ul>
         </div>
     </div>
