@@ -42,6 +42,102 @@
             
         </div>
 
+        <div class="new-post">
+        	<a class="btn btn-primary btn-lg btn-new-post" data-toggle="modal" data-target="#newPost" data-original-title>
+	          <span class="glyphicon glyphicon-pencil"></span> Buat Post Baru 
+	        </a>
+	        <div class="modal fade modal-new-post" id="newPost" tabindex="-1" role="dialog" aria-labelledby="newPostLabel" aria-hidden="true">
+	            <div class="modal-dialog">
+	                <div class="panel panel-primary">
+	                    <div class="panel-heading">
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                        <h4 class="panel-title" id="newPostLabel"><span class="glyphicon glyphicon-pencil"></span> Buat Post Baru </h4>
+	                    </div>
+	                    <form action="" method="" accept-charset="utf-8" onsubmit="alert('test');$('#newPost').modal('hide');this.reset();$('#failed').modal('toggle');return false;">
+                    	<div class="modal-body" style="padding: 5px;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
+                                    <input class="form-control" name="subject" placeholder="Masukkan Judul Post Anda" type="text" required />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
+                                    <textarea style="resize:vertical;" class="form-control" placeholder="Masukkan Isi Post Anda" rows="30" name="content" required></textarea>
+                                </div>
+                            </div>
+                           	<div class="row">
+                            	<div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+						                <label for="gbrUtamaInputFile">Gambar Utama : </label>
+						                <input type="file" id="gbrUtamaInputFIle" required>
+						            </div>
+                                </div>                         
+                            </div>
+                            <div class="row">
+	                            <div class="col-lg-12 col-md-12 col-sm-12" >
+                                    <div class="form-group">
+						                 <label for="gbr2SampinganInputFile">Gambar-Gambar Sampingan : </label>
+						                <input type="file" id="gbr2SampinganInputFile" multiple>
+						                <p class="help-block">Bisa lebih dari 1 dan Bersifat opsional.</p>
+						            </div>
+                                </div>  
+                            </div>
+                        </div>  
+                        <div class="panel-footer" style="margin-bottom:-14px;">
+                            <input type="submit" formmethod="" value="Post" class="btn btn-success">
+                                <!--<span class="glyphicon glyphicon-ok"></span>-->
+                            <input type="reset" class="btn btn-danger" value="Clear" />
+                                <!--<span class="glyphicon glyphicon-remove"></span>-->
+                            <button style="float: right;" type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+	        <div class="modal fade modal-new-post" id="failed" tabindex="-1" role="dialog" aria-labelledby="failedLabel" aria-hidden="true">
+	            <div class="modal-dialog">
+	                <div class="panel panel-danger">
+	                    <div class="panel-heading">
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                        <h4 class="panel-title" id="failedLabel"><span class="glyphicon glyphicon-remove"></span> Operasi Gagal! </h4>
+	                    </div>
+                    	<div class="modal-body" style="padding: 5px;">
+                    	 	<div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
+                                    Post gagal dibuat! Pastikan koneksi internet anda stabil!
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="panel-footer" style="text-align: right;">
+                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                        </div>
+	                </div>
+	            </div>
+	        </div>
+
+	        <div class="modal fade modal-new-post" id="success" tabindex="-1" role="dialog" aria-labelledby="successLabel" aria-hidden="true">
+	            <div class="modal-dialog">
+	                <div class="panel panel-success">
+	                    <div class="panel-heading">
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                        <h4 class="panel-title" id="successLabel"><span class="glyphicon glyphicon-ok"></span> Operasi Berhasil! </h4>
+	                    </div>
+                    	<div class="modal-body" style="padding: 5px;">
+                    	 	<div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
+                                    Post berhasil dibuat!
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="panel-footer" style="text-align: right;">
+                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                        </div>
+	                </div>
+	            </div>
+	        </div>
+
+        </div>
+
         <!-- Custom Theme JavaScript -->
         <script src="/javascripts/bloguser.min.js"></script>
     	

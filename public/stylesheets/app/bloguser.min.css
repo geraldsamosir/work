@@ -8,6 +8,8 @@ body {
     font-family: Lora, 'Times New Roman', serif;
     font-size: 20px;
     color: #404040;
+    padding-right:0px !important; /*! Fix bug dimana modal menyebabkan page bergeser ke kiri */
+    margin-right:0px !important; /*! Fix bug dimana modal menyebabkan page bergeser ke kiri */
 }
 p {
     line-height: 1.5;
@@ -478,5 +480,23 @@ body {
 }
 .btn-pref .btn  {   
     -webkit-border-radius: 0 !important;   
+}
+.new-post{
+    font-size: 14px;
+}
+.new-post>.btn-new-post{
+    margin: 0;
+    position: fixed;
+    bottom: 1%;
+    right: 1%;
+    border-radius: 100px;
+    z-index: 0;
+}
+
+/* Fix bug dimana modal menyebabkan page bergeser ke kiri */
+
+.modal-open {
+ overflow: auto;
+ overflow-x: hidden;
 }
 
