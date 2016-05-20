@@ -1276,3 +1276,38 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout' , funct
           alert('Delete');
      };
 }]);
+
+app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout' , function(articleDataPasser, $scope, $timeout) {
+     $scope.currentPost = {
+          id : 65535,
+          title : "",
+          img : [""],
+          content : ""
+     }
+     $scope.submitPost = function(){
+          $('#newPost').modal('hide');
+          $scope.resetInput();
+          if($scope.getPostButtonText() == "Post"){
+               // Insert ke DB, karena id gak ada (Post baru), pakai increment saja.     
+               $('#success').modal('toggle');
+          }
+          else if ($scope.getPostButtonText() == "Save Changes"){
+               // Update ke DB dengan berdasarkan id yang ada
+               $('#success2').modal('toggle');
+          }
+          
+          // Perbarui Post di Halaman Utama dan Profile.
+     }
+     $scope.resetInput = function(){
+          // memakai jquery
+          $('#formNewPost')[0].reset();     
+     }
+     $scope.getPostButtonText = function(){
+          // Cara ambil teks button yg disupport IE
+          var label = $("#btnSubmit").text(); 
+          $("#btnSubmit").text('');
+          var buttonValue = $("#btnSubmit").val();
+          $("#btnSubmit").text(label);
+          return buttonValue;
+     }
+}]);
