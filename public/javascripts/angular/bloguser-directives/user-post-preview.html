@@ -3,6 +3,18 @@
         <h2 class="post-title">{{ info.title }}</h2>
         <h3 class="post-subtitle">{{ info.subtitle }}</h3>
     </a>
-	<p class="post-meta">Posted by <a href="#">{{ info.author }}</a> on {{ info.date }}</p>
+	<p class="post-meta">
+		Posted by <a href="#">{{ info.author }}</a> on {{ info.date }}
+    </p>
+	<div class="btn-group btn-action">
+        <a class="btn dropdown-toggle btn-success" data-toggle="dropdown" style="padding: 6 12;"> 
+            Action<span class="icon-cog icon-white"></span><span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li ng-click="$parent.editPost()"><a role="button"><span class="icon-wrench"></span>Edit Post</a></li>
+            <li ng-click="$parent.showDeletePostModal()"><a role="button"><span class="icon-trash"></span>Remove Post</a></li>
+        </ul>
+    </div>	
+	
 </div>
 <hr>

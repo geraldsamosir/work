@@ -209,6 +209,8 @@ hr.small {
     font-size: 18px;
     font-style: italic;
     margin-top: 0;
+    display: inline-block;
+    margin-bottom: 12px;
 }
 .post-preview>.post-meta>a {
     text-decoration: none;
@@ -217,6 +219,10 @@ hr.small {
 .post-preview>.post-meta>a:hover, .post-preview>.post-meta>a:focus {
     color: #0085a1;
     text-decoration: underline;
+}
+.post-preview>.btn-action{
+    margin-left: 5px;
+    margin-top: -2px;
 }
 @media only screen and (min-width:768px) {
     .post-preview>a>.post-title {
