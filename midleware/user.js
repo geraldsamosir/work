@@ -18,10 +18,10 @@ user.register = function(req,res,next){
 
 user.login  = function(req,res,next){
 	 var visitor = {
-    	username : req.body.username ,
-    	password : req.body.password 
+    	username : req.body.username  || null,
+    	password : req.body.password || null
     };
-    if(visitor.username = 'undefined'){
+    if(visitor.username == null){
       visitor = {
             username : req.params.username ,
             password : req.params.password 
