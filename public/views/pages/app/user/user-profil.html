@@ -1,0 +1,67 @@
+    <header class="intro-header">
+        <div class="card hovercard">
+            <div class="card-background">
+                <img class="card-bkimg" alt="" src="{{ fotokronologiuser }}">
+                <!-- http://lorempixel.com/850/280/people/9/ -->
+            </div>
+            <div class="useravatar">
+                <img alt="" src="https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/home-bg.jpg">
+            </div>
+            <div class="card-info"> <h1>{{namauser | uppercase}}</h1>
+
+            </div>
+        </div>
+        <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" href="" ng-class="clsmenu1" ng-click="switchtab(1)"><span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                    <div class="hidden-xs">Posts</div>
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default" href="#" ng-class="clsmenu2" ng-click="switchtab(2)"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <div class="hidden-xs">Daftar Teman</div>
+                </button>
+            </div>
+        </div>
+
+        
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row" ng-class="clsisimenu1">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div ng-repeat="post in userposts | limitTo: paginationLimitPosts()">
+                    <user-post-preview info ="post"><!-- Diambil dari directives post.js dan post-preview.html --></user-post-preview>
+                </div> 
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="next" ng-click="showMorePosts()" ng-class="{disabled: hasMoreItemsToShowPosts() == false}">
+                        <a href="">Older Posts &darr;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row" ng-class="clsisimenu2">   
+            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1" style="margin-top: -25px;">
+                <div class="container-fluid well span6">
+                    <div class="daftar-teman well">
+                        <div class="input-group searchForm">
+                          <input type="text" class="form-control" placeholder="Search for..." ng-model="friendSearchBox">
+                          <span class="input-group-btn">
+                            <button class="btn btn-info" type="button" ng-click="search(friendSearchBox)">Search</button>
+                          </span>
+                        </div><!-- /input-group -->
+                        <div class="friends-list">
+                            <div class="row-fluid friend-box" ng-repeat="user in friends | filter: searchKeyword | limitTo: paginationLimitFriends()">  
+                                <friends-list info="user"></friends-list>
+                            </div>
+                        </div>
+                        <div class="show-more">
+                            <a href="" ng-click="showMoreFriends()" ng-class="{hidden: hasMoreFriendsToShow() == false}">&darr; Show more &darr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -14,7 +14,7 @@ app.config(function($routeProvider, $locationProvider) {
                 controller  : 'friendsCtrl'
             })
             .when('/profil', {
-                templateUrl : '/views/pages/app/user/profil.html',
+                templateUrl : '/views/pages/app/user/user-profil.html',
                 controller  : 'profileCtrl'
             })
             .when('/post-:postid', {
@@ -22,8 +22,8 @@ app.config(function($routeProvider, $locationProvider) {
                 controller  : 'articleCtrl'
             })
             .when('/person-:personid', {
-                templateUrl : '/views/pages/app/user/artikel.html'
-                //controller  : 'aboutController'
+                templateUrl : '/views/pages/app/user/friend-profil.html',
+                controller  : 'friendProfileCtrl'
             })
             // Load main page if wrong address (probably useless due to back-end)
             .otherwise({

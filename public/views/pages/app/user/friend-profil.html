@@ -1,13 +1,13 @@
     <header class="intro-header">
         <div class="card hovercard">
             <div class="card-background">
-                <img class="card-bkimg" alt="" src="{{ fotokronologipemilik }}">
+                <img class="card-bkimg" alt="" src="{{ fotokronologiteman }}">
                 <!-- http://lorempixel.com/850/280/people/9/ -->
             </div>
             <div class="useravatar">
                 <img alt="" src="https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/home-bg.jpg">
             </div>
-            <div class="card-info"> <h1>{{namapemilik | uppercase}}</h1>
+            <div class="card-info"> <h1>{{namateman | uppercase}}</h1>
 
             </div>
         </div>
@@ -31,8 +31,8 @@
     <div class="container">
         <div class="row" ng-class="clsisimenu1">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div ng-repeat="post in userposts | limitTo: paginationLimitPosts()">
-                    <post-preview info ="post"><!-- Diambil dari directives post.js dan post-preview.html --></post-preview>
+                <div ng-repeat="post in poststeman | limitTo: paginationLimitPosts()">
+                    <friend-post-preview info ="post"><!-- Diambil dari directives post.js dan post-preview.html --></friend-post-preview>
                 </div> 
                 <!-- Pager -->
                 <ul class="pager">
@@ -54,7 +54,7 @@
                         </div><!-- /input-group -->
                         <div class="friends-list">
                             <div class="row-fluid friend-box" ng-repeat="user in friends | filter: searchKeyword | limitTo: paginationLimitFriends()">  
-                                <friends-list info="user"></friends-list>
+                                <all-friends-list info="user"></all-friends-list>
                             </div>
                         </div>
                         <div class="show-more">
