@@ -43,33 +43,33 @@
         </div>
 
         <div class="new-post" ng-controller="postCtrl">
-        	<a class="btn btn-primary btn-lg btn-new-post" data-toggle="modal" data-target="#newPost" data-original-title>
-	          <span class="glyphicon glyphicon-pencil"></span> Buat Post Baru 
+        	<a class="btn btn-primary btn-lg btn-new-post" data-toggle="modal" data-target="#newPost" data-original-title ng-click="initNewPostModal()">
+	          <span class="glyphicon glyphicon-pencil"></span> <div class="hidden-xs" style="display: inline-block;">Buat Post Baru</div>
 	        </a>
 	        <div class="modal fade modal-new-post" id="newPost" tabindex="-1" role="dialog" aria-labelledby="newPostLabel" aria-hidden="true">
 	            <div class="modal-dialog">
 	                <div class="panel panel-primary">
 	                    <div class="panel-heading">
 	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	                        <h4 class="panel-title" id="newPostLabel"><span class="glyphicon glyphicon-pencil"></span> Buat Post Baru </h4>
+	                        <h4 class="panel-title"><span class="glyphicon glyphicon-pencil"></span> <span id="newPostLabel">Buat Post Baru</span></h4>
 	                    </div>
 	                    <form action="" method="" id="formNewPost" accept-charset="utf-8" onsubmit="return false;" ng-submit="submitPost()">
                     	<div class="modal-body" style="padding: 5px;">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
-                                    <input class="form-control" name="subject" placeholder="Masukkan Judul Post Anda" type="text" ng-model="currentPost.title" required />
+                                    <input id="titleInput" class="form-control" name="subject" placeholder="Masukkan Judul Post Anda" type="text" ng-model="currentPost.title" required />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
-                                    <textarea style="resize:vertical;" class="form-control" placeholder="Masukkan Isi Post Anda" rows="30" name="content" ng-model="currentPost.content" required></textarea>
+                                    <textarea style="resize:vertical;" id="contentInput" class="form-control" placeholder="Masukkan Isi Post Anda" rows="30" name="content" ng-model="currentPost.content" required></textarea>
                                 </div>
                             </div>
                            	<div class="row">
                             	<div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
 						                <label for="gbrUtamaInputFile">Gambar Utama : </label>
-						                <input type="file" id="gbrUtamaInputFIle" required>
+						                <input type="file" id="gbrUtamaInputFile" required>
 						            </div>
                                 </div>                         
                             </div>
@@ -124,6 +124,7 @@
 	                    </div>
                     	<div class="modal-body" style="padding: 5px;">
                     	 	<div class="row">
+
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
                                     Post berhasil dibuat!
                                 </div>
@@ -147,6 +148,48 @@
                     	 	<div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
                                     Post berhasil di-edit!
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="panel-footer" style="text-align: right;">
+                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                        </div>
+	                </div>
+	            </div>
+	        </div>
+
+			<div class="modal fade modal-new-post" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+	            <div class="modal-dialog">
+	                <div class="panel panel-danger">
+	                    <div class="panel-heading">
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                        <h4 class="panel-title" id="deleteLabel"><span class="glyphicon glyphicon-trash"></span> Delete Post </h4>
+	                    </div>
+                    	<div class="modal-body" style="padding: 5px;">
+                    	 	<div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
+                                    Apakah anda yakin ingin menghapus post ini?
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="panel-footer" style="text-align: right;margin-bottom:-14px;">
+                            <button type="button" class="btn btn-default btn-success" data-dismiss="modal" ng-click="deletePost()">Ya</button>
+                            <button type="button" class="btn btn-default btn-danger" data-dismiss="modal">Tidak</button>
+                        </div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="modal fade modal-new-post" id="success3" tabindex="-1" role="dialog" aria-labelledby="success3Label" aria-hidden="true">
+	            <div class="modal-dialog">
+	                <div class="panel panel-success">
+	                    <div class="panel-heading">
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                        <h4 class="panel-title" id="success3Label"><span class="glyphicon glyphicon-ok"></span> Operasi Berhasil! </h4>
+	                    </div>
+                    	<div class="modal-body" style="padding: 5px;">
+                    	 	<div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
+                                    Post berhasil dihapus!
                                 </div>
                             </div>
                         </div>  

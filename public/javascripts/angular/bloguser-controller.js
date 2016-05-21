@@ -1295,12 +1295,6 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout' , funct
           }
      }
 
-     //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
-     $scope.readPost = function(post){
-          alert('overriden1');
-          articleDataPasser.setArticle(post);
-     }
-
      // Profile juga bisa melakukan operasi-operasi yang mirip dengan halaman pertemanan, antara lain :
      $scope.requestFriend = function(){
           alert('Requested');
@@ -1316,6 +1310,35 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout' , funct
      };
      $scope.delete = function(){
           alert('Delete');
+     };
+
+     // Metode-metode yang berhubungan dengan fitur Posting
+
+     //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
+     $scope.readPost = function(post){
+          alert('overriden1');
+          articleDataPasser.setArticle(post);
+     };
+     $scope.showEditPostModal = function(posisi){
+          // Memakai Jquery
+          $('#newPost').modal('show');
+          $("#newPostLabel").text('Edit Post');
+          $("#btnSubmit").text('');
+          $("#btnSubmit").val('Save Changes');
+          $("#btnSubmit").text('Save Changes');  
+          $("#btnReset").addClass('hidden');
+
+          $("#titleInput").val($scope.userposts[posisi].title);
+
+          $("#contentInput").val($scope.userposts[posisi].content);
+
+          // Taruh gambar???
+     };
+     $scope.showDeletePostModal = function(posisi){
+          // Memakai Jquery
+          $('#delete').modal('show');
+
+          $scope.readPost($scope.userposts[posisi]);
      };
 }]);
 
@@ -1856,7 +1879,7 @@ app.controller('friendProfileCtrl', ['articleDataPasser', '$scope', '$timeout' ,
           articleDataPasser.setArticle(post);
      }
 
-     // Profile juga bisa melakukan operasi-operasi yang mirip dengan halaman pertemanan, antara lain :
+     // Profile Teman juga bisa melakukan operasi-operasi yang mirip dengan halaman pertemanan, antara lain :
      $scope.requestFriend = function(){
           alert('Requested');
      };
@@ -1876,27 +1899,53 @@ app.controller('friendProfileCtrl', ['articleDataPasser', '$scope', '$timeout' ,
 
 app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout' , function(articleDataPasser, $scope, $timeout) {
      $scope.currentPost = {
-          id : 65535,
+          //id : 65535,  --> Tidak terpakai lagi , karena auto-increment pada saat Insert ke DB.
           title : "",
           img : [""],
           content : ""
+     }
+     $scope.initNewPostModal = function(){
+          if($("#newPostLabel").text() == "Edit Post"){
+               $scope.resetInput(); 
+          }
+          $("#newPostLabel").text("Buat Post Baru"); 
+          $("#btnSubmit").text("Post");
+          $("#btnReset").removeClass('hidden');
+
      }
      $scope.submitPost = function(){
           $('#newPost').modal('hide');
           $scope.resetInput();
           if($scope.getPostButtonText() == "Post"){
                // Insert ke DB, karena id gak ada (Post baru), pakai increment saja.     
-               $('#success').modal('toggle');
+               // Jika post berhasil disubmit maka tampilkan
+               $('#success').modal('show');
           }
           else if ($scope.getPostButtonText() == "Save Changes"){
                // Update ke DB dengan berdasarkan id yang ada
-               $('#success2').modal('toggle');
+
+               // Jika post berhasil di-edit maka tampilkan
+               $('#success2').modal('show');
           }
           
           // Perbarui Post di Halaman Utama dan Profile.
      }
+
+     $scope.deletePost = function(){
+          $('#delete').modal('hide')
+          // Baca post (untuk dipakai idnya) untuk post yang ingin dihapus;
+          $scope.currentPost = articleDataPasser.loadArticle();
+
+          // Delete data pada DB dengan berdasarkan id yang ada
+
+          // Jika post berhasil dihapus maka tampilkan
+          $('#success3').modal('show');
+          
+          // Perbarui Post di Halaman Utama dan Profile.
+     }
+
      $scope.resetInput = function(){
-          // memakai jquery
+          // memakai jquery, karena perlu melakukan reset pada Input Type File juga.
           $('#formNewPost')[0].reset();     
      }
      $scope.getPostButtonText = function(){

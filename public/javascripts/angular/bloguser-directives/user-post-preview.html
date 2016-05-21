@@ -11,8 +11,8 @@
             Action<span class="icon-cog icon-white"></span><span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li ng-click="$parent.editPost()"><a role="button"><span class="icon-wrench"></span>Edit Post</a></li>
-            <li ng-click="$parent.showDeletePostModal()"><a role="button"><span class="icon-trash"></span>Remove Post</a></li>
+            <li ng-click="$parent.showEditPostModal($parent.$index)"><a role="button"><span class="icon-wrench"></span>Edit Post</a></li>
+            <li ng-click="$parent.showDeletePostModal($parent.$index)"><a role="button"><span class="icon-trash"></span>Remove Post</a></li>
         </ul>
     </div>	
 	
