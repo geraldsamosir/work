@@ -34,8 +34,8 @@ user.update =  function(req,res){
 	var result = {};
 	var update ={};
 	var user_update = {
-		nama : req.body.username,
-		password : req.body.password,
+		nama : req.body.nama,
+		password : req.body.newpassword,
 		status_id : 2,
 		fotoprofil :  req.body.fotoprofil,
 		fotokronologi : req.body.fotokronologi,
