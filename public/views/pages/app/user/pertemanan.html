@@ -25,7 +25,7 @@
                     <div class="undangan-pertemanan" ng-class="clsisimenu1">
                         <div class="friends-list">
                             <div class="row-fluid friend-box" ng-repeat="user in unconfirmed">  
-                                <unconfirmed-friends-list info="user"></unconfirmed-friends-list>
+                                <friends-list info="user"></friends-list>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         </div><!-- /input-group -->
                         <div class="friends-list">
                             <div class="row-fluid friend-box" ng-repeat="user in all | filter: searchKeyword2 | limitTo: paginationLimitFriends2()">  
-                                <all-friends-list info="user"></friends-list>
+                                <friends-list info="user"></friends-list>
                             </div>
                         </div>
                         <div class="show-more">
