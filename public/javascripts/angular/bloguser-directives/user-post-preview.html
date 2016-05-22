@@ -1,5 +1,5 @@
 <div class="post-preview" id="{{ info.id }}">
-    <a href="#post-{{ info.id }}" ng-click="$parent.readPost($parent.userposts[$parent.$index])">
+    <a href="#post-{{ info.id }}" ng-click="$parent.readPost(info)">
         <h2 class="post-title">{{ info.title }}</h2>
         <h3 class="post-subtitle">{{ info.subtitle }}</h3>
     </a>
