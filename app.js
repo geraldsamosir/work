@@ -10,6 +10,7 @@ var nunjucks = require('nunjucks');
 //make controler path ...
 var index = require('./routes/index');
 var user = require('./routes/user');
+var post = require('./routes/post');
 
 
 
@@ -39,6 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 
 app.use('/user',user);
+
+app.use('/post',post);
 
 
 

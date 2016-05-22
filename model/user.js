@@ -47,6 +47,11 @@ user.cari =  function(user){
 		.table('user')
 		.where('nama','like','%'+user.cari+'%');
 };
+user.cari_by_id =  function(user){
+	return knex.select('id','nama','fotoprofil')
+		.table('user')
+		.where('id','like','%'+user.id_user+'%');
+};
 
 
 

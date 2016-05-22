@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var ctrl_index = require('../controller/index');
 var ctrl_user = require('../controller/user');
+
+//midleware
 var user_mid =  require('../midleware/user');
 
 
