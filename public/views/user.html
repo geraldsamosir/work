@@ -1,6 +1,8 @@
 <html ng-app="bloguser">
 	<head>
 		<title>{{ title }}</title>
+
+		<!-- Jquery dan Bootstrap -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
 		<link rel="stylesheet" type="text/css" href="/stylesheets/app/bloguser.min.css">
@@ -10,6 +12,7 @@
 	    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
 	</head>
 
 	<body ng-controller="bloguserCtrl">
@@ -57,19 +60,19 @@
                     	<div class="modal-body" style="padding: 5px;">
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
-                                    <input id="titleInput" class="form-control" name="subject" placeholder="Masukkan Judul Post Anda" type="text" ng-model="currentPost.title" required />
+                                    <input id="titleInput" class="form-control" name="title" placeholder="Masukkan Judul Post Anda" type="text" ng-model="currentPost.title" ng-change="cekValiditas()" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
-                                    <textarea style="resize:vertical;" id="contentInput" class="form-control" placeholder="Masukkan Isi Post Anda" rows="30" name="content" ng-model="currentPost.content" required></textarea>
+                                    <textarea ui-tinymce="tinymceOptions" id="contentInput" class="form-control" name="content" ng-model="currentPost.content"></textarea>
                                 </div>
                             </div>
                            	<div class="row">
                             	<div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
 						                <label for="gbrUtamaInputFile">Gambar Utama : </label>
-						                <input type="file" id="gbrUtamaInputFile" required>
+						                <input type="file" id="gbrUtamaInputFile" required />
 						            </div>
                                 </div>                         
                             </div>
@@ -77,14 +80,14 @@
 	                            <div class="col-lg-12 col-md-12 col-sm-12" >
                                     <div class="form-group">
 						                 <label for="gbr2SampinganInputFile">Gambar-Gambar Sampingan : </label>
-						                <input type="file" id="gbr2SampinganInputFile" multiple>
+						                <input type="file" id="gbr2SampinganInputFile" multiple />
 						                <p class="help-block">Bisa lebih dari 1 dan Bersifat opsional.</p>
 						            </div>
                                 </div>  
                             </div>
                         </div>  
                         <div class="panel-footer" style="margin-bottom:-14px;">
-                            <input type="submit" formmethod="" value="Post" class="btn btn-success" id="btnSubmit">
+                            <input type="submit" formmethod="" value="Post" class="btn btn-success disabled" id="btnSubmit" />
                                 <!--<span class="glyphicon glyphicon-ok"></span>-->
                             <input type="reset" class="btn btn-danger" value="Clear" id="btnClear" />
                                 <!--<span class="glyphicon glyphicon-remove"></span>-->
@@ -204,29 +207,35 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="/javascripts/bloguser.min.js"></script>
+
+        <!-- TinyMCE yang berfungsi sebagai widget formatter textarea. Digunakan pada saat Buat / Edit Post -->
+		<script src="/javascripts/tinymce/tinymce.min.js"></script>
     	
     	<!-- Angular -->
         <script src="/javascripts/angular/angular.js"></script>
 
-        <!-- Angular Route -->
+        <!-- Angular Route untuk keperluan Routing FrontEnd -->
         <script src="/javascripts/angular/angular-route.js"></script>
 
-        <!-- Angular Module -->
+        <!-- Penghubung TinyMCE dengan Angular -->
+		<script src="/javascripts/angular-ui-tinymce/tinymce.js"></script>
+
+        <!-- Angular Module User -->
         <script src="/javascripts/angular/bloguser-angular-module.js"></script>
         
-        <!-- Angular Service -->
+        <!-- Angular Service User -->
         <script src="/javascripts/angular/bloguser-service.js"></script>
 
-        <!-- Angular Controller -->
+        <!-- Angular Controller User -->
         <script src="/javascripts/angular/bloguser-controller.js"></script>
 
-        <!-- Angular Routing -->
+        <!-- Angular Routing User -->
         <script src="/javascripts/angular/bloguser-routing.js"></script>
 
-        <!-- Angular Post Directives -->
+        <!-- Angular Post Directives untuk User -->
         <script src="/javascripts/angular/bloguser-directives/post.js"></script>
 
-        <!-- Angular Friend Directives -->
+        <!-- Angular Friend Directives untuk User -->
         <script src="/javascripts/angular/bloguser-directives/friend.js"></script>
 
 	

@@ -1319,26 +1319,27 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout' , funct
           alert('overriden1');
           articleDataPasser.setArticle(post);
      };
-     $scope.showEditPostModal = function(posisi){
+     $scope.showEditPostModal = function(post){
           // Memakai Jquery
           $('#newPost').modal('show');
           $("#newPostLabel").text('Edit Post');
           $("#btnSubmit").text('');
           $("#btnSubmit").val('Save Changes');
-          $("#btnSubmit").text('Save Changes');  
-          $("#btnReset").addClass('hidden');
+          $("#btnSubmit").text('Save Changes');
+          $('#btnSubmit').removeClass('disabled'); // Enable visually
+          $('#btnSubmit').prop('disabled', false); // Enable visually + functionally
+          $("#btnClear").addClass('hidden');
 
-          $("#titleInput").val($scope.userposts[posisi].title);
-
-          $("#contentInput").val($scope.userposts[posisi].content);
+          $("#titleInput").val(post.title);
+          tinyMCE.activeEditor.setContent(post.content);
 
           // Taruh gambar???
      };
-     $scope.showDeletePostModal = function(posisi){
+     $scope.showDeletePostModal = function(post){
           // Memakai Jquery
           $('#delete').modal('show');
 
-          $scope.readPost($scope.userposts[posisi]);
+          $scope.readPost(post);
      };
 }]);
 
@@ -1909,8 +1910,12 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout' , function
                $scope.resetInput(); 
           }
           $("#newPostLabel").text("Buat Post Baru"); 
-          $("#btnSubmit").text("Post");
-          $("#btnReset").removeClass('hidden');
+          $("#btnSubmit").text('');
+          $("#btnSubmit").val('Post');
+          $("#btnSubmit").text('Post'); 
+          $('#btnSubmit').addClass('disabled'); // Disables visually
+          $('#btnSubmit').prop('disabled', true); // Disables visually + functionally
+          $("#btnClear").removeClass('hidden');
 
      }
      $scope.submitPost = function(){
@@ -1956,4 +1961,29 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout' , function
           $("#btnSubmit").text(label);
           return buttonValue;
      }
+     $scope.cekValiditas = function(){
+          if($scope.currentPost.title.length > 0 && $scope.currentPost.content.length > 0){
+               // Jquery
+               $('#btnSubmit').removeClass('disabled'); // Enable visually
+               $('#btnSubmit').prop('disabled', false); // Enable visually + functionally
+          }
+          else{
+               // Jquery
+               $('#btnSubmit').addClass('disabled'); // Disables visually
+               $('#btnSubmit').prop('disabled', true); // Disables visually + functionally
+          }
+     }
+
+     $scope.tinymceOptions = {
+               menubar: false,
+               resize: 'vertical',
+               height: '240px',
+               setup : function(ed) {
+                  ed.on('keyup', function() {
+                    // Cukup naive karena kebetulan editor yang ada hanya 1
+                     $scope.currentPost.content = tinyMCE.activeEditor.getContent();
+                     $scope.cekValiditas();
+                  });
+               }
+     };
 }]);
