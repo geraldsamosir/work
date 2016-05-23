@@ -10,18 +10,17 @@ var user_mid =  require('../midleware/user');
 // user profil and single blog
 router.get('/:username', ctrl_user.profil);
 
-router.get('/cari/:username/:password/:cari', user_mid.login , ctrl_user.search);
+router.get('/cari/:key/:cari', user_mid.login , ctrl_user.search);
 
-router.get('/add/:username/:password/:target',user_mid.login,ctrl_user.addfriend);
+router.get('/add/:key/:target',user_mid.login,ctrl_user.addfriend);
 
-router.get('/confirm/:username/:password/:target',user_mid.login,ctrl_user.confirm);
+router.get('/confirm/:key/:target',user_mid.login,ctrl_user.confirm);
 
-router.get('/config/:username/:password',user_mid.login,ctrl_user.allconfig);
+router.get('/config/:key',user_mid.login,ctrl_user.allconfig);
 
-router.delete('/delete/:username/:password/:target',user_mid.login,ctrl_user.deletefriend);
+router.delete('/delete/:key/:target',user_mid.login,ctrl_user.deletefriend);
 
 router.post('/update/',user_mid.login,ctrl_user.update);
-
 
 
 

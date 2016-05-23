@@ -1,6 +1,7 @@
 var modeluser = require('../model/user');
 var modelpertemanan = require('../model/pertemanan');
 
+var CryptoJS = require("crypto-js");
 
 var user ={};
 
@@ -25,8 +26,20 @@ user.login = function(req,res){
 		username : req.body.username,
     	password : req.body.password	
 	}
+
+	var slash = -1;
+	do{
+		var my_key = CryptoJS.AES
+					.encrypt(JSON.stringify(user.username+":"+user.password), 'secret key 123');
+		slash = my_key.toString().indexOf("/");
+
+	}while(slash != -1);
+
+	var result ={
+		key :  my_key.toString()
+	};
 	res.status(200);
-	res.json(user);
+	res.json(result);
 };
 
 user.update =  function(req,res){
@@ -123,6 +136,7 @@ user.search = function(req,res){
 
 
 user.addfriend = function(req,res){
+	console.log('here');
 	var user_detail ={};
 	var action ={};
 	var user_login = {
