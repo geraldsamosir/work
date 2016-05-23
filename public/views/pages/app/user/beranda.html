@@ -16,12 +16,12 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div ng-repeat="post in posts | limitTo: paginationLimit()">
+                <div ng-repeat="post in filteredposts = (posts) | limitTo: paginationLimit()">
                     <all-post-preview info ="post"><!-- Diambil dari directives post.js dan post-preview.html --></all-post-preview>
                 </div> 
                 <!-- Pager -->
                 <ul class="pager">
-                    <li class="next" ng-click="showMoreItems()" ng-class="{disabled: hasMoreItemsToShow() == false}">
+                    <li class="next" ng-click="showMoreItems()" ng-class="{disabled: hasMoreItemsToShow(filteredposts) == false}">
                         <a href="">Older Posts &darr;</a>
                     </li>
                 </ul>

@@ -37,12 +37,12 @@
                           </span>
                         </div><!-- /input-group -->
                         <div class="friends-list">
-                            <div class="row-fluid friend-box" ng-repeat="user in confirmed | filter: searchKeyword | limitTo: paginationLimitFriends1()">  
+                            <div class="row-fluid friend-box" ng-repeat="user in filteredconfirmed = (confirmed | filter: { nama: searchKeyword }) | limitTo: paginationLimitFriends1()">  
                                 <friends-list info="user"></friends-list>
                             </div>
                         </div>
                         <div class="show-more">
-                            <a href="" ng-click="showMoreFriends1()" ng-class="{hidden: hasMoreFriendsToShow1() == false}">&darr; Show more &darr;</a>
+                            <a href="" ng-click="showMoreFriends1()" ng-class="{hidden: hasMoreFriendsToShow1(filteredconfirmed) == false}">&darr; Show more &darr;</a>
                         </div>
                     </div>
                     <div class="cari-teman" ng-class="clsisimenu3">
@@ -53,12 +53,12 @@
                           </span>
                         </div><!-- /input-group -->
                         <div class="friends-list">
-                            <div class="row-fluid friend-box" ng-repeat="user in all | filter: searchKeyword2 | limitTo: paginationLimitFriends2()">  
+                            <div class="row-fluid friend-box" ng-repeat="user in filteredall = (all | filter : { nama: searchKeyword2 }) | limitTo: paginationLimitFriends2()">  
                                 <friends-list info="user"></friends-list>
                             </div>
                         </div>
                         <div class="show-more">
-                            <a href="" ng-click="showMoreFriends2()" ng-class="{hidden: hasMoreFriendsToShow2() == false}">&darr; Show more &darr;</a>
+                            <a href="" ng-click="showMoreFriends2()" ng-class="{hidden: hasMoreFriendsToShow2(filteredall) == false}">&darr; Show more &darr;</a>
                         </div>
                     </div>
                 </div>

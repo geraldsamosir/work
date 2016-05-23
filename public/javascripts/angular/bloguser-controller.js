@@ -316,8 +316,8 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout' , func
       return pageSize * pagesShown;
      };
 
-     $scope.hasMoreItemsToShow = function() {
-      return pagesShown < ($scope.posts.length / pageSize);
+     $scope.hasMoreItemsToShow = function(filteredposts) {
+      return pagesShown < ((filteredposts ? filteredposts.length : 0)  / pageSize);
      };
 
      $scope.showMoreItems = function() {
@@ -727,8 +727,8 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , function($scope, $timeout)
       return pageSizeFriends1 * pagesShownFriends1;
      };
 
-     $scope.hasMoreFriendsToShow1 = function() {
-      return pagesShownFriends1 < ($scope.all.length / pageSizeFriends1);
+     $scope.hasMoreFriendsToShow1 = function(filteredconfirmed) {
+      return pagesShownFriends1 < ((filteredconfirmed ? filteredconfirmed.length : 0) / pageSizeFriends1);
      };
 
      $scope.showMoreFriends1 = function() {
@@ -742,8 +742,8 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , function($scope, $timeout)
       return pageSizeFriends2 * pagesShownFriends2;
      };
 
-     $scope.hasMoreFriendsToShow2 = function() {
-      return pagesShownFriends2 < ($scope.all.length / pageSizeFriends2);
+     $scope.hasMoreFriendsToShow2 = function(filteredall) {
+      return pagesShownFriends2 < ((filteredall ? filteredall.length : 0) / pageSizeFriends2);
      };
 
      $scope.showMoreFriends2 = function() {
@@ -1249,8 +1249,8 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout' , funct
       return pageSizePosts * pagesShownPosts;
      };
 
-     $scope.hasMoreItemsToShowPosts = function() {
-      return pagesShownPosts < ($scope.userposts.length / pageSizePosts);
+     $scope.hasMoreItemsToShowPosts = function(filtereduserposts) {
+      return pagesShownPosts < ((filtereduserposts ? filtereduserposts.length : 0) / pageSizePosts);
      };
 
      $scope.showMorePosts = function() {
@@ -1265,8 +1265,8 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout' , funct
       return pageSizeFriends * pagesShownFriends;
      };
 
-     $scope.hasMoreFriendsToShow = function() {
-      return pagesShownFriends < ($scope.friends.length / pageSizeFriends);
+     $scope.hasMoreFriendsToShow = function(filteredfriends) {
+      return pagesShownFriends < ((filteredfriends ? filteredfriends.length : 0) / pageSizeFriends);
      };
 
      $scope.showMoreFriends = function() {
@@ -1828,8 +1828,8 @@ app.controller('friendProfileCtrl', ['articleDataPasser', '$scope', '$timeout' ,
       return pageSizePosts * pagesShownPosts;
      };
 
-     $scope.hasMoreItemsToShowPosts = function() {
-      return pagesShownPosts < ($scope.poststeman.length / pageSizePosts);
+     $scope.hasMoreItemsToShowPosts = function(filteredpoststeman) {
+      return pagesShownPosts < ((filteredpoststeman ? filteredpoststeman.length : 0) / pageSizePosts);
      };
 
      $scope.showMorePosts = function() {
@@ -1844,8 +1844,8 @@ app.controller('friendProfileCtrl', ['articleDataPasser', '$scope', '$timeout' ,
       return pageSizeFriends * pagesShownFriends;
      };
 
-     $scope.hasMoreFriendsToShow = function() {
-      return pagesShownFriends < ($scope.friends.length / pageSizeFriends);
+     $scope.hasMoreFriendsToShow = function(filteredfriends) {
+      return pagesShownFriends < ((filteredfriends ? filteredfriends.length : 0) / pageSizeFriends);
      };
 
      $scope.showMoreFriends = function() {
