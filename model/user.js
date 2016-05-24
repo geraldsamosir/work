@@ -8,7 +8,6 @@ user.detail = function(user){
 			password : user.password
 		});
 };
-
 user.add =function(visitor){
 	return knex('user')
 		.insert({
@@ -43,12 +42,12 @@ user.update = function(user){
 }
 
 user.cari =  function(user){
-	return knex.select('id','nama','fotoprofil')
+	return knex.select('id','nama','fotoprofil','fotokronologi')
 		.table('user')
 		.where('nama','like','%'+user.cari+'%');
 };
 user.cari_by_id =  function(user){
-	return knex.select('id','nama','fotoprofil')
+	return knex.select('id','nama','fotoprofil','fotokronologi')
 		.table('user')
 		.where('id','like','%'+user.id_user+'%');
 };

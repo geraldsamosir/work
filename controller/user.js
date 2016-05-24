@@ -109,11 +109,22 @@ user.search = function(req,res){
 	//search friend
 	res.status(200);
 	var result = {};
+	var group ={
+		pertemanan : [],
+		add :[] ,
+		confirm:[],
+		akunsendiri:[],
+		un_friend : []
+
+	};
 	var user_login = {
 		username : req.params.username,
 		password : req.params.password
 	};
-
+	if(req.params.cari  =="all" || req.params.cari =="ALL"){
+		req.params.cari ="";
+	}
+	console.log(req.params.cari);
 	modeluser.detail(user_login).then(function(rows){
 		user_login = rows;
 		user_login.cari = req.params.cari;
@@ -128,7 +139,69 @@ user.search = function(req,res){
 					user : result ,
 					pertemanan : rows
 				};
-				res.json(table);
+				for(var a in table.user){
+					for(var b in table.pertemanan){
+						if(user_login[0].id != table.user[a].id){
+							if((user_login[0].id == table.pertemanan[b].id_yang_add
+								&& table.user[a].id == table.pertemanan[b].id_yang_aprove)
+								||(user_login[0].id == table.pertemanan[b].id_yang_aprove 
+								&& table.user[a].id == table.pertemanan[b].id_yang_add)
+								){
+								if(table.pertemanan[b].status_aprove ==1 
+									&& table.pertemanan[b].status_add ==1){
+									table.user[a].pertemanan =1;
+									table.user[a].add = 0;
+									table.user[a].confirm = 0;
+									table.user[a].akunsendiri =0;
+									console.log(table.user);
+								}
+								else if(table.pertemanan[b].status_aprove ==0
+										&& table.pertemanan[b].status_add ==1
+										&&  user_login[0].id == table.pertemanan[b].id_yang_add){
+									table.user[a].pertemanan =0;
+									table.user[a].add = 1;
+									table.user[a].confirm = 0;
+									table.user[a].akunsendiri =0;
+								}
+								else if(table.pertemanan[b].status_aprove ==0
+										&& table.pertemanan[b].status_add ==1
+										&&  user_login[0].id == table.pertemanan[b].id_yang_aprove){
+									table.user[a].pertemanan =0;
+									table.user[a].add = 0;
+									table.user[a].confirm = 1;
+									table.user[a].akunsendiri =0;
+								}
+								
+							}
+						}
+						else {
+							table.user[a].pertemanan =0;
+							table.user[a].add = 0;
+							table.user[a].confirm = 0;	
+							table.user[a].akunsendiri =1;
+						}
+					}
+				}
+				for(var x in table.user){
+					if(table.user[x].pertemanan ==1){
+						group.pertemanan.push(table.user[x]);
+					}
+					else if(table.user[x].add ==1){
+						group.add.push(table.user[x]);
+					}
+					else if(table.user[x].confirm ==1){
+							group.confirm.push(table.user[x])
+					}
+					else if(table.user[x].akunsendiri ==1){
+						group.akunsendiri.push(table.user[x]);
+					}
+					else{
+						group.un_friend.push(table.user[x]);
+					}
+
+				}
+				
+				res.json(group);
 			})
 		})
 	})
