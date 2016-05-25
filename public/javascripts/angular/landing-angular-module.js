@@ -1,2 +1,2 @@
-var app = angular.module('landing', ['ngRoute']);
+var app = angular.module('landing', ['ngRoute','ngStorage']);
 

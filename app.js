@@ -34,7 +34,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
 // Routes setup
 
 app.use('/', index);
@@ -42,7 +41,6 @@ app.use('/', index);
 app.use('/user',user);
 
 app.use('/post',post);
-
 
 
 

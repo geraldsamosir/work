@@ -1,1 +1,1 @@
-var app = angular.module('bloguser',['ngRoute', 'ui.tinymce']);
+var app = angular.module('bloguser',['ngRoute', 'ngStorage', 'ui.tinymce']);

@@ -1,4 +1,4 @@
-app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout' , function(articleDataPasser, $scope, $timeout) {
+app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$localStorage', '$window', '$http', function(articleDataPasser, $scope, $timeout, $localStorage, $window, $http) {
      //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
      var pagesShown;
      var pageSize;
@@ -6,13 +6,44 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout' , func
           pagesShown = 1;
           pageSize = 5;
      });
+     // Kita dapat mengakses localstorage walaupun disimpan dalam variabel,
+     // karena module ngStorage pada saat statement dibawah, operasi yang dilakukan
+     // hanya memberikan alamat memori (pointer) bukan copy nilai ke variabel storange.
+     $scope.storage = $localStorage;
+
+     // watch (secara realtime) untuk cek logout (baik terduga maupun tak terduga)
+     $scope.$watch("storage.key", function(newVal, oldVal) {
+          // cek apakah kosong (logout)
+          if (!newVal) {
+               $window.location.href = "/";
+          }
+          // cek apakah key pada localstorage ditemper (percobaan hack)
+          if(newVal != oldVal){
+               $localStorage.$reset();
+               $window.location.href = "/";
+          }
+     },true);
+
+     $scope.loggedUser = {};
+     $scope.config = {
+          headers : {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          }
+     }
+     if($scope.storage.key){
+         $http.get("/user/config/" + $scope.storage.key, $scope.config)
+          .then(
+              function(response){
+                    $scope.loggedUser = response.data[0];
+              }, 
+              function(response){
+                    alert("Load failed! Back to homepage");
+                    $localStorage.$reset();
+                    $window.location.href = "/";
+              }
+           );
+     }
      $scope.posts = [{
-		// id : "id-posting(nomor)"
-		// title : "judul",
-		// img : ["link1", "link"],
-		// content : "isi",
-		// author : "penulis/user",
-		// date : tanggal post;
 		id : Math.round(Math.random() * 100 ).toString(),
 		title : "A1I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.",
 		img : ["https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg", "https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg"],
@@ -328,6 +359,11 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout' , func
 
      $scope.readPost = function(post){
           articleDataPasser.setArticle(post);
+     }
+
+     // Fungsi Logout
+     $scope.logout = function(){
+          $localStorage.$reset();
      }
 }]);
 

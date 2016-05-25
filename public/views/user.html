@@ -9,9 +9,9 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 		<!-- Custom Fonts -->
-	    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+	    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
 	</head>
 
@@ -35,7 +35,7 @@
 	            <li><a href="#beranda">BERANDA</a></li>
 	            <li><a href="#pertemanan">PERTEMANAN</a></li>
 	            <li><a href="#profil">{{name}}</a></li>
-	            <li><a href="">LOG OUT</a></li> <!-- Koneksi ke server -->
+	            <li ng-click="logout()"><a href="">LOG OUT</a></li> <!-- Koneksi ke server -->
 	          </ul>
 	        </div><!-- /.navbar-collapse -->
 	      </div><!-- /.container -->
@@ -216,6 +216,9 @@
 
         <!-- Angular Route untuk keperluan Routing FrontEnd -->
         <script src="/javascripts/angular/angular-route.js"></script>
+
+        <!-- Angular ngStorage untuk keperluan pengelolaan token pada local Storage -->
+    	<script src="/javascripts/angular/angular-ngStorage.js"></script>
 
         <!-- Penghubung TinyMCE dengan Angular -->
 		<script src="/javascripts/angular-ui-tinymce/tinymce.js"></script>
