@@ -13,12 +13,23 @@ var user ={};
 // function
 
 user.register = function(req,res){
+	var result ={};
+	var slash =-1;
 	var visitor ={
 		username : req.body.username,
     	password : req.body.password
 	};
+	do{
+		var my_key = CryptoJS.AES
+					.encrypt(JSON.stringify(visitor.username+":"+visitor.password), 'secret key 123');
+		slash = my_key.toString().indexOf("/");
+
+	}while(slash != -1);
+	result ={
+		key : my_key.toString()
+	};
 	res.status(200);
-	res.json(visitor);
+	res.json(result);
 };
 
 user.login = function(req,res){
