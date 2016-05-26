@@ -132,7 +132,7 @@ user.search = function(req,res){
 		username : req.params.username,
 		password : req.params.password
 	};
-	if(req.params.cari  =="all" || req.params.cari =="ALL"){
+	if(req.params.cari  =="__alldata__" || req.params.cari =="__Alldata__" || req.params.cari =="__allData__" || req.params.cari =="__AllData__" || req.params.cari =="__ALLDATA__"){
 		req.params.cari ="";
 	}
 	console.log(req.params.cari);
