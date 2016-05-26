@@ -42,7 +42,7 @@
                 <span class="icon-cog icon-white"></span><span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                <li ng-click="$parent.cancelrequestFriend()"><a role="button"><span class="icon-trash"></span>Cancel Request</a></li>
+                <li ng-click="$parent.cancelrequestFriend(info.id)"><a role="button"><span class="icon-trash"></span>Cancel Request</a></li>
             </ul>
         </div>
     </div>
@@ -68,7 +68,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li ng-click="$parent.acceptrequestFriend(info.id)"><a role="button"><span class="icon-trash"></span>Accept Request</a></li>
-                <li ng-click="$parent.rejectrequestFriend()"><a role="button"><span class="icon-trash"></span>Cancel Request</a></li>
+                <li ng-click="$parent.rejectrequestFriend(info.id)"><a role="button"><span class="icon-trash"></span>Reject Request</a></li>
             </ul>
         </div>
     </div>

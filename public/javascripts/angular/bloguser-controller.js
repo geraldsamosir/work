@@ -736,9 +736,17 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
           );
 
      };
-     $scope.cancelrequestFriend = function(){
-          alert('Cancelled Request');
-          $scope.updateData();
+     $scope.cancelrequestFriend = function(target){
+          $http.delete("/user/delete/" + $scope.$parent.storage.key + "/" + target, $scope.config)
+          .then(
+               function(response){
+                    alert('Cancelled');
+                    $scope.updateData();
+               }, 
+               function(response){
+                    alert("Cancellation failed! Check your internet connection.");
+               }
+          );
      };
      $scope.acceptrequestFriend = function(target){
           $http.get("/user/confirm/" + $scope.$parent.storage.key + "/" + target, $scope.config)
@@ -753,9 +761,17 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
                }
           );
      };
-     $scope.rejectrequestFriend = function(){
-          alert('Reject');
-          $scope.updateData();
+     $scope.rejectrequestFriend = function(target){
+          $http.delete("/user/delete/" + $scope.$parent.storage.key + "/" + target, $scope.config)
+          .then(
+               function(response){
+                    alert('Rejected');
+                    $scope.updateData();
+               }, 
+               function(response){
+                    alert("Reject failed! Check your internet connection.");
+               }
+          );
      };
      $scope.delete = function(target){
           $http.delete("/user/delete/" + $scope.$parent.storage.key + "/" + target, $scope.config)
@@ -1407,9 +1423,17 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           );
 
      };
-     $scope.cancelrequestFriend = function(){
-          alert('Cancelled Request');
-          $scope.updateDataUser();
+     $scope.cancelrequestFriend = function(target){
+          $http.delete("/user/delete/" + $scope.$parent.storage.key + "/" + target, $scope.config)
+          .then(
+               function(response){
+                    alert('Cancelled');
+                    $scope.updateDataUser();
+               }, 
+               function(response){
+                    alert("Cancellation failed! Check your internet connection.");
+               }
+          );
      };
      $scope.acceptrequestFriend = function(target){
           $http.get("/user/confirm/" + $scope.$parent.storage.key + "/" + target, $scope.config)
@@ -1424,9 +1448,17 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                }
           );
      };
-     $scope.rejectrequestFriend = function(){
-          alert('Reject');
-          $scope.updateDataUser();
+     $scope.rejectrequestFriend = function(target){
+          $http.delete("/user/delete/" + $scope.$parent.storage.key + "/" + target, $scope.config)
+          .then(
+               function(response){
+                    alert('Rejected');
+                    $scope.updateDataUser();
+               }, 
+               function(response){
+                    alert("Reject failed! Check your internet connection.");
+               }
+          );
      };
      $scope.delete = function(target){
           $http.delete("/user/delete/" + $scope.$parent.storage.key + "/" + target, $scope.config)
