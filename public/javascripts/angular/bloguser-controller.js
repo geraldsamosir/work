@@ -1399,7 +1399,7 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           .then(
                function(response){
                     alert('Requested');
-                    $scope.updateData();
+                    $scope.updateDataUser();
                }, 
                function(response){
                     alert("Request failed! Check your internet connection.");
@@ -1409,7 +1409,7 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
      };
      $scope.cancelrequestFriend = function(){
           alert('Cancelled Request');
-          $scope.updateData();
+          $scope.updateDataUser();
      };
      $scope.acceptrequestFriend = function(target){
           $http.get("/user/confirm/" + $scope.$parent.storage.key + "/" + target, $scope.config)
@@ -1417,7 +1417,7 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                function(response){
 
                     alert('Confirmed');
-                    $scope.updateData();
+                    $scope.updateDataUser();
                }, 
                function(response){
                     alert("Confirm failed! Check your internet connection.");
@@ -1426,14 +1426,14 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
      };
      $scope.rejectrequestFriend = function(){
           alert('Reject');
-          $scope.updateData();
+          $scope.updateDataUser();
      };
      $scope.delete = function(target){
           $http.delete("/user/delete/" + $scope.$parent.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
                     alert('Deleted');
-                    $scope.updateData();
+                    $scope.updateDataUser();
                }, 
                function(response){
                     alert("Delete failed! Check your internet connection.");
