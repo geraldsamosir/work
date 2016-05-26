@@ -1,11 +1,13 @@
-app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$localStorage', '$window', '$http', function(articleDataPasser, $scope, $timeout, $localStorage, $window, $http) {
+app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function(articleDataPasser, $scope, $timeout, $localStorage, $location ,$window, $http) {
      //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
      var pagesShown;
      var pageSize;
+
      $scope.$on("$routeChangeSuccess", function () {
           pagesShown = 1;
           pageSize = 5;
      });
+
      // Kita dapat mengakses localstorage walaupun disimpan dalam variabel,
      // karena module ngStorage pada saat statement dibawah, operasi yang dilakukan
      // hanya memberikan alamat memori (pointer) bukan copy nilai ke variabel storange.
@@ -43,6 +45,21 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
               }
            );
      }
+
+     // watch (secara realtime, namun dihanya diperlukan 1 kali saja) 
+     // mengecek untuk kecocokan data loggedUser dengan URL
+     $scope.$watch("loggedUser.nama", function(newVal, oldVal) {
+          // cek apakah data loggedUser dengan URL cocok.
+          if(newVal){
+               // Memakai Regex untuk mengekstrak username yang diinput di URL
+               if(!(($location.absUrl()).match(/\w+#/g)[0] == $scope.loggedUser.nama + "#")){
+                    alert("Wrong user! Back to homepage");
+                    $localStorage.$reset();
+                    $window.location.href = "/";
+               }
+          }
+     },true);
+
      $scope.posts = [{
 		id : Math.round(Math.random() * 100 ).toString(),
 		title : "A1I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.",
