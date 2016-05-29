@@ -37,12 +37,12 @@
                           </span>
                         </div><!-- /input-group -->
                         <div class="friends-list">
-                            <div class="row-fluid friend-box" ng-repeat="user in filteredconfirmed = (confirmed | filter: { nama: searchKeyword }) | limitTo: paginationLimitFriends1()">  
+                            <div class="row-fluid friend-box" ng-repeat="user in filteredfriends = (friends | filter: { nama: searchKeyword }) | limitTo: paginationLimitFriends1()">  
                                 <friends-list info="user"></friends-list>
                             </div>
                         </div>
                         <div class="show-more">
-                            <a href="" ng-click="showMoreFriends1()" ng-class="{hidden: hasMoreFriendsToShow1(filteredconfirmed) == false}">&darr; Show more &darr;</a>
+                            <a href="" ng-click="showMoreFriends1()" ng-class="{hidden: hasMoreFriendsToShow1(filteredfriends) == false}">&darr; Show more &darr;</a>
                         </div>
                     </div>
                     <div class="cari-teman" ng-class="clsisimenu3">

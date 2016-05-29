@@ -31,7 +31,10 @@ user.register = function(req,res){
 	};
 	res.status(200);
 	res.json(result);
+<<<<<<< HEAD
 
+=======
+>>>>>>> b121c873e9175384ec42e44c9230a68aaddf376b
 };
 
 user.login = function(req,res){
@@ -133,7 +136,11 @@ user.search = function(req,res){
 		username : req.params.username,
 		password : req.params.password
 	};
+<<<<<<< HEAD
 	if(req.params.cari  =="__alldata__" || req.params.cari =="__alldata__"){
+=======
+	if(req.params.cari  =="__alldata__" || req.params.cari =="__Alldata__" || req.params.cari =="__allData__" || req.params.cari =="__AllData__" || req.params.cari =="__ALLDATA__"){
+>>>>>>> b121c873e9175384ec42e44c9230a68aaddf376b
 		req.params.cari ="";
 	}
 	console.log(req.params.cari);
