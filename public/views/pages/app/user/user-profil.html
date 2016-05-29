@@ -1,13 +1,13 @@
     <header class="intro-header">
         <div class="card hovercard">
             <div class="card-background">
-                <img class="card-bkimg" alt="" src="{{ fotokronologiuser }}">
+                <img class="card-bkimg" alt="" src="{{ $parent.loggedUser.fotokronologi }}">
                 <!-- http://lorempixel.com/850/280/people/9/ -->
             </div>
             <div class="useravatar">
-                <img alt="" src="{{ fotoprofiluser }}">
+                <img alt="" src="{{ $parent.loggedUser.fotoprofil }}">
             </div>
-            <div class="card-info"> <h1>{{namauser | uppercase}}</h1>
+            <div class="card-info"> <h1 ng-bind="$parent.loggedUser.nama"></h1>
 
             </div>
         </div>

@@ -4,7 +4,7 @@ knex.local = require('knex')({
   connection: {
     host     : 'localhost',
     user     : 'root',
-    password : 'NEWPASSWORD',
+    password : '',
     database : 'blogengine'
   }
 });

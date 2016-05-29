@@ -904,9 +904,10 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           pagesShownFriends = 1;
           pageSizeFriends = 15;
      });
-     $scope.namauser = $scope.$parent.loggedUser.nama;
-     $scope.fotoprofiluser = $scope.$parent.loggedUser.fotoprofil;
-     $scope.fotokronologiuser = $scope.$parent.loggedUser.fotokronologi;
+     // Diganti dengan cara pemanggilan ng-bind di template user-profil.html
+     //$scope.namauser = $scope.$parent.loggedUser.nama;
+     //$scope.fotoprofiluser = $scope.$parent.loggedUser.fotoprofil;
+     //$scope.fotokronologiuser = $scope.$parent.loggedUser.fotokronologi;
      $scope.userposts = [{
           // id : "id-posting(nomor)"
           // title : "judul",
@@ -1521,21 +1522,39 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
      };
 }]);
 
-app.controller('friendProfileCtrl', ['articleDataPasser', '$scope', '$timeout' , function(articleDataPasser, $scope, $timeout) {
+app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', '$location','$http', function(articleDataPasser, $scope, $timeout, $location, $http) {
      var pagesShownPosts;
      var pageSizePosts;
      var pagesShownFriends;
      var pageSizeFriends;
+     $scope.updateDataFriend = function(){
+          //alert($location.path().substring(8));
+          $http.get("/user/friend/" + $scope.storage.key + "/" + $location.path().substring(8), $scope.config)
+          .then(
+               function(response){
+                    $scope.idteman = response.data.id;
+                    $scope.namateman = response.data.nama;
+                    $scope.fotoprofilteman = response.data.fotoprofil;
+                    $scope.fotokronologiteman = response.data.fotokronologi;
+                    $scope.friends = response.data.pertemanan.akunsendiri.concat(response.data.pertemanan.pertemanan, response.data.pertemanan.confirm, response.data.pertemanan.add, response.data.pertemanan.un_friend);
+                    // $scope.posts = response.data.post;
+               }, 
+               function(response){
+                    alert("Load failed! Try to refresh this page.");
+               }
+          );
+     }
      $scope.$on("$routeChangeSuccess", function () {
+          $scope.updateDataFriend();
           pagesShownPosts = 1;
           pageSizePosts = 5;
           pagesShownFriends = 1;
           pageSizeFriends = 15;
      });
-     $scope.namateman = "Temantest";
-     $scope.fotoprofilteman = "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm";
-     $scope.fotokronologiteman = "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm";
-     $scope.poststeman = [{
+     // $scope.namateman = "Temantest";
+     // $scope.fotoprofilteman = "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm";
+     // $scope.fotokronologiteman = "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm";
+     $scope.posts = [{
           // id : "id-posting(nomor)"
           // title : "judul",
           // img : ["link1", "link"],
@@ -1856,144 +1875,144 @@ app.controller('friendProfileCtrl', ['articleDataPasser', '$scope', '$timeout' ,
      ];
 
      // temporary, rencana nnt all loading dr event saja biar tidak memberatkan koneksi internet user.
-     $scope.friends = [
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 0,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test2",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test3",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 1
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 0,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test5",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 1
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 0,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 1
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 0,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 1
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 0,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 1
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 0,
-          status_approve : 0
-     },
-     {
-          id : Math.round(Math.random() * 100 ).toString(),
-          nama : "test4",
-          fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
-          status_add : 1,
-          status_approve : 0
-     }
-     ];
+     // $scope.friends = [
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 0,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test2",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test3",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 1
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 0,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test5",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 1
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 0,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 1
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 0,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 1
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 0,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 1
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 0,
+     //      status_approve : 0
+     // },
+     // {
+     //      id : Math.round(Math.random() * 100 ).toString(),
+     //      nama : "test4",
+     //      fotoprofil : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      fotokronologi : "https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm",
+     //      status_add : 1,
+     //      status_approve : 0
+     // }
+     // ];
 
      $scope.searchKeyword = "";
      $scope.search = function(temp){
@@ -2007,8 +2026,8 @@ app.controller('friendProfileCtrl', ['articleDataPasser', '$scope', '$timeout' ,
       return pageSizePosts * pagesShownPosts;
      };
 
-     $scope.hasMoreItemsToShowPosts = function(filteredpoststeman) {
-      return pagesShownPosts < ((filteredpoststeman ? filteredpoststeman.length : 0) / pageSizePosts);
+     $scope.hasMoreItemsToShowPosts = function(filteredposts) {
+      return pagesShownPosts < ((filteredposts ? filteredposts.length : 0) / pageSizePosts);
      };
 
      $scope.showMorePosts = function() {
