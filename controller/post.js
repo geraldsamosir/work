@@ -87,6 +87,13 @@ post.new = function(req,res){
 		
 	});
 };
+
+post.allkategori = function (req,res){
+	modelketegori.all().then(function(rows){
+		res.json(rows);
+	});
+};
+
 post.update  = function(req,res){
 
 };
@@ -94,12 +101,6 @@ post.delete = function (req,res){
 
 };
 
-
-// posting dari teman
-
-post.all_friends = function(req,res){
-
-};
 
 
 

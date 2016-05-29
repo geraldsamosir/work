@@ -1,4 +1,5 @@
 var modeluser = require('../model/user');
+var modelpost = require('../model/post');
 var modelpertemanan = require('../model/pertemanan');
 
 var CryptoJS = require("crypto-js");
@@ -13,12 +14,24 @@ var user ={};
 // function
 
 user.register = function(req,res){
+	var result ={};
+	var slash =-1;
 	var visitor ={
 		username : req.body.username,
     	password : req.body.password
 	};
+	do{
+		var my_key = CryptoJS.AES
+					.encrypt(JSON.stringify(visitor.username+":"+visitor.password), 'secret key 123');
+		slash = my_key.toString().indexOf("/");
+
+	}while(slash != -1);
+	result ={
+		key : my_key.toString()
+	};
 	res.status(200);
-	res.json(visitor);
+	res.json(result);
+
 };
 
 user.login = function(req,res){
@@ -36,7 +49,7 @@ user.login = function(req,res){
 	}while(slash != -1);
 
 	var result ={
-		key :  my_key.toString()
+		key :  my_key.toString(),
 	};
 	res.status(200);
 	res.json(result);
@@ -115,13 +128,12 @@ user.search = function(req,res){
 		confirm:[],
 		akunsendiri:[],
 		un_friend : []
-
 	};
 	var user_login = {
 		username : req.params.username,
 		password : req.params.password
 	};
-	if(req.params.cari  =="all" || req.params.cari =="ALL"){
+	if(req.params.cari  =="__alldata__" || req.params.cari =="__alldata__"){
 		req.params.cari ="";
 	}
 	console.log(req.params.cari);
@@ -207,9 +219,58 @@ user.search = function(req,res){
 	})
 };
 
+user.friend_detail = function(req,res){
+	var user_detail ={};
+	var friend_detail ={};
+	var action ={};
+	var filter ={};
+	var user_login = {
+		username : req.params.username,
+		password : req.params.password,
+		add 	  : req.params.target
+	};
+	modeluser.detail(user_login).then(function(rows){
+		user_detail = rows;
+		 action ={
+			adder : user_detail[0].id,
+			target : parseInt(user_login.add) 
+		};
+	})
+	.then(function(rows){
+		modeluser.friend_detail(action).then(function(rows){
+			//get frien information detail
+			friend_detail = rows[0];
+		})
+		.then(function(rows){
+			modelpertemanan.semua().then(function(rows){
+				friend_detail.friend = [];
+				for(var a in rows){
+					if((rows[a].id_yang_add == friend_detail.id 
+						|| rows[a].id_yang_add == friend_detail.id)
+						&& rows[a].status_add == 1
+						&& rows[a].status_aprove ==1 ){
+						friend_detail.friend.push(rows[a]);
+					}
+				}
+				//res.json(friend_detail);
+			})
+			.then(function(rows){
+				filter.id_user =  friend_detail.id;
+				modelpost.user(filter).then(function(rows){
+					friend_detail.post = [];
+					friend_detail.post = rows;
+					res.json(friend_detail);
+				});
+			})
+
+		})
+	});
+
+
+};
 
 user.addfriend = function(req,res){
-	console.log('here');
+	
 	var user_detail ={};
 	var action ={};
 	var user_login = {
@@ -292,4 +353,5 @@ user.deletefriend = function (req,res){
 	});
 };
 
-module.exports = user;
+
+module.exports = user;	

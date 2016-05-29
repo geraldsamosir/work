@@ -10,10 +10,8 @@ router.get('/:key/:id',user_mid.login , ctrl_post.detail);
 
 router.get('/filteruser/:key/:target_id',user_mid.login,ctrl_post.user);
 
+router.get('/:key/kategori/all' , user_mid.login,ctrl_post.allkategori);
 router.post('/',user_mid.login,ctrl_post.new);
-
-
-
 
 
 

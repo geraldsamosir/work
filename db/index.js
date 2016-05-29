@@ -1,11 +1,23 @@
-var knex = require('knex')({
+var knex ={};
+knex.local = require('knex')({
   client: 'mysql',
   connection: {
     host     : 'localhost',
     user     : 'root',
-    password : '',
+    password : 'NEWPASSWORD',
     database : 'blogengine'
   }
 });
-module.exports = knex;
+
+knex.online = require('knex')({
+  client: 'mysql',
+  connection: {
+    host     : 'db4free.net',
+    user     : 'gerald',
+    password : '70377e',
+    database : 'blogengine'
+  }
+});
+
+module.exports = knex.local;
 

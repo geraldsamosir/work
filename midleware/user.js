@@ -20,7 +20,6 @@ user.register = function(req,res,next){
 
 
 user.login  = function(req,res,next){
-    
     key_params =  req.params.key  || null;
     key_body = req.body.key || null;
     var visitor = {};
@@ -43,7 +42,7 @@ user.login  = function(req,res,next){
             var batas =  decryptedData.indexOf(":");
             visitor = {
                 username : decryptedData.substring(0,batas),
-                 password : decryptedData.substring(batas+1,decryptedData.length)
+                password : decryptedData.substring(batas+1,decryptedData.length)
             };
             req.body.username = visitor.username;
             req.body.password = visitor.password;
@@ -53,8 +52,8 @@ user.login  = function(req,res,next){
     else{
 
         visitor = {
-        username : req.body.username  || null,
-        password : req.body.password || null
+            username : req.body.username  || null,
+            password : req.body.password || null
 
         };
         if(visitor.username == null){

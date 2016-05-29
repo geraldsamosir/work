@@ -6,6 +6,9 @@ kategori.new = function (kategori){
 
 };
 
+kategori.all = function(){
+	return knex('post_kategori');
+}
 kategori.post_relation = function(relation){
   	return knex('post_kategori').insert({
   		id_post :relation.post_id,

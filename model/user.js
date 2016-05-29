@@ -8,6 +8,13 @@ user.detail = function(user){
 			password : user.password
 		});
 };
+user.friend_detail = function(user){
+	return knex.select('id','nama','fotoprofil','fotokronologi')
+			.table('user')
+			.where({
+				id :  user.target
+			});
+};
 user.add =function(visitor){
 	return knex('user')
 		.insert({
@@ -46,7 +53,7 @@ user.cari =  function(user){
 		.table('user')
 		.where('nama','like','%'+user.cari+'%');
 };
-user.cari_by_id =  function(user){
+user.cari_by_id = function(user){
 	return knex.select('id','nama','fotoprofil','fotokronologi')
 		.table('user')
 		.where('id','like','%'+user.id_user+'%');
