@@ -120,7 +120,6 @@ user.profil = function(req, res) {
 
 
 user.friendship_filter = function(user_login,table){
-	console.log(table);
 	var group ={
 		pertemanan : [],
 		add :[] ,
@@ -228,14 +227,20 @@ user.search = function(req,res){
 user.friend_detail = function(req,res){
 	var user_detail ={};
 	var friend_detail ={};
+	var friend_friends = [];
+	var result =[];
 	var action ={};
 	var filter ={};
+	var table = {};
 	var user_login = {
 		username : req.params.username,
 		password : req.params.password,
-		add 	  : req.params.target
+		add 	  : req.params.target,
+		cari : ''
 	};
+
 	modeluser.detail(user_login).then(function(rows){
+		user_login.id =  rows[0].id;
 		user_detail = rows;
 		 action ={
 			adder : user_detail[0].id,
@@ -255,18 +260,36 @@ user.friend_detail = function(req,res){
 						|| rows[a].id_yang_add == friend_detail.id)
 						&& rows[a].status_add == 1
 						&& rows[a].status_aprove ==1 ){
-						friend_detail.pertemanan.push(rows[a]);
+
+						filter ={};
+						if(rows[a].id_yang_add == action.target){
+							filter.id_user = rows[a].id_yang_aprove
+						}
+						else if(rows[a].id_yang_aprove == action.target){
+							filter.id_user	=rows[a].id_yang_add;
+						}
+						modeluser.cari_by_id(filter).then(function(rows){
+							result.push(rows[0]);
+							
+						})
+
+						friend_friends.push(rows[a]);
 					}
 				}
-				//res.json(friend_detail);
+				table.user = result;
+				table.pertemanan = friend_friends;
 			})
 			.then(function(rows){
 				filter.id_user =  friend_detail.id;
 				modelpost.user(filter).then(function(rows){
 					friend_detail.post = [];
 					friend_detail.post = rows;
+				})
+				.then(function(rows){
+					console.log(user_detail);
+					friend_detail.pertemanan = user.friendship_filter(user_detail, table);
 					res.json(friend_detail);
-				});
+				})
 			})
 
 		})
