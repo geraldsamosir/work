@@ -118,10 +118,9 @@ user.profil = function(req, res) {
 // and friendship
 //function
 
-user.search = function(req,res){
-	//search friend
-	res.status(200);
-	var result = {};
+
+user.friendship_filter = function(user_login,table){
+	console.log(table);
 	var group ={
 		pertemanan : [],
 		add :[] ,
@@ -129,6 +128,75 @@ user.search = function(req,res){
 		akunsendiri:[],
 		un_friend : []
 	};
+	for(var a in table.user){
+		for(var b in table.pertemanan){
+			if(user_login[0].id != table.user[a].id){
+				if((user_login[0].id == table.pertemanan[b].id_yang_add
+					&& table.user[a].id == table.pertemanan[b].id_yang_aprove)
+					||(user_login[0].id == table.pertemanan[b].id_yang_aprove 
+					&& table.user[a].id == table.pertemanan[b].id_yang_add)
+				){
+				if(table.pertemanan[b].status_aprove ==1 
+					&& table.pertemanan[b].status_add ==1){
+					table.user[a].pertemanan =1;
+					table.user[a].add = 0;
+					table.user[a].confirm = 0;
+					table.user[a].akunsendiri =0;
+					console.log(table.user);
+				}
+				else if(table.pertemanan[b].status_aprove ==0
+					&& table.pertemanan[b].status_add ==1
+					&&  user_login[0].id == table.pertemanan[b].id_yang_add){
+					table.user[a].pertemanan =0;
+					table.user[a].add = 1;
+					table.user[a].confirm = 0;
+					table.user[a].akunsendiri =0;
+				}
+				else if(table.pertemanan[b].status_aprove ==0
+					&& table.pertemanan[b].status_add ==1
+					&&  user_login[0].id == table.pertemanan[b].id_yang_aprove){
+					table.user[a].pertemanan =0;
+					table.user[a].add = 0;
+					table.user[a].confirm = 1;
+					table.user[a].akunsendiri =0;
+				}
+								
+				}
+			}
+			else {
+				table.user[a].pertemanan =0;
+				table.user[a].add = 0;
+				table.user[a].confirm = 0;	
+				table.user[a].akunsendiri =1;
+			}
+		}
+	}
+	for(var x in table.user){
+		if(table.user[x].pertemanan ==1){
+			group.pertemanan.push(table.user[x]);
+		}
+		else if(table.user[x].add ==1){
+			group.add.push(table.user[x]);
+		}
+		else if(table.user[x].confirm ==1){
+			group.confirm.push(table.user[x])
+		}
+		else if(table.user[x].akunsendiri ==1){
+			group.akunsendiri.push(table.user[x]);
+		}
+		else{
+			group.un_friend.push(table.user[x]);
+		}
+
+	}			
+	return group;
+}
+
+user.search = function(req,res){
+	//search friend
+	res.status(200);
+	var result = {};
+	var group ={};
 	var user_login = {
 		username : req.params.username,
 		password : req.params.password
@@ -136,7 +204,6 @@ user.search = function(req,res){
 	if(req.params.cari  =="__alldata__" || req.params.cari =="__alldata__"){
 		req.params.cari ="";
 	}
-	console.log(req.params.cari);
 	modeluser.detail(user_login).then(function(rows){
 		user_login = rows;
 		user_login.cari = req.params.cari;
@@ -151,68 +218,7 @@ user.search = function(req,res){
 					user : result ,
 					pertemanan : rows
 				};
-				for(var a in table.user){
-					for(var b in table.pertemanan){
-						if(user_login[0].id != table.user[a].id){
-							if((user_login[0].id == table.pertemanan[b].id_yang_add
-								&& table.user[a].id == table.pertemanan[b].id_yang_aprove)
-								||(user_login[0].id == table.pertemanan[b].id_yang_aprove 
-								&& table.user[a].id == table.pertemanan[b].id_yang_add)
-								){
-								if(table.pertemanan[b].status_aprove ==1 
-									&& table.pertemanan[b].status_add ==1){
-									table.user[a].pertemanan =1;
-									table.user[a].add = 0;
-									table.user[a].confirm = 0;
-									table.user[a].akunsendiri =0;
-									console.log(table.user);
-								}
-								else if(table.pertemanan[b].status_aprove ==0
-										&& table.pertemanan[b].status_add ==1
-										&&  user_login[0].id == table.pertemanan[b].id_yang_add){
-									table.user[a].pertemanan =0;
-									table.user[a].add = 1;
-									table.user[a].confirm = 0;
-									table.user[a].akunsendiri =0;
-								}
-								else if(table.pertemanan[b].status_aprove ==0
-										&& table.pertemanan[b].status_add ==1
-										&&  user_login[0].id == table.pertemanan[b].id_yang_aprove){
-									table.user[a].pertemanan =0;
-									table.user[a].add = 0;
-									table.user[a].confirm = 1;
-									table.user[a].akunsendiri =0;
-								}
-								
-							}
-						}
-						else {
-							table.user[a].pertemanan =0;
-							table.user[a].add = 0;
-							table.user[a].confirm = 0;	
-							table.user[a].akunsendiri =1;
-						}
-					}
-				}
-				for(var x in table.user){
-					if(table.user[x].pertemanan ==1){
-						group.pertemanan.push(table.user[x]);
-					}
-					else if(table.user[x].add ==1){
-						group.add.push(table.user[x]);
-					}
-					else if(table.user[x].confirm ==1){
-							group.confirm.push(table.user[x])
-					}
-					else if(table.user[x].akunsendiri ==1){
-						group.akunsendiri.push(table.user[x]);
-					}
-					else{
-						group.un_friend.push(table.user[x]);
-					}
-
-				}
-				
+				group = user.friendship_filter(user_login, table);
 				res.json(group);
 			})
 		})
@@ -238,18 +244,18 @@ user.friend_detail = function(req,res){
 	})
 	.then(function(rows){
 		modeluser.friend_detail(action).then(function(rows){
-			//get frien information detail
+			//get friend information detail
 			friend_detail = rows[0];
 		})
 		.then(function(rows){
 			modelpertemanan.semua().then(function(rows){
-				friend_detail.friend = [];
+				friend_detail.pertemanan = [];
 				for(var a in rows){
 					if((rows[a].id_yang_add == friend_detail.id 
 						|| rows[a].id_yang_add == friend_detail.id)
 						&& rows[a].status_add == 1
 						&& rows[a].status_aprove ==1 ){
-						friend_detail.friend.push(rows[a]);
+						friend_detail.pertemanan.push(rows[a]);
 					}
 				}
 				//res.json(friend_detail);
