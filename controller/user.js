@@ -141,7 +141,7 @@ user.friendship_filter = function(user_login,table){
 					table.user[a].add = 0;
 					table.user[a].confirm = 0;
 					table.user[a].akunsendiri =0;
-					console.log(table.user);
+					
 				}
 				else if(table.pertemanan[b].status_aprove ==0
 					&& table.pertemanan[b].status_add ==1
@@ -227,8 +227,9 @@ user.search = function(req,res){
 user.friend_detail = function(req,res){
 	var user_detail ={};
 	var friend_detail ={};
+	var friend_detail_X ={};
 	var friend_friends = [];
-	var result =[];
+	var result ={};
 	var action ={};
 	var filter ={};
 	var table = {};
@@ -251,33 +252,17 @@ user.friend_detail = function(req,res){
 		modeluser.friend_detail(action).then(function(rows){
 			//get friend information detail
 			friend_detail = rows[0];
+			friend_detail_X = rows;
+		})
+		modeluser.cari(user_login).then(function(rows){
+				result = rows;
+				table.user = result;
 		})
 		.then(function(rows){
 			modelpertemanan.semua().then(function(rows){
-				friend_detail.pertemanan = [];
-				for(var a in rows){
-					if((rows[a].id_yang_add == friend_detail.id 
-						|| rows[a].id_yang_add == friend_detail.id)
-						&& rows[a].status_add == 1
-						&& rows[a].status_aprove ==1 ){
+				table.pertemanan = rows
+				table.user = user.friendship_filter(friend_detail_X,table)['pertemanan'];
 
-						filter ={};
-						if(rows[a].id_yang_add == action.target){
-							filter.id_user = rows[a].id_yang_aprove
-						}
-						else if(rows[a].id_yang_aprove == action.target){
-							filter.id_user	=rows[a].id_yang_add;
-						}
-						modeluser.cari_by_id(filter).then(function(rows){
-							result.push(rows[0]);
-							
-						})
-
-						friend_friends.push(rows[a]);
-					}
-				}
-				table.user = result;
-				table.pertemanan = friend_friends;
 			})
 			.then(function(rows){
 				filter.id_user =  friend_detail.id;
@@ -286,7 +271,6 @@ user.friend_detail = function(req,res){
 					friend_detail.post = rows;
 				})
 				.then(function(rows){
-					console.log(user_detail);
 					friend_detail.pertemanan = user.friendship_filter(user_detail, table);
 					res.json(friend_detail);
 				})
