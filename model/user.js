@@ -51,12 +51,15 @@ user.update = function(user){
 user.cari =  function(user){
 	return knex.select('id','nama','fotoprofil','fotokronologi')
 		.table('user')
-		.where('nama','like','%'+user.cari+'%');
+		.where('nama','like','%'+user.cari+'%')
+		.orderBy('nama', 'asc');
+
 };
 user.cari_by_id = function(user){
 	return knex.select('id','nama','fotoprofil','fotokronologi')
 		.table('user')
-		.where('id','like','%'+user.id_user+'%');
+		.where('id','like','%'+user.id_user+'%')
+		.orderBy('nama', 'asc');
 };
 
 
