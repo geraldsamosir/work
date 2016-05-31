@@ -2096,17 +2096,34 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
      };
 }]);
 
-app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout' , function(articleDataPasser, $scope, $timeout) {
+app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', function(articleDataPasser, $scope, $timeout, $http) {
      $scope.currentPost = {
           //id : 65535,  --> Tidak terpakai lagi , karena auto-increment pada saat Insert ke DB.
           title : "",
           img : [""],
-          content : ""
+          content : "",
+          id_kategori : null
      }
+     $scope.listOfCategories = [];
+     $scope.loadCategories = function(){
+          $http.get("/post/" + $scope.storage.key + "/kategori/all", $scope.config)
+               .then(
+                   function(response){
+                         $scope.listOfCategories = response.data;
+                   }, 
+                   function(response){
+                         alert("Load Categories failed! Check your internet connection.");
+                   }
+               );
+     }
+
      $scope.initNewPostModal = function(){
           if($("#newPostLabel").text() == "Edit Post"){
                $scope.resetInput(); 
           }
+          // Load kategori
+          $scope.loadCategories();
+
           $("#newPostLabel").text("Buat Post Baru"); 
           $("#btnSubmit").text('');
           $("#btnSubmit").val('Post');

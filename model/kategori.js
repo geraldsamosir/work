@@ -7,7 +7,8 @@ kategori.new = function (kategori){
 };
 
 kategori.all = function(){
-	return knex('post_kategori');
+	return knex('kategori')
+		.orderBy('nama', 'asc');
 }
 kategori.post_relation = function(relation){
   	return knex('post_kategori').insert({
