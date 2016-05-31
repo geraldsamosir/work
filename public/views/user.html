@@ -68,20 +68,34 @@
                                     <textarea ui-tinymce="tinymceOptions" id="contentInput" class="form-control" name="content" ng-model="currentPost.content"></textarea>
                                 </div>
                             </div>
+                            <div class="row">
+                            	<div class="col-lg-12 col-md-12 col-sm-12" style="padding-top: 0px;padding-bottom: 4px;">
+									<label for="categoryInput">Kategori Post : * </label>
+							     	<select class="form-control" id="categoryInput" required>
+									    <option value="">Pilih Kategori Post</option>
+									    <option value="1">1</option>
+									    <option value="2">2</option>
+									    <option value="3">3</option>
+									    <option value="4">4</option>
+								    </select>
+					                <p class="help-block">*Bersifat wajib.</p>
+                                </div>                         
+                            </div>
                            	<div class="row">
                             	<div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
-						                <label for="gbrUtamaInputFile">Gambar Utama : </label>
+						                <label for="gbrUtamaInputFile">Gambar Utama : ** </label>
 						                <input type="file" id="gbrUtamaInputFile" required />
+						                <p class="help-block">**Berupa 1 File Gambar dan Bersifat wajib.</p>
 						            </div>
                                 </div>                         
                             </div>
                             <div class="row">
 	                            <div class="col-lg-12 col-md-12 col-sm-12" >
                                     <div class="form-group">
-						                 <label for="gbr2SampinganInputFile">Gambar-Gambar Sampingan : </label>
+						                 <label for="gbr2SampinganInputFile">Gambar-Gambar Sampingan : ***</label>
 						                <input type="file" id="gbr2SampinganInputFile" multiple />
-						                <p class="help-block">Bisa lebih dari 1 dan Bersifat opsional.</p>
+						                <p class="help-block">***Bisa lebih dari 1 File Gambar dan Bersifat opsional.</p>
 						            </div>
                                 </div>  
                             </div>

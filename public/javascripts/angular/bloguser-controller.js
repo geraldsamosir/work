@@ -52,7 +52,7 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
           // cek apakah data loggedUser dengan URL cocok.
           if(newVal){
                // Memakai Regex untuk mengekstrak username yang diinput di URL
-               if(!(($location.absUrl()).match(/\w+#/g)[0] == $scope.loggedUser.nama + "#")){
+               if(!(($location.absUrl()).match(/user\/\w+/g)[0] == "user/" + $scope.loggedUser.nama)){
                     alert("Wrong user! Back to homepage");
                     $localStorage.$reset();
                     $window.location.href = "/";
