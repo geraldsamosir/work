@@ -6,6 +6,9 @@ var ctrl_post = require('../controller/post');
 //midleware path
 var user_mid =  require('../midleware/user');
 
+//routing get untuk ambil semua post yang di-post oleh semua user yang ada
+router.get('/all/:key' , user_mid.login, ctrl_post.all);
+
 //routing get untuk ambil single post secara detail
 router.get('/:key/:id',user_mid.login , ctrl_post.detail);
 

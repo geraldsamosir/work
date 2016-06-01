@@ -8,6 +8,14 @@ var post = {};
 //filter post by user
 
 
+// posting di beranda
+
+post.all = function(req,res){
+	modelpost.all().then(function(rows){
+		res.json(rows);
+	});
+};
+
 // posting di profil
 
 post.user = function(req,res){

@@ -2,6 +2,17 @@ var knex = require('../db/index');
 
 var post ={};
 
+post.all  = function(){
+	return knex('post')
+		.select("post.id as id_post" ,"post.title" , "post.body" 
+				, "user.nama as 'nama_user' "," user.id as  id_user "
+				, "kategori.id as id_kategori"
+				, "user.fotoprofil", "user.fotokronologi","kategori.nama")
+		.innerJoin('user','post.id_user','=','user.id')
+		.innerJoin('post_kategori','post.id','=','post_kategori.id_post')
+		.innerJoin('kategori','kategori.id','=','post_kategori.id_kategori');
+};
+
 post.detail = function(posting){
 	return knex('post')
 		.innerJoin('post_kategori','post.id','=','post_kategori.id_post')
