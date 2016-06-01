@@ -414,12 +414,34 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
      }
 }]);
 
-app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout' , '$location', function(articleDataPasser, $sce, $scope, $timeout, $location) {
+app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout' , '$location', '$http', function(articleDataPasser, $sce, $scope, $timeout, $location, $http) {
      //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
      $scope.post = articleDataPasser.loadArticle();
+
+     $scope.updateDataArticle = function(){
+          $http.get("/post/" + $scope.storage.key + "/" + $location.path().substring(6), $scope.config)
+          .then(
+               function(response){
+                    $scope.post = {
+                         "id" : response.data.id_post,
+                         "title" : response.data.title,
+                         "content" : response.data.body,
+                         "id_author" : response.data.user.id,
+                         "author" : response.data.user.nama,
+                         "date" : response.data.id_post,
+                         "id_kategori" : response.data.id_kategori,
+                         "kategori" : response.data.nama,
+                         // IMG sementara
+                         "img" : ["https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg", "https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg"] 
+                    }
+               }, 
+               function(response){
+                    alert("Load failed! Try to refresh this page.");
+               }
+          );
+     }
      if($scope.post == null){
-          //$scope.post = getPost dengan id dri database;
-          alert("ID : " + $location.path().substring(6) + ", Load database via AJAX");
+          $scope.updateDataArticle();
      }
      //  $sce.trustAsHtml (dengan parameter string) adalah fungsi yang melakukan validasi dari suatu string
      //  apakah string tersebut memang element HTML atau bukan.;
@@ -2157,13 +2179,14 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
      };
 }]);
 
-app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', function(articleDataPasser, $scope, $timeout, $http) {
+app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', '$route', function(articleDataPasser, $scope, $timeout, $http, $route) {
      $scope.currentPost = {
           //id : 65535,  --> Tidak terpakai lagi , karena auto-increment pada saat Insert ke DB.
+          key : $scope.storage.key, // Diperlukan untuk operasi-operasi Post.
           title : "",
-          img : [""],
-          content : "",
-          id_kategori : null
+          //img : [""], --> Tidak dipakai dulu sementara karena belum ditemukan cara upload image.
+          body : "",
+          kategori_id : null
      }
      $scope.listOfCategories = [];
      $scope.loadCategories = function(){
@@ -2196,11 +2219,19 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
      }
      $scope.submitPost = function(){
           $('#newPost').modal('hide');
-          $scope.resetInput();
           if($scope.getPostButtonText() == "Post"){
-               // Insert ke DB, karena id gak ada (Post baru), pakai increment saja.     
-               // Jika post berhasil disubmit maka tampilkan
-               $('#success').modal('show');
+               // Insert ke DB, karena id gak ada (Post baru), pakai increment saja.
+               $http.post("/post", $.param($scope.currentPost), $scope.config)
+                    .then(
+                         function(response){
+                              // Jika post berhasil disubmit maka tampilkan
+                              $('#success').modal('show');
+                         }, 
+                         function(response){
+                              alert("Post failed! Check your internet connection.");
+                         }
+                    );     
+
           }
           else if ($scope.getPostButtonText() == "Save Changes"){
                // Update ke DB dengan berdasarkan id yang ada
@@ -2208,8 +2239,7 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                // Jika post berhasil di-edit maka tampilkan
                $('#success2').modal('show');
           }
-          
-          // Perbarui Post di Halaman Utama dan Profile.
+          $scope.resetInput();
      }
 
      $scope.deletePost = function(){
@@ -2222,13 +2252,14 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           // Jika post berhasil dihapus maka tampilkan
           $('#success3').modal('show');
           
-          // Perbarui Post di Halaman Utama dan Profile.
      }
 
      $scope.resetInput = function(){
           // memakai jquery, karena perlu melakukan reset pada Input Type File juga.
-          $('#formNewPost')[0].reset();     
+          $('#formNewPost')[0].reset();
+          $scope.currentPost.kategori_id = null;     
      }
+
      $scope.getPostButtonText = function(){
           // Cara ambil teks button yg disupport IE
           var label = $("#btnSubmit").text(); 
@@ -2237,8 +2268,9 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           $("#btnSubmit").text(label);
           return buttonValue;
      }
+
      $scope.cekValiditas = function(){
-          if($scope.currentPost.title.length > 0 && $scope.currentPost.content.length > 0){
+          if($scope.currentPost.title.length > 0 && $scope.currentPost.body.length > 0){
                // Jquery
                $('#btnSubmit').removeClass('disabled'); // Enable visually
                $('#btnSubmit').prop('disabled', false); // Enable visually + functionally
@@ -2250,6 +2282,13 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           }
      }
 
+     $scope.reloadPage = function(){
+          // reload disini bukan REFRESH atau LOADING ULANG semuanya.
+          // Syntax ini hanya load ulang bagian ng-View sehingga templating dan controllernya
+          // dibaca ulang.
+          $route.reload();
+     }
+
      $scope.tinymceOptions = {
                menubar: false,
                resize: 'vertical',
@@ -2257,7 +2296,7 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                setup : function(ed) {
                   ed.on('keyup', function() {
                     // Cukup naive karena kebetulan editor yang ada hanya 1
-                     $scope.currentPost.content = tinyMCE.activeEditor.getContent();
+                     $scope.currentPost.body = tinyMCE.activeEditor.getContent();
                      $scope.cekValiditas();
                   });
                }

@@ -65,16 +65,18 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding-bottom: 10px;">
-                                    <textarea ui-tinymce="tinymceOptions" id="contentInput" class="form-control" name="content" ng-model="currentPost.content"></textarea>
+                                    <textarea ui-tinymce="tinymceOptions" id="contentInput" class="form-control" name="content" ng-model="currentPost.body"></textarea>
                                 </div>
                             </div>
                             <div class="row">
                             	<div class="col-lg-12 col-md-12 col-sm-12" style="padding-top: 0px;padding-bottom: 4px;">
-									<label for="categoryInput">Kategori Post : * </label>
-							     	<select class="form-control" id="categoryInput" required ng-model="currentPost.id_kategori"  ng-options="category.id as category.nama for category in listOfCategories">
-									    <option value="">Pilih Kategori Post</option>
-								    </select>
-					                <p class="help-block">*Bersifat wajib.</p>
+                                    <div class="form-group">
+										<label for="categoryInput">Kategori Post : * </label>
+								     	<select class="form-control" id="categoryInput" required ng-model="currentPost.kategori_id"  ng-options="category.id as category.nama for category in listOfCategories">
+										    <option value="">Pilih Kategori Post</option>
+									    </select>
+						                <p class="help-block">*Bersifat wajib.</p>
+						            </div>
                                 </div>                         
                             </div>
                            	<div class="row">
@@ -144,7 +146,7 @@
                             </div>
                         </div>  
                         <div class="panel-footer" style="text-align: right;">
-                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal" ng-click="reloadPage()">Close</button>
                         </div>
 	                </div>
 	            </div>
@@ -165,7 +167,7 @@
                             </div>
                         </div>  
                         <div class="panel-footer" style="text-align: right;">
-                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal" ng-click="reloadPage()">Close</button>
                         </div>
 	                </div>
 	            </div>
@@ -207,7 +209,7 @@
                             </div>
                         </div>  
                         <div class="panel-footer" style="text-align: right;">
-                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal" ng-click="reloadPage()">Close</button>
                         </div>
 	                </div>
 	            </div>
