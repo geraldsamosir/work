@@ -894,7 +894,7 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                     $scope.userposts = [];
                     for(var i = 0; i<response.data.post.length; i++){
                          $scope.userposts[i] = {
-                              "id" : response.data.post[i].id,
+                              "id" : response.data.post[i].id_post,
                               "title" : response.data.post[i].title,
                               "content" : response.data.post[i].body,
                               "id_author" : response.data.post[i].id_user,
@@ -1557,7 +1557,7 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                     $scope.posts = [];
                     for(var i = 0; i<response.data.post.length; i++){
                          $scope.posts[i] = {
-                              "id" : response.data.post[i].id,
+                              "id" : response.data.post[i].id_post,
                               "title" : response.data.post[i].title,
                               "content" : response.data.post[i].body,
                               "id_author" : response.data.post[i].id_user,
