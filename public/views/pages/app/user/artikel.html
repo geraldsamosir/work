@@ -3,9 +3,9 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
-                        <h1>{{ post.title }}</h1>
+                        <h1 ng-bind="post.title"></h1>
                         <!--<h2 class="subheading">Problems look mighty small from 150 miles up</h2> -->
-                        <span class="meta">Posted by <a ng-href="{{ post.id_author == $parent.loggedUser.id ? '#profil' : '#person-' + post.id_author }}">{{ post.author }}</a> on {{ post.date}}</span>
+                        <span class="meta">Posted by <a ng-href="{{ post.id_author == $parent.loggedUser.id ? '#profil' : '#person-' + post.id_author }}" ng-bind="post.author"></a> on <span ng-bind="post.date"></span></span>
                     </div>
                 </div>
             </div>
