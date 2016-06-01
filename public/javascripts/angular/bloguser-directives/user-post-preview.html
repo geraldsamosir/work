@@ -1,10 +1,10 @@
 <div class="post-preview" id="{{ info.id }}">
-    <a href="#post-{{ info.id }}" ng-click="$parent.readPost(info)">
+    <a ng-href="#post-{{ info.id }}" ng-click="$parent.readPost(info)">
         <h2 class="post-title">{{ info.title }}</h2>
         <h3 class="post-subtitle">{{ info.subtitle }}</h3>
     </a>
 	<p class="post-meta">
-		Posted by <a href="#">{{ info.author }}</a> on {{ info.date }}
+		Posted by <a href="#profil">{{ info.author }}</a> on {{ info.date }}
     </p>
 	<div class="btn-group btn-action">
         <a class="btn dropdown-toggle btn-success" data-toggle="dropdown" style="padding: 6px 12px;"> 

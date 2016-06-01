@@ -1,11 +1,11 @@
 <div ng-show="!info.pertemanan && !info.add && !info.confirm && !info.akunsendiri">
 <!-- Template 1 : Untuk yang belum add sama sekali -->
     <div class="span2" >
-        <img src="{{ info.fotoprofil }}" class="img-circle">
+        <img ng-src="{{ info.fotoprofil }}" class="img-circle">
     </div>
 
     <div class="span8">
-        <a href="#person-{{ info.id }}">
+        <a ng-href="#person-{{ info.id }}">
             <h3 class="friend-name">{{ info.nama }}</h2>
         </a>
     </div>
@@ -26,11 +26,11 @@
 <div ng-show="info.pertemanan == 0 && info.add == 1 && info.confirm == 0 && info.akunsendiri == 0">
 <!-- Template 2 : Untuk yg sudah add tapi belum diaprrove orang lain -->
     <div class="span2" >
-        <img src="{{ info.fotoprofil }}" class="img-circle">
+        <img ng-src="{{ info.fotoprofil }}" class="img-circle">
     </div>
 
     <div class="span8">
-        <a href="#person-{{ info.id }}">
+        <a ng-href="#person-{{ info.id }}">
             <h3 class="friend-name">{{ info.nama }}</h2>
         </a>
     </div>
@@ -51,11 +51,11 @@
 <div ng-show="info.pertemanan == 0 && info.add == 0 && info.confirm == 1 && info.akunsendiri == 0">
 <!-- Template 3 : Untuk yg sudah add tapi belum kita aprrove -->
     <div class="span2" >
-        <img src="{{ info.fotoprofil }}" class="img-circle">
+        <img ng-src="{{ info.fotoprofil }}" class="img-circle">
     </div>
 
     <div class="span8">
-        <a href="#person-{{ info.id }}">
+        <a ng-href="#person-{{ info.id }}">
             <h3 class="friend-name">{{ info.nama }}</h2>
         </a>
     </div>
@@ -77,11 +77,11 @@
 <div ng-show="info.pertemanan == 1 && info.add == 0 && info.confirm == 0 && info.akunsendiri == 0">
 <!-- Template 4 : Untuk yang sudah add dan aprrove -->
     <div class="span2" >
-        <img src="{{ info.fotoprofil }}" class="img-circle">
+        <img ng-src="{{ info.fotoprofil }}" class="img-circle">
     </div>
 
     <div class="span8">
-        <a href="#person-{{ info.id }}">
+        <a ng-href="#person-{{ info.id }}">
             <h3 class="friend-name">{{ info.nama }}</h2>
         </a>
     </div>
@@ -103,7 +103,7 @@
 <div ng-show="info.pertemanan == 0 && info.add == 0 && info.confirm == 0 && info.akunsendiri == 1">
 <!-- Template 5 : Untuk user (diri kita sendiri) -->
     <div class="span2" >
-        <img src="{{ info.fotoprofil }}" class="img-circle">
+        <img ng-src="{{ info.fotoprofil }}" class="img-circle">
     </div>
 
     <div class="span8">
