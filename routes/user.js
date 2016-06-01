@@ -25,7 +25,7 @@ router.get('/confirm/:key/:target',user_mid.login,ctrl_user.confirm);
 //routing ini untuk mendapatkan semua data user lain kecuali password nya 
 //dan juga temannya dia semua di kaitan dengan hubungan orang ke tiga antara
 //user yang login dengan teman si user tersebut
-router.get('/friend/:key/:target',user_mid.login ,ctrl_user.friend_detail);
+router.get('/detail/:key/:target',user_mid.login ,ctrl_user.friend_detail);
 
 //mengambil semua configurasi profil user yang sedang login
 router.get('/config/:key',user_mid.login,ctrl_user.allconfig);
