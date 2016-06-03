@@ -30,5 +30,5 @@ app.config(function($routeProvider, $locationProvider) {
                 redirectTo : '/'
             })
 
-            // route for the contact page
+            $locationProvider.html5Mode(false).hashPrefix("!");
     });

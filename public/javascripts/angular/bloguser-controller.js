@@ -1,4 +1,5 @@
 app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function(articleDataPasser, $scope, $timeout, $localStorage, $location ,$window, $http) {
+
      //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
      var pagesShown;
      var pageSize;
@@ -6,6 +7,7 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
      $scope.$on("$routeChangeSuccess", function () {
           pagesShown = 1;
           pageSize = 5;
+          $window.document.title = "BLOG ENGINE"; // Ubah title pada tab browser
           $scope.updateAllPosts();
      });
 
@@ -414,10 +416,10 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
      }
 }]);
 
-app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout' , '$location', '$http', function(articleDataPasser, $sce, $scope, $timeout, $location, $http) {
+app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout' , '$location', '$http', '$window', function(articleDataPasser, $sce, $scope, $timeout, $location, $http, $window) {
      //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
      $scope.post = articleDataPasser.loadArticle();
-
+     
      $scope.updateDataArticle = function(){
           $http.get("/post/" + $scope.storage.key + "/" + $location.path().substring(6), $scope.config)
           .then(
@@ -434,6 +436,13 @@ app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout'
                          // IMG sementara
                          "img" : ["https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg", "https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg"] 
                     }
+                    $window.document.title = $scope.post.title;
+                    $scope.disqusConfig = {
+                        disqus_shortname: 'blogengineweb',
+                        disqus_identifier: $scope.post.id,
+                        disqus_url: $location.absUrl(),
+                        disqus_title: $scope.post.title
+                    };
                }, 
                function(response){
                     alert("Load failed! Try to refresh this page.");
@@ -443,6 +452,16 @@ app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout'
      if($scope.post == null){
           $scope.updateDataArticle();
      }
+     else{
+          $window.document.title = $scope.post.title;
+          $scope.disqusConfig = {
+              disqus_shortname: 'blogengineweb',
+              disqus_identifier: $scope.post.id,
+              disqus_url: $location.absUrl(),
+              disqus_title: $scope.post.title
+          };
+     }
+
      //  $sce.trustAsHtml (dengan parameter string) adalah fungsi yang melakukan validasi dari suatu string
      //  apakah string tersebut memang element HTML atau bukan.;
      $scope.trustAsHtml = $sce.trustAsHtml;
@@ -933,7 +952,7 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
      }
 }]);
 
-app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http' , function(articleDataPasser, $scope, $timeout, $http) {
+app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', '$window', function(articleDataPasser, $scope, $timeout, $http, $window) {
      var pagesShownPosts;
      var pageSizePosts;
      var pagesShownFriends;
@@ -969,6 +988,7 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           pageSizePosts = 5;
           pagesShownFriends = 1;
           pageSizeFriends = 15;
+          $window.document.title = $scope.loggedUser.nama;
           $scope.updateDataUser();
      });
      // Diganti dengan cara pemanggilan ng-bind di template user-profil.html
@@ -1590,7 +1610,7 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
      };
 }]);
 
-app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', '$location','$http', function(articleDataPasser, $scope, $timeout, $location, $http) {
+app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', '$location', '$http', '$window', function(articleDataPasser, $scope, $timeout, $location, $http, $window) {
      var pagesShownPosts;
      var pageSizePosts;
      var pagesShownFriends;
@@ -1621,6 +1641,7 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                               "img" : ["https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg", "https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg"] 
                          }
                     }
+                    $window.document.title = $scope.namateman;
                }, 
                function(response){
                     alert("Load failed! Try to refresh this page.");
