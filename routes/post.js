@@ -22,6 +22,7 @@ router.get('/:key/kategori/all' , user_mid.login,ctrl_post.allkategori);
 //routing untuk post artikel (diminta untuk post key,title,body, kategori_id,gambar ) dalam body
 router.post('/',user_mid.login,ctrl_post.new);
 
-
+//routing untuk update post yang sudah pernah di buat (diminta  key,id,title,body,kategori_id,gambar )
+router.post('/update',user_mid.login,ctrl_post.update);
 
 module.exports = router;

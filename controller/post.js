@@ -102,8 +102,36 @@ post.allkategori = function (req,res){
 	});
 };
 
-post.update  = function(req,res){
-
+post.update = function(req,res){
+	var user_login = {
+		username : req.body.username,
+		password : req.body.password
+	};
+	var post ={};
+	modeluser.detail(user_login).then(function(rows){
+		user_login = rows;
+	})
+	.then(function(rows){
+		post = {
+			id: req.body.id,
+			id_user : user_login[0].id,
+			title : req.body.title,
+			body : req.body.body
+		};
+	    modelpost.update(post).then(function(rows){
+	    	
+	    })
+		.then(function(rows){
+		   var relation = {
+		   		post_id : req.body.id,
+		   		kategori : req.body.kategori_id
+		   };
+		   modelketegori.post_relation_update(relation).then(function(rows){
+		   		res.json('sukses');
+		   });
+		});
+		
+	});
 };
 post.delete = function (req,res){
 

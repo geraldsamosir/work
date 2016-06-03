@@ -10,7 +10,8 @@ post.all  = function(){
 			, "user.fotoprofil", "user.fotokronologi","kategori.nama")
 	.innerJoin('user','post.id_user','=','user.id')
 	.innerJoin('post_kategori','post.id','=','post_kategori.id_post')
-	.innerJoin('kategori','kategori.id','=','post_kategori.id_kategori');
+	.innerJoin('kategori','kategori.id','=','post_kategori.id_kategori')
+	.orderBy('id_post','desc');
 }
 
 post.detail = function(posting){
@@ -44,13 +45,12 @@ post.filter_as_user = function(user){
 		id_user: user[0].id,
 	});
 }
-post.update = function(user,post){
+post.update = function(post){
 	return knex('post').update({
-		id  	:  post.id,
 		id_user : post.id_user,
 		title 	: post.title,
 		body  	: post.body
-	});
+	}).where('post.id','=',post.id);
 };
 
 module.exports =  post;
