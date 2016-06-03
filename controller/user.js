@@ -225,13 +225,14 @@ user.search = function(req,res){
 };
 
 user.friend_detail = function(req,res){
+	var group ={};
 	var user_detail ={};
 	var friend_detail ={};
 	var friend_detail_X ={};
+	var filter = {};
 	var friend_friends = [];
 	var result ={};
 	var action ={};
-	var filter ={};
 	var table = {};
 	var user_login = {
 		username : req.params.username,
@@ -253,33 +254,49 @@ user.friend_detail = function(req,res){
 			//get friend information detail
 			friend_detail = rows[0];
 			friend_detail_X = rows;
-		})
-		modeluser.cari(user_login).then(function(rows){
-				result = rows;
-				table.user = result;
+			
 		})
 		.then(function(rows){
-			modelpertemanan.semua().then(function(rows){
-				table.pertemanan = rows
-				table.user = user.friendship_filter(friend_detail_X,table)['pertemanan'];
-
+			var temp ="" ;
+			var usr  = {};
+			var frtmp = [];
+			modeluser.friends_friend(friend_detail).then(function(rows){
+				result = rows;
+			})
+			modeluser.cari(user_login).then(function(rows){
+				for(var x  in result){
+					if(result[x].id_yang_add == friend_detail.id){
+						usr.id = result[x].id_yang_aprove;
+					}
+					else{
+						usr.id = result[x].id_yang_add;
+					}
+					for(var y in rows){
+						if(rows[y].id == usr.id){
+							friend_friends.push(rows[y]);	
+						}
+					}
+				}
+					
 			})
 			.then(function(rows){
 				filter.id_user =  friend_detail.id;
 				modelpost.user(filter).then(function(rows){
-					friend_detail.post = [];
 					friend_detail.post = rows;
 				})
 				.then(function(rows){
+				modelpertemanan.semua().then(function(rows){
+					console.log(user_detail);
+					table.user = friend_friends;
+					table.pertemanan = rows;;
 					friend_detail.pertemanan = user.friendship_filter(user_detail, table);
 					res.json(friend_detail);
 				})
+
 			})
-
-		})
+			})
+		});
 	});
-
-
 };
 
 user.addfriend = function(req,res){

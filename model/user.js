@@ -15,6 +15,12 @@ user.friend_detail = function(user){
 				id :  user.target
 			});
 };
+user.friends_friend  = function(user){
+	return knex('pertemanan')
+		.where('pertemanan.id_yang_add' , '=', user.id)
+		.orWhere('pertemanan.id_yang_aprove' , '=', user.id)
+
+};
 user.add =function(visitor){
 	return knex('user')
 		.insert({

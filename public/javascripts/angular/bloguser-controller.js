@@ -2141,6 +2141,7 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
      $scope.clsisimenu2 = "hidden";
 
      $scope.switchtab = function(i){
+          $scope.updateDataFriend();
           if(i === 1){
                $scope.clsmenu1 = "active";
                $scope.clsisimenu1 = "";
@@ -2157,25 +2158,72 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
 
      //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
      $scope.readPost = function(post){
-          alert('overriden2');
+          //alert('overriden2');
           articleDataPasser.setArticle(post);
      }
 
-     // Profile Teman juga bisa melakukan operasi-operasi yang mirip dengan halaman pertemanan, antara lain :
-     $scope.requestFriend = function(){
-          alert('Requested');
+     // Profile juga bisa melakukan operasi-operasi yang mirip dengan halaman pertemanan, antara lain :
+     $scope.requestFriend = function(target){
+          $http.get("/user/add/" + $scope.storage.key + "/" + target, $scope.config)
+          .then(
+               function(response){
+                    alert('Requested');
+                    $scope.updateDataFriend();
+               }, 
+               function(response){
+                    alert("Request failed! Check your internet connection.");
+               }
+          );
+
      };
-     $scope.cancelrequestFriend = function(){
-          alert('Cancelled Request');
+     $scope.cancelrequestFriend = function(target){
+          $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
+          .then(
+               function(response){
+                    alert('Cancelled');
+                    $scope.updateDataFriend();
+               }, 
+               function(response){
+                    alert("Cancellation failed! Check your internet connection.");
+               }
+          );
      };
-     $scope.accept = function(){
-          alert('Accept');
+     $scope.acceptrequestFriend = function(target){
+          $http.get("/user/confirm/" + $scope.storage.key + "/" + target, $scope.config)
+          .then(
+               function(response){
+
+                    alert('Confirmed');
+                    $scope.updateDataFriend();
+               }, 
+               function(response){
+                    alert("Confirm failed! Check your internet connection.");
+               }
+          );
      };
-     $scope.reject = function(){
-          alert('Reject');
+     $scope.rejectrequestFriend = function(target){
+          $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
+          .then(
+               function(response){
+                    alert('Rejected');
+                    $scope.updateDataFriend();
+               }, 
+               function(response){
+                    alert("Reject failed! Check your internet connection.");
+               }
+          );
      };
-     $scope.delete = function(){
-          alert('Delete');
+     $scope.delete = function(target){
+          $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
+          .then(
+               function(response){
+                    alert('Deleted');
+                    $scope.updateDataFriend();
+               }, 
+               function(response){
+                    alert("Delete failed! Check your internet connection.");
+               }
+          );
      };
 }]);
 
