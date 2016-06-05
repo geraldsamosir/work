@@ -1583,11 +1583,12 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
 
      //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
      $scope.readPost = function(post){
-          alert('overriden1');
+          //alert('overriden1');
           articleDataPasser.setArticle(post);
      };
      $scope.showEditPostModal = function(post){
           // Memakai Jquery
+          $scope.readPost(post);
           $('#newPost').modal('show');
           $("#newPostLabel").text('Edit Post');
           $("#btnSubmit").text('');
@@ -1596,17 +1597,11 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           $('#btnSubmit').removeClass('disabled'); // Enable visually
           $('#btnSubmit').prop('disabled', false); // Enable visually + functionally
           $("#btnClear").addClass('hidden');
-
-          $("#titleInput").val(post.title);
-          tinyMCE.activeEditor.setContent(post.content);
-
-          // Taruh gambar???
      };
      $scope.showDeletePostModal = function(post){
           // Memakai Jquery
-          $('#delete').modal('show');
-
           $scope.readPost(post);
+          $('#delete').modal('show');
      };
 }]);
 
@@ -2250,14 +2245,14 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
 
 app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', '$route', function(articleDataPasser, $scope, $timeout, $http, $route) {
      $scope.currentPost = {
-          //id : 65535,  --> Tidak terpakai lagi , karena auto-increment pada saat Insert ke DB.
-          key : $scope.storage.key, // Diperlukan untuk operasi-operasi Post.
+          id : null,
           title : "",
-          //img : [""], --> Tidak dipakai dulu sementara karena belum ditemukan cara upload image.
+          // img : [""], //--> Tidak dipakai dulu sementara karena belum ditemukan cara upload image.
           body : "",
           kategori_id : null
      }
      $scope.listOfCategories = [];
+
      $scope.loadCategories = function(){
           $http.get("/post/" + $scope.storage.key + "/kategori/all", $scope.config)
                .then(
@@ -2270,12 +2265,29 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                );
      }
 
+     // Load kategori
+     $scope.loadCategories();
+
+     // watch (secara realtime) untuk cek kembalian dari fungsi getPostButtonText
+     $scope.$watch("getPostButtonText()", function(newVal, oldVal) {
+          // cek perubahan nilai
+          if (newVal == "Save Changes" && oldVal == "Post") {
+               $scope.tempPost = articleDataPasser.loadArticle();
+               $scope.currentPost = {
+                    id : $scope.tempPost.id,
+                    title : $scope.tempPost.title,
+                    // img : [""], //--> Tidak dipakai dulu sementara karena belum ditemukan cara upload image.
+                    body : $scope.tempPost.content,
+                    kategori_id : $scope.tempPost.id_kategori
+               }
+          }
+     },true);
+
+
      $scope.initNewPostModal = function(){
           if($("#newPostLabel").text() == "Edit Post"){
                $scope.resetInput(); 
           }
-          // Load kategori
-          $scope.loadCategories();
 
           $("#newPostLabel").text("Buat Post Baru"); 
           $("#btnSubmit").text('');
@@ -2290,7 +2302,14 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           $('#newPost').modal('hide');
           if($scope.getPostButtonText() == "Post"){
                // Insert ke DB, karena id gak ada (Post baru), pakai increment saja.
-               $http.post("/post", $.param($scope.currentPost), $scope.config)
+               $http.post("/post", $.param(
+                    { 
+                         key : $scope.storage.key,
+                         title : $scope.currentPost.title, 
+                         body : $scope.currentPost.body, 
+                         kategori_id : $scope.currentPost.kategori_id
+                    }), 
+                    $scope.config)
                     .then(
                          function(response){
                               // Jika post berhasil disubmit maka tampilkan
@@ -2304,9 +2323,26 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           }
           else if ($scope.getPostButtonText() == "Save Changes"){
                // Update ke DB dengan berdasarkan id yang ada
+               $http.post("/post/update", $.param(
+                    { 
+                         key : $scope.storage.key,
+                         id : $scope.currentPost.id,
+                         title : $scope.currentPost.title, 
+                         body : $scope.currentPost.body, 
+                         kategori_id : $scope.currentPost.kategori_id
+                         //img?
 
-               // Jika post berhasil di-edit maka tampilkan
-               $('#success2').modal('show');
+                    }), 
+                    $scope.config)
+                    .then(
+                         function(response){
+                              // Jika post berhasil di-edit maka tampilkan
+                              $('#success2').modal('show');
+                         }, 
+                         function(response){
+                              alert("Edit failed! Check your internet connection.");
+                         }
+                    ); 
           }
           $scope.resetInput();
      }
@@ -2353,8 +2389,8 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
 
      $scope.reloadPage = function(){
           // reload disini bukan REFRESH atau LOADING ULANG semuanya.
-          // Syntax ini hanya load ulang bagian ng-View sehingga templating dan controllernya
-          // dibaca ulang.
+          // Syntax ini hanya load ulang bagian ng-View dengan templating dan controllernya
+          // pemanggilnya.
           $route.reload();
      }
 
