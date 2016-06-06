@@ -25,4 +25,7 @@ router.post('/',user_mid.login,ctrl_post.new);
 //routing untuk update post yang sudah pernah di buat (diminta  key,id,title,body,kategori_id,gambar )
 router.post('/update',user_mid.login,ctrl_post.update);
 
+//routing untuk delete post
+router.delete('/delete/:key/:post_id',user_mid.login,ctrl_post.delete);
+
 module.exports = router;

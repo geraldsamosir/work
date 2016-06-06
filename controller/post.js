@@ -134,10 +134,42 @@ post.update = function(req,res){
 	});
 };
 post.delete = function (req,res){
-
+	var post ={};
+	var author = false;
+	var user_login = {
+		username : req.params.username,
+		password : req.params.password
+	};
+	modeluser.detail(user_login).then(function(rows){
+		user_login = rows;
+	})
+	.then(function(rows){
+		post ={
+			id : req.params.post_id,
+			id_user : user_login[0].id
+		};
+		modelpost.user(post).then(function(rows){
+			for(var x in rows){
+				if(rows[x].id_post == post.id){
+					author = true;
+					console.log(rows[x].id_post);
+				}
+			}
+			console.log(user_login);
+			if(author == true){
+				modelketegori.post_relation_delete(post).then(function(rows){
+				})
+				modelpost.delete(post).then(function(rows){
+				})
+				res.json('delete');
+			}
+			else{
+				res.status(401);
+				res.json('unauthorize');
+			}
+		})
+		
+	})
 };
-
-
-
 
 module.exports = post;

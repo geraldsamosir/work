@@ -25,5 +25,13 @@ kategori.post_relation_update  = function(relation){
 	.where('id_post','=',relation.post_id);
 };
 
+kategori.post_relation_delete= function(post){
+	return knex('post_kategori')
+	.where({
+		id_post : post.id
+	})
+	.del();
+};
+
 
 module.exports =  kategori;

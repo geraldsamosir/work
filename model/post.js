@@ -53,4 +53,12 @@ post.update = function(post){
 	}).where('post.id','=',post.id);
 };
 
+post.delete = function(post){
+	return knex('post')
+	.where({
+		id : post.id
+	})
+	.del();
+};
+
 module.exports =  post;
