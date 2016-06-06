@@ -24,8 +24,7 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
           }
           // cek apakah key pada localstorage ditemper (percobaan hack)
           if(newVal != oldVal){
-               $localStorage.$reset();
-               $window.location.href = "/";
+               $('#failed2').modal('show');
           }
      },true);
 
@@ -42,9 +41,10 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
                     $scope.loggedUser = response.data[0];
               }, 
               function(response){
-                    alert("Load failed! Back to homepage");
-                    $localStorage.$reset();
-                    $window.location.href = "/";
+                    //alert("Load failed! Back to homepage");
+                    $('#failed3').modal('show');
+                    // $localStorage.$reset();
+                    // $window.location.href = "/";
               }
            );
      }
@@ -56,9 +56,9 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
           if(newVal){
                // Memakai Regex untuk mengekstrak username yang diinput di URL
                if(!(($location.absUrl()).match(/user\/\w+/g)[0] == "user/" + $scope.loggedUser.nama)){
-                    alert("Wrong user! Back to homepage");
-                    $localStorage.$reset();
-                    $window.location.href = "/";
+                    //alert("Wrong user! Back to homepage");
+                    //$localStorage.$reset();
+                    $window.location.href = "/user/" + $scope.loggedUser.nama;
                }
           }
      },true);
@@ -87,7 +87,8 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
                     }
                }, 
                function(response){
-                    alert("Load failed! Try to refresh this page.");
+                    //alert("Load failed! Try to refresh this page.");
+                    $('#failed').modal('show');
                }
           );
      }
@@ -445,7 +446,8 @@ app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout'
                     };
                }, 
                function(response){
-                    alert("Load failed! Try to refresh this page.");
+                    //alert("Load failed! Try to refresh this page.");
+                    $('#failed').modal('show');
                }
           );
      }
@@ -484,7 +486,8 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
                     $scope.all = response.data.akunsendiri.concat(response.data.pertemanan, response.data.confirm, response.data.add, response.data.un_friend)
                }, 
                function(response){
-                    alert("Load failed! Try to refresh this page.");
+                    //alert("Load failed! Try to refresh this page.");
+                    $('#failed').modal('show');
                }
           );
      }
@@ -815,11 +818,13 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
           $http.get("/user/add/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Requested');
+                    //alert('Requested');
+                    $('#success4').modal('show');
                     $scope.updateData();
                }, 
                function(response){
-                    alert("Request failed! Check your internet connection.");
+                    //alert("Request failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
 
@@ -828,11 +833,13 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
           $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Cancelled');
+                    //alert('Cancelled');
+                    $('#success4').modal('show');
                     $scope.updateData();
                }, 
                function(response){
-                    alert("Cancellation failed! Check your internet connection.");
+                    //alert("Cancellation failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -840,12 +847,13 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
           $http.get("/user/confirm/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-
-                    alert('Confirmed');
+                    //alert('Confirmed');
+                    $('#success4').modal('show');
                     $scope.updateData();
                }, 
                function(response){
-                    alert("Confirm failed! Check your internet connection.");
+                    //alert("Confirm failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -853,11 +861,13 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
           $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Rejected');
+                    //alert('Rejected');
+                    $('#success4').modal('show');
                     $scope.updateData();
                }, 
                function(response){
-                    alert("Reject failed! Check your internet connection.");
+                    //alert("Reject failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -865,11 +875,13 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
           $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Deleted');
+                    //alert('Deleted');
+                    $('#success4').modal('show');
                     $scope.updateData();
                }, 
                function(response){
-                    alert("Delete failed! Check your internet connection.");
+                    //alert("Delete failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -979,7 +991,8 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                     }
                }, 
                function(response){
-                    alert("Load failed! Try to refresh this page.");
+                    //alert("Load failed! Try to refresh this page.");
+                    $('#failed').modal('show');
                }
           );
      }
@@ -1520,11 +1533,13 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           $http.get("/user/add/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Requested');
+                    //alert('Requested');
+                    $('#success4').modal('show');
                     $scope.updateDataUser();
                }, 
                function(response){
-                    alert("Request failed! Check your internet connection.");
+                    //alert("Request failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
 
@@ -1533,11 +1548,13 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Cancelled');
+                    //alert('Cancelled');
+                    $('#success4').modal('show');
                     $scope.updateDataUser();
                }, 
                function(response){
-                    alert("Cancellation failed! Check your internet connection.");
+                    //alert("Cancellation failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -1545,12 +1562,13 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           $http.get("/user/confirm/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-
-                    alert('Confirmed');
+                    //alert('Confirmed');
+                    $('#success4').modal('show');
                     $scope.updateDataUser();
                }, 
                function(response){
-                    alert("Confirm failed! Check your internet connection.");
+                    //alert("Confirm failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -1558,11 +1576,13 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Rejected');
+                    //alert('Rejected');
+                    $('#success4').modal('show');
                     $scope.updateDataUser();
                }, 
                function(response){
-                    alert("Reject failed! Check your internet connection.");
+                    //alert("Reject failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -1570,11 +1590,13 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Deleted');
+                    //alert('Deleted');
+                    $('#success4').modal('show');
                     $scope.updateDataUser();
                }, 
                function(response){
-                    alert("Delete failed! Check your internet connection.");
+                    //alert("Delete failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -1639,7 +1661,8 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                     $window.document.title = $scope.namateman;
                }, 
                function(response){
-                    alert("Load failed! Try to refresh this page.");
+                    //alert("Load failed! Try to refresh this page.");
+                    $('#failed').modal('show');
                }
           );
      }
@@ -2183,11 +2206,13 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
           $http.get("/user/add/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Requested');
+                    //alert('Requested');
+                    $('#success4').modal('show');
                     $scope.updateDataFriend();
                }, 
                function(response){
-                    alert("Request failed! Check your internet connection.");
+                    //alert("Request failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
 
@@ -2196,11 +2221,13 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
           $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Cancelled');
+                    //alert('Cancelled');
+                    $('#success4').modal('show');
                     $scope.updateDataFriend();
                }, 
                function(response){
-                    alert("Cancellation failed! Check your internet connection.");
+                    //alert("Cancellation failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -2208,12 +2235,13 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
           $http.get("/user/confirm/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-
-                    alert('Confirmed');
+                    //alert('Confirmed');
+                    $('#success4').modal('show');
                     $scope.updateDataFriend();
                }, 
                function(response){
-                    alert("Confirm failed! Check your internet connection.");
+                    //alert("Confirm failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -2221,11 +2249,13 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
           $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Rejected');
+                    //alert('Rejected');
+                    $('#success4').modal('show');
                     $scope.updateDataFriend();
                }, 
                function(response){
-                    alert("Reject failed! Check your internet connection.");
+                    //alert("Reject failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -2233,11 +2263,13 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
           $http.delete("/user/delete/" + $scope.storage.key + "/" + target, $scope.config)
           .then(
                function(response){
-                    alert('Deleted');
+                    //alert('Deleted');
+                    $('#success4').modal('show');
                     $scope.updateDataFriend();
                }, 
                function(response){
-                    alert("Delete failed! Check your internet connection.");
+                    //alert("Delete failed! Check your internet connection.");
+                    $('#failed').modal('show');
                }
           );
      };
@@ -2260,7 +2292,8 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                          $scope.listOfCategories = response.data;
                    }, 
                    function(response){
-                         alert("Load Categories failed! Check your internet connection.");
+                         //alert("Load Categories failed! Check your internet connection.");
+                         $('#failed').modal('show');
                    }
                );
      }
@@ -2316,7 +2349,8 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                               $('#success').modal('show');
                          }, 
                          function(response){
-                              alert("Post failed! Check your internet connection.");
+                              //alert("Post failed! Check your internet connection.");
+                              $('#failed').modal('show');
                          }
                     );     
 
@@ -2340,7 +2374,8 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                               $('#success2').modal('show');
                          }, 
                          function(response){
-                              alert("Edit failed! Check your internet connection.");
+                              //alert("Edit failed! Check your internet connection.");
+                              $('#failed').modal('show');
                          }
                     ); 
           }
