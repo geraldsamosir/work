@@ -2388,9 +2388,17 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           $scope.currentPost = articleDataPasser.loadArticle();
 
           // Delete data pada DB dengan berdasarkan id yang ada
-
-          // Jika post berhasil dihapus maka tampilkan
-          $('#success3').modal('show');
+          $http.delete("/post/delete/" + $scope.storage.key + "/" + $scope.currentPost.id, $scope.config)
+          .then(
+               function(response){
+                    // Jika post berhasil dihapus maka tampilkan
+                    $('#success3').modal('show');
+               }, 
+               function(response){
+                    //alert("Delete failed! Check your internet connection.");
+                    $('#failed').modal('show');
+               }
+          );
           
      }
 
