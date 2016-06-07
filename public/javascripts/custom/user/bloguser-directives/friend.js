@@ -5,6 +5,6 @@ app.directive('friendsList', function() {
       info: '=' 
     },
 
-    templateUrl: '/javascripts/angular/bloguser-directives/friends-list.html',
+    templateUrl: '/javascripts/custom/user/bloguser-directives/friends-list.html',
   }; 
 });

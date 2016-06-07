@@ -2,7 +2,7 @@ var index ={};
 
 index.home = function(req, res) {
 	res.status(200);
-    res.render('./homepage.html', {
+    res.render('./landing.html', {
    		 title : "BLOG ENGINE"
   	});
 };

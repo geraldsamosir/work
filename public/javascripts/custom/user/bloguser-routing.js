@@ -2,27 +2,27 @@ app.config(function($routeProvider, $locationProvider) {
         $routeProvider
             // Load main page
             .when('/', {
-                templateUrl : '/views/pages/app/user/beranda.html'
+                templateUrl : '/views/pages/user/beranda.html'
                 //controller  : 'aboutController'
             })
             .when('/beranda', {
-                templateUrl : '/views/pages/app/user/beranda.html'
+                templateUrl : '/views/pages/user/beranda.html'
                 //controller  : 'aboutController'
             })
             .when('/pertemanan', {
-                templateUrl : '/views/pages/app/user/pertemanan.html',
+                templateUrl : '/views/pages/user/pertemanan.html',
                 controller  : 'friendsCtrl'
             })
             .when('/profil', {
-                templateUrl : '/views/pages/app/user/user-profil.html',
+                templateUrl : '/views/pages/user/user-profil.html',
                 controller  : 'profileCtrl'
             })
             .when('/post-:postid', {
-                templateUrl : '/views/pages/app/user/artikel.html',
+                templateUrl : '/views/pages/user/artikel.html',
                 controller  : 'articleCtrl'
             })
             .when('/person-:personid', {
-                templateUrl : '/views/pages/app/user/friend-profil.html',
+                templateUrl : '/views/pages/user/friend-profil.html',
                 controller  : 'friendProfileCtrl'
             })
             // Load main page if wrong address (probably useless due to back-end)

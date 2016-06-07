@@ -4,7 +4,7 @@ app.directive('allPostPreview', function() {
     scope: { 
       info: '=' 
     }, 
-    templateUrl: '/javascripts/angular/bloguser-directives/all-post-preview.html' 
+    templateUrl: '/javascripts/custom/user/bloguser-directives/all-post-preview.html' 
   }; 
 });
 
@@ -14,7 +14,7 @@ app.directive('userPostPreview', function() {
     scope: { 
       info: '=' 
     }, 
-    templateUrl: '/javascripts/angular/bloguser-directives/user-post-preview.html' 
+    templateUrl: '/javascripts/custom/user/bloguser-directives/user-post-preview.html' 
   }; 
 });
 
@@ -24,6 +24,6 @@ app.directive('friendPostPreview', function() {
     scope: { 
       info: '=' 
     }, 
-    templateUrl: '/javascripts/angular/bloguser-directives/friend-post-preview.html' 
+    templateUrl: '/javascripts/custom/user/bloguser-directives/friend-post-preview.html' 
   }; 
 });
