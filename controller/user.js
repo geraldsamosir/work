@@ -35,24 +35,35 @@ user.register = function(req,res){
 };
 
 user.login = function(req,res){
+	var super_user ;
+	var user_detail ={};
 	var user = {
 		username : req.body.username,
     	password : req.body.password	
-	}
-
-	var slash = -1;
-	do{
-		var my_key = CryptoJS.AES
-					.encrypt(JSON.stringify(user.username+":"+user.password), 'secret key 123');
-		slash = my_key.toString().indexOf("/");
-
-	}while(slash != -1);
-
-	var result ={
-		key :  my_key.toString(),
 	};
-	res.status(200);
-	res.json(result);
+	modeluser.detail(user).then(function(rows){
+		user_detail = rows[0];	
+	})
+	.then(function(rows){
+		if(user_detail.status_id == 1){
+			super_user = true;
+		}
+		else{
+			super_user = false;
+		}
+		var slash = -1;
+		do{
+			var my_key = CryptoJS.AES
+						.encrypt(JSON.stringify(user.username+":"+user.password), 'secret key 123');
+			slash = my_key.toString().indexOf("/");
+
+		}while(slash != -1);
+		var result ={
+			key :  my_key.toString(),
+			admin : super_user
+		};
+		res.json(result);
+	})
 };
 
 user.update =  function(req,res){

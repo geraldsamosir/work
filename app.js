@@ -11,6 +11,7 @@ var nunjucks = require('nunjucks');
 var index = require('./routes/index');
 var user = require('./routes/user');
 var post = require('./routes/post');
+var super_usr = require('./routes/admin/super_user');
 
 
 
@@ -42,7 +43,7 @@ app.use('/user',user);
 
 app.use('/post',post);
 
-
+app.use('/admin', super_usr);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
