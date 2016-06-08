@@ -7,7 +7,7 @@ app.controller('landingCtrl', ['$scope', '$location', '$http', '$localStorage', 
      // Event yang dijalankan atau dipanggil ketika route hendak berubah (template belum diload).
      $scope.$on("$routeChangeStart", function () {
           // Jika ditemukan token, langsung redirect ke halaman user.
-          if($localStorage.key){
+          if(typeof $localStorage.key !== 'undefined' && typeof $localStorage.admin !== 'undefined'){
               $http.get("/user/config/" + $localStorage.key, $scope.config)
                .then(
                    function(response){
@@ -64,6 +64,7 @@ app.controller('landingCtrl', ['$scope', '$location', '$http', '$localStorage', 
                  function(response){
                     $localStorage.$default({
                         key: response.data.key,
+                        admin: response.data.admin
                     });
                     $window.location.href = "/user/" + $scope.datalogin.username;
                  }, 
@@ -83,6 +84,7 @@ app.controller('landingCtrl', ['$scope', '$location', '$http', '$localStorage', 
                  function(response){
                     $localStorage.$default({
                         key: response.data.key,
+                        admin: response.data.admin
                     });
                     $window.location.href = "/user/" + $scope.dataregister.username;
                  }, 

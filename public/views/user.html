@@ -35,6 +35,7 @@
 	            <li><a href="#!beranda">BERANDA</a></li>
 	            <li><a href="#!pertemanan">PERTEMANAN</a></li>
 	            <li><a href="#!profil" ng-bind="loggedUser.nama"></a></li>
+	            <li ng-if="storage.admin == true" ng-click="gotoAdminPanel()"><a href="">ADMIN PANEL</a></li> <!-- Koneksi ke Admin Panel -->
 	            <li ng-click="logout()"><a href="">LOG OUT</a></li> <!-- Koneksi ke server -->
 	          </ul>
 	        </div><!-- /.navbar-collapse -->

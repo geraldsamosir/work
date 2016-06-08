@@ -9,7 +9,7 @@ var user_mid =  require('../../midleware/user');
 var super_mid = require('../../midleware/super_user');
 
 
-//post to admin page (silahkan post key yang sudah login)
+//get to admin page
 router.get('/', ctrl_super.admin_page);
 
 //update status user minta key,id ,status_ud yang  update 

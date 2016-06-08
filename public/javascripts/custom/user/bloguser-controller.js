@@ -19,10 +19,20 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
      // watch (secara realtime) untuk cek logout (baik terduga maupun tak terduga)
      $scope.$watch("storage.key", function(newVal, oldVal) {
           // cek apakah kosong (logout)
-          if (!newVal) {
-               $window.location.href = "/";
+          if (typeof newVal === 'undefined') {
+               $('#failed2').modal('show');
           }
           // cek apakah key pada localstorage ditemper (percobaan hack)
+          if(newVal != oldVal){
+               $('#failed2').modal('show');
+          }
+     },true);
+     $scope.$watch("storage.admin", function(newVal, oldVal) {
+          // cek apakah kosong (logout)
+          if (typeof newVal === 'undefined') {
+               $('#failed2').modal('show');
+          }
+          // cek apakah admin pada localstorage ditemper (percobaan hack)
           if(newVal != oldVal){
                $('#failed2').modal('show');
           }
@@ -34,7 +44,7 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
               'Content-Type': 'application/x-www-form-urlencoded'
           }
      }
-     if($scope.storage.key){
+     if(typeof $scope.storage.key !== 'undefined' && typeof $scope.storage.admin !== 'undefined'){
          $http.get("/user/config/" + $scope.storage.key, $scope.config)
           .then(
               function(response){
@@ -411,9 +421,25 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
           articleDataPasser.setArticle(post);
      }
 
+
+     // Fungsi untuk pergi ke admin panel
+     $scope.gotoAdminPanel = function(){
+          $http.get("/admin", $scope.config)
+          .then(
+               function(response){
+                    $window.location.href = "/admin";
+                    // (Tidak ada diterapkan konsep SPA antara Halaman User dan Admin Panel)
+               }, 
+               function(response){
+                    $('#failed').modal('show');
+               }
+          );   
+     }
+
      // Fungsi Logout
      $scope.logout = function(){
           $localStorage.$reset();
+          $window.location.href = "/";
      }
 }]);
 
