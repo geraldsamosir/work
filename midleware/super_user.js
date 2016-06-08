@@ -8,8 +8,8 @@ var super_user ={};
 super_user.is_admin = function(req,res,next){
 	var user_detail ={};
 	var user = {
-		username : req.body.username,
-    	password : req.body.password	
+		username : req.body.username || req.params.username,
+    	password : req.body.password || req.params.password	
 	};
 	modeluser.detail(user).then(function(rows){
 		user_detail = rows[0];	
@@ -19,11 +19,8 @@ super_user.is_admin = function(req,res,next){
 			next();
 		}
 		else{
-			res.status(401);
-		    res.render('./error.html', {
-		   		 title : "EROR"
-		  	});
-			
+			res.status(200);
+		    res.json('false');
 		}
 	});
 };

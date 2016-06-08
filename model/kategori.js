@@ -3,7 +3,16 @@ var knex = require('../db/index');
 var kategori ={};
 
 kategori.new = function (kategori){
+	return knex('kategori').insert({
+		nama : kategori.nama
+	});
+};
 
+kategori.update = function(kategori){
+	return knex('kategori').update({
+		nama : kategori.nama
+	})
+	.where('id','=',kategori.id);
 };
 
 kategori.all = function(){

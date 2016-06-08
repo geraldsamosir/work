@@ -54,6 +54,14 @@ user.update = function(user){
 	});
 }
 
+user.update_status = function(user){
+	return knex('user').update({
+		status_id : user.status_id
+	}).where({
+		id : user.id
+	});
+}
+
 user.cari =  function(user){
 	return knex.select('id','nama','fotoprofil','fotokronologi')
 		.table('user')
