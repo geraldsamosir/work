@@ -4,14 +4,16 @@ app.controller('landingCtrl', ['$scope', '$location', '$http', '$localStorage', 
               'Content-Type': 'application/x-www-form-urlencoded'
           }
       }
-     // Event yang dijalankan atau dipanggil ketika route hendak berubah (template belum diload).
+     // Event yang dijalankan atau dipanggil ketika route hendak berubah (template hendak/sedang diload).
      $scope.$on("$routeChangeStart", function () {
           // Jika ditemukan token, langsung redirect ke halaman user.
           if(typeof $localStorage.key !== 'undefined' && typeof $localStorage.admin !== 'undefined'){
               $http.get("/user/config/" + $localStorage.key, $scope.config)
                .then(
                    function(response){
-                      $window.location.href = "/user/" + response.data[0].nama;
+                      if(typeof response.data[0].nama !== 'undefined'){
+                        $window.location.href = "/user/" + response.data[0].nama;
+                      }
                    }, 
                    function(response){
                       // Do nothing
@@ -19,7 +21,7 @@ app.controller('landingCtrl', ['$scope', '$location', '$http', '$localStorage', 
                 );
           }
      });
-     // Event yang dijalankan atau dipanggil ketika route sudah berubah dan template sudah diload.
+     // Event yang dijalankan atau dipanggil ketika route sudah berubah dan template sudah selesai diload.
      $scope.$on("$routeChangeSuccess", function () {
           if($location.url() == "/" || $location.url() == "/login" || $location.url() == "/register"){
                $scope.clsmenu1 = "active";

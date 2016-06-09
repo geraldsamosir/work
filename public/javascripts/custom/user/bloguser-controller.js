@@ -20,20 +20,22 @@ app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$loc
      $scope.$watch("storage.key", function(newVal, oldVal) {
           // cek apakah kosong (logout)
           if (typeof newVal === 'undefined') {
-               $('#failed2').modal('show');
+               $scope.logout();
           }
           // cek apakah key pada localstorage ditemper (percobaan hack)
-          if(newVal != oldVal){
+          if(newVal != oldVal && (newVal !== "tempered" && typeof newVal !== 'undefined')){
+               $scope.storage.key = "tempered";
                $('#failed2').modal('show');
           }
      },true);
      $scope.$watch("storage.admin", function(newVal, oldVal) {
           // cek apakah kosong (logout)
           if (typeof newVal === 'undefined') {
-               $('#failed2').modal('show');
+               $scope.logout();
           }
           // cek apakah admin pada localstorage ditemper (percobaan hack)
-          if(newVal != oldVal){
+          if(newVal != oldVal && (newVal !== null && typeof newVal !== 'undefined')){
+               $scope.storage.admin = null;
                $('#failed2').modal('show');
           }
      },true);
