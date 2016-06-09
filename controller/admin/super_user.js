@@ -33,9 +33,6 @@ super_user.change_user = function(req,res){
 	});
 };
 
-super_user.delete = function(req,res){
-
-};
 
 
 //kategori management

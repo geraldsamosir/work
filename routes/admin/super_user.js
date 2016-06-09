@@ -31,4 +31,5 @@ router.post('/kategori/add',user_mid.login,super_mid.is_admin,ctrl_super.add_kat
 router.post('/kategori/update',user_mid.login,super_mid.is_admin,ctrl_super.update_kategori);
 
 
+
 module.exports = router;

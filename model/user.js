@@ -37,8 +37,9 @@ user.login= function(user){
 		.count('nama as result')
 		.where({
 			nama : user.username,
-			password: user.password
-		});
+			password: user.password,	
+		})
+		.whereNot('status_id' ,'=',4);
 };
 
 user.update = function(user){
