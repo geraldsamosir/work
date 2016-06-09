@@ -1,4 +1,4 @@
-app.controller('bloguserCtrl', ['articleDataPasser', '$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function(articleDataPasser, $scope, $timeout, $localStorage, $location ,$window, $http) {
+app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function(articleDataPasser, $scope, $timeout, $localStorage, $location ,$window, $http) {
 
      //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
      var pagesShown;

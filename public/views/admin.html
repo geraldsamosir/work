@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="adminpanel">
 
 <head>
 
@@ -29,7 +29,7 @@
 
 </head>
 
-<body>
+<body ng-controller="adminpanelMainCtrl">
 
     <div id="wrapper">
 
@@ -43,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="admin.html">BLOG ENGINE</a>
+                <a class="navbar-brand" href="#">BLOG ENGINE</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -128,20 +128,20 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            <a href=""><i class="fa fa-fw fa-user"></i> Pergi ke Halaman User</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                            <a href=""><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            <a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href=""><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -150,21 +150,21 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="active">
-                        <a href="admin.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="#dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
                     	<a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-user"></i> User <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="demo2" class="collapse">
                             <li>
-                                <a href="tambahuser.html">Tambah User</a>
+                                <a href="#tambah-user">Tambah User</a>
                             </li>
                             <li>
-                                <a href="kelolauser.html">Kelola User</a>
+                                <a href="#kelola-user">Kelola User</a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                    	<a href="kategori.html"><i class="fa fa-fw fa-comment"></i> Kategori</a>
+                    	<a href="#kategori"><i class="fa fa-fw fa-comment"></i> Kategori</a>
                     </li>
                 </ul>
             </div>
@@ -173,40 +173,10 @@
 
         <div id="page-wrapper">
 
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            Dashboard <small>Admin Panel</small>
-                        </h1>
-                        <ol class="breadcrumb">
-                            <li class="active">
-                                <i class="fa fa-dashboard"></i> Dashboard
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum pariatur, incidunt inventore adipisci tempora illo dignissimos laboriosam quos qui cumque fugit quasi mollitia aliquid sunt, dolor autem beatae ipsa ullam.</p>
-                        <p>Magni ipsa vero, impedit iste ea laudantium saepe soluta quia voluptatem provident mollitia rerum magnam incidunt ad, voluptas a amet, veniam dolor sapiente maxime natus odit doloremque libero consectetur! Fugiat.</p>
-                        <p>Quo placeat quod esse quas rem saepe, deleniti, harum culpa at amet fuga ut velit a beatae. Sit, veniam explicabo est, dolorem, porro blanditiis ex fugit aspernatur, numquam minima quam.</p>
-                        <p>Dolore accusamus aliquid debitis, quaerat vel quae assumenda a harum consequuntur perferendis deserunt, illum maiores nobis molestiae illo, provident aspernatur explicabo quis voluptatem ut. Fugiat esse dolorem accusantium temporibus ea!</p>
-                        <p>Ipsa sapiente repellat adipisci vel, dolore saepe facilis fuga voluptatem repudiandae amet iure cupiditate! Odio consectetur unde fugit, magni nihil libero aliquam illo, veniam doloribus laborum, error molestias repudiandae dolorum!</p>
-                        <p>Ipsa sapiente repellat adipisci vel, dolore saepe facilis fuga voluptatem repudiandae amet iure cupiditate! Odio consectetur unde fugit, magni nihil libero aliquam illo, veniam doloribus laborum, error molestias repudiandae dolorum!</p>
-                        <p>Ipsa sapiente repellat adipisci vel, dolore saepe facilis fuga voluptatem repudiandae amet iure cupiditate! Odio consectetur unde fugit, magni nihil libero aliquam illo, veniam doloribus laborum, error molestias repudiandae dolorum!</p>
-                        <p>Ipsa sapiente repellat adipisci vel, dolore saepe facilis fuga voluptatem repudiandae amet iure cupiditate! Odio consectetur unde fugit, magni nihil libero aliquam illo, veniam doloribus laborum, error molestias repudiandae dolorum!</p>
-                        <p>Ipsa sapiente repellat adipisci vel, dolore saepe facilis fuga voluptatem repudiandae amet iure cupiditate! Odio consectetur unde fugit, magni nihil libero aliquam illo, veniam doloribus laborum, error molestias repudiandae dolorum!</p>            
-                    </div>
-                </div>
-                <!-- /.row -->
+            <div class="container-fluid ng-view">
 
             </div>
-            <!-- /.container-fluid -->
+            <!-- /.container-fluid ng-view -->
 
         </div>
         <!-- /#page-wrapper -->
@@ -219,6 +189,34 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/javascripts/vendor/bootstrap.min.js"></script>
+
+    <!-- Angular -->
+    <script src="/javascripts/vendor/angular/angular.js"></script>
+
+    <!-- Angular Route untuk keperluan Routing FrontEnd -->
+    <script src="/javascripts/vendor/angular/angular-route.js"></script>
+
+    <!-- Angular ngStorage untuk keperluan pengelolaan token pada local Storage -->
+    <script src="/javascripts/vendor/angular/angular-ngStorage.js"></script>
+
+
+    <!-- Angular Module Admin Panel -->
+    <script src="/javascripts/custom/admin/adminpanel-angular-module.js"></script>
+    
+    <!-- Angular Service Admin Panel -->
+    <!-- <script src="/javascripts/custom/admin/adminpanel-service.js"></script> -->
+
+    <!-- Angular Controller Admin Panel -->
+    <script src="/javascripts/custom/admin/adminpanel-controller.js"></script>
+
+    <!-- Angular Routing Admin Panel -->
+    <script src="/javascripts/custom/admin/adminpanel-routing.js"></script>
+
+    <!-- Angular Post Directives untuk Admin Panel -->
+    <!-- <script src="/javascripts/custom/admin/adminpanel-directives/post.js"></script> -->
+
+    <!-- Angular Friend Directives untuk Admin Panel -->
+    <!-- <script src="/javascripts/custom/admin/adminpanel-directives/friend.js"></script> -->
 
 </body>
 
