@@ -9,6 +9,7 @@
 body {
     margin-top: 100px;
     /*background-color: #222;*/
+    background-color: transparent;
 }
 
 @media(min-width:768px) {
@@ -224,4 +225,12 @@ ul.alert-dropdown {
 
 .panel-yellow > a:hover {
     color: #df8a13;
+}
+
+.categoryTableRow input[disabled] {
+    background-color: transparent;
+    border: none;
+    cursor: auto;
+    box-shadow: none;
+    height: auto;
 }

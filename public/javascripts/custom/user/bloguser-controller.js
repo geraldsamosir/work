@@ -12,8 +12,8 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
      });
 
      // Kita dapat mengakses localstorage walaupun disimpan dalam variabel,
-     // karena module ngStorage pada saat statement dibawah, operasi yang dilakukan
-     // hanya memberikan alamat memori (pointer) bukan copy nilai ke variabel storange.
+     // karena pada saat melakukan statement dibawah, operasi yang dilakukan sebenarnya
+     // adalah memberikan alamat memori (pointer) bukan copy nilai ke variabel storange.
      $scope.storage = $localStorage;
 
      // watch (secara realtime) untuk cek logout (baik terduga maupun tak terduga)

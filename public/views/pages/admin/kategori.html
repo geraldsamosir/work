@@ -6,7 +6,7 @@
         </h1>
         <ol class="breadcrumb">
             <li>
-                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                <i class="fa fa-dashboard"></i>  <a href="#dashboard">Dashboard</a>
             </li>
             <li class="active">
                 <i class="fa fa-fw fa-comment"></i> Kategori
@@ -20,66 +20,61 @@
     <div class="col-lg-12">
         <header>
             <div class="input-group searchForm pull-right" style="width: 45%">
-              <input type="text" class="form-control" placeholder="Search for...">
+              <input type="text" class="form-control" placeholder="Search for..." ng-model="categorySearchBox">
               <span class="input-group-btn">
-                <button class="btn btn-info" type="button" n>Search</button>
+                <button class="btn btn-info" type="button" ng-click="search(categorySearchBox)">Search</button>
               </span>
             </div><!-- /input-group -->
-            <h2>Bordered Table</h2>
+            <h2>Daftar Kategori</h2>
         </header>
+
+
+        <div class="alert alert-success hidden alert-category" role="alert" id="success">
+          <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#success')"><span aria-hidden="true">&times;</span></button>
+          Kategori berhasil ditambahkan!
+        </div>
+
+        <div class="alert alert-success hidden alert-category" role="alert" id="success2">
+          <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#success2')"><span aria-hidden="true">&times;</span></button>
+          Nama Kategori berhasil di-edit!
+        </div>
+
+        <div class="alert alert-danger hidden alert-category" role="alert" id="failed">
+          <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#failed')"><span aria-hidden="true" ng-click="">&times;</span></button>
+          Operasi gagal! Mohon periksa kembali koneksi internet anda!
+        </div>
         
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Page</th>
-                        <th>Visits</th>
-                        <th>% New Visits</th>
-                        <th>Revenue</th>
+                        <th>#</th>
+                        <th>Nama Kategori</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>/index.html</td>
-                        <td>1265</td>
-                        <td>32.3%</td>
-                        <td>$321.33</td>
+                        <td></td>
+                        <td style="width : 65%">
+                            <input type="text" class="form-control" placeholder="Masukkan Nama Kategori"ng-model="newInput">
+                        </td>
+                        <td>                            
+                            <button class="btn btn-success" type="button" ng-click="addInput()">Tambah</button>
+                            <button class="btn btn-danger" type="button" ng-click="resetInput()">Reset</button>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>/about.html</td>
-                        <td>261</td>
-                        <td>33.3%</td>
-                        <td>$234.12</td>
-                    </tr>
-                    <tr>
-                        <td>/sales.html</td>
-                        <td>665</td>
-                        <td>21.3%</td>
-                        <td>$16.34</td>
-                    </tr>
-                    <tr>
-                        <td>/blog.html</td>
-                        <td>9516</td>
-                        <td>89.3%</td>
-                        <td>$1644.43</td>
-                    </tr>
-                    <tr>
-                        <td>/404.html</td>
-                        <td>23</td>
-                        <td>34.3%</td>
-                        <td>$23.52</td>
-                    </tr>
-                    <tr>
-                        <td>/services.html</td>
-                        <td>421</td>
-                        <td>60.3%</td>
-                        <td>$724.32</td>
-                    </tr>
-                    <tr>
-                        <td>/blog/post.html</td>
-                        <td>1233</td>
-                        <td>93.2%</td>
-                        <td>$126.34</td>
+                    <tr ng-repeat="category in filteredcategories = (listOfCategories | filter: { nama: searchKeyword })" class="categoryTableRow" id="{{category.id}}">
+                        <td ng-bind="$index + 1" style="padding: 14px 12px;"></td>
+                        <td>
+                            <input type="text" class="form-control" disabled ng-model="category.nama">
+                        </td>
+
+                        <td>                             
+                            <button class="btn btn-success init-button" type="button" ng-click="initEditCategory(category)">Edit</button>
+                            <button class="btn btn-success save-button hidden" type="button" ng-click="editCategory(category)">Simpan</button>
+                            <button class="btn btn-danger cancel-button hidden" type="button" ng-click="cancelEditCategory(category)">Batal</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
