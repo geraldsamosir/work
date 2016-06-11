@@ -5,7 +5,7 @@ app.controller('adminpanelMainCtrl', ['$scope', '$timeout', '$localStorage', '$l
                $scope.clsmenu2 = "";
                $scope.clsmenu3 = "";
           }
-          else if($location.url() == "/tambah-user" || $location.url() == "/kelola-user"){
+          else if($location.url() == "/user"){
                $scope.clsmenu1 = "";
                $scope.clsmenu2 = "active";
                $scope.clsmenu3 = "";
@@ -31,11 +31,7 @@ app.controller('adminpanelMainCtrl', ['$scope', '$timeout', '$localStorage', '$l
      }
 }]);
 
-app.controller('addUserCtrl', ['$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function($scope, $timeout, $localStorage, $location ,$window, $http) {
-
-}]);
-
-app.controller('manageUserCtrl', ['$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function($scope, $timeout, $localStorage, $location ,$window, $http) {
+app.controller('userCtrl', ['$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function($scope, $timeout, $localStorage, $location ,$window, $http) {
 
 }]);
 

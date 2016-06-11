@@ -9,13 +9,9 @@ app.config(function($routeProvider, $locationProvider) {
                 templateUrl : '/views/pages/admin/dashboard.html'
                 //controller  : 'aboutController'
             })
-            .when('/tambah-user', {
-                templateUrl : '/views/pages/admin/tambahuser.html',
-                controller  : 'addUserCtrl'
-            })
-            .when('/kelola-user', {
-                templateUrl : '/views/pages/admin/kelolauser.html',
-                controller  : 'manageUserCtrl'
+            .when('/user', {
+                templateUrl : '/views/pages/admin/user.html',
+                controller  : 'userCtrl'
             })
             .when('/kategori', {
                 templateUrl : '/views/pages/admin/kategori.html',
