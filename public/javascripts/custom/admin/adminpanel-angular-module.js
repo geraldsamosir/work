@@ -1,1 +1,1 @@
-var app = angular.module('adminpanel',['ngRoute', 'ngStorage']);
+var app = angular.module('adminpanel',['ngRoute', 'ngStorage', 'angularUtils.directives.dirPagination']);

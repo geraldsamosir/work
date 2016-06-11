@@ -40,6 +40,9 @@ app.controller('manageUserCtrl', ['$scope', '$timeout', '$localStorage', '$locat
 }]);
 
 app.controller('categoryCtrl', ['$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function($scope, $timeout, $localStorage, $location ,$window, $http) {
+     $scope.currentPage = 1; // Digunakan untuk Paging
+     $scope.pageSize = 10; // Digunakan untuk Paging
+
      $scope.listOfCategories = [];
      $scope.updateDataCategories = function(){
                $http.get("/admin/kategori/" + $scope.storage.key + "/all", $scope.config)

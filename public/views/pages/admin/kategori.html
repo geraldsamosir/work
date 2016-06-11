@@ -64,8 +64,8 @@
                             <button class="btn btn-danger" type="button" ng-click="resetInput()">Reset</button>
                         </td>
                     </tr>
-                    <tr ng-repeat="category in filteredcategories = (listOfCategories | filter: { nama: searchKeyword })" class="categoryTableRow" id="{{category.id}}">
-                        <td ng-bind="$index + 1" style="padding: 14px 12px;"></td>
+                    <tr dir-paginate="category in filteredcategories = (listOfCategories | filter: { nama: searchKeyword }) | itemsPerPage: pageSize" current-page="currentPage" class="categoryTableRow" id="{{category.id}}">
+                        <td ng-bind="($index + 1) + ((currentPage - 1 ) * pageSize)" style="padding: 14px 12px;"></td>
                         <td>
                             <input type="text" class="form-control" disabled ng-model="category.nama">
                         </td>
@@ -78,6 +78,10 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="text-center">
+            <dir-pagination-controls boundary-links="true" max-size="7" template-url="/javascripts/vendor/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
         </div>
     </div>
 </div>
