@@ -17,6 +17,10 @@ super_user.admin_page = function(req,res){
   	});
 };
 
+super_user.allconfig = function(req,res){
+	ctrl_user.allconfig(req,res);
+}
+
 //user managemen
 
 super_user.admin_get_users = function(req,res){

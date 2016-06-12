@@ -1,6 +1,6 @@
 app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function(articleDataPasser, $scope, $timeout, $localStorage, $location ,$window, $http) {
 
-     //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
+     //articleDataPasser lihat di public/javascripts/custom/user/bloguser-service.js, anggap seperti kelas statis yg global
      var pagesShown;
      var pageSize;
 
@@ -429,7 +429,12 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
           $http.get("/admin", $scope.config)
           .then(
                function(response){
-                    $window.location.href = "/admin";
+                    if($scope.storage.admin === true){
+                         $window.location.href = "/admin";     
+                    }
+                    else{
+                         $window.location.href = "/ERROR";     
+                    }
                     // (Tidak ada diterapkan konsep SPA antara Halaman User dan Admin Panel)
                }, 
                function(response){
@@ -446,7 +451,7 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
 }]);
 
 app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout' , '$location', '$http', '$window', function(articleDataPasser, $sce, $scope, $timeout, $location, $http, $window) {
-     //articleDataPasser lihat di public/javascripts/bloguser-service.js, anggap seperti kelas statis yg global
+     //articleDataPasser lihat di public/javascripts/custom/user/bloguser-service.js, anggap seperti kelas statis yg global
      $scope.post = articleDataPasser.loadArticle();
      
      $scope.updateDataArticle = function(){
@@ -2420,6 +2425,7 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           .then(
                function(response){
                     // Jika post berhasil dihapus maka tampilkan
+                    articleDataPasser.setArticle(null);
                     $('#success3').modal('show');
                }, 
                function(response){

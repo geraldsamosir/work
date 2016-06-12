@@ -12,7 +12,8 @@ var super_mid = require('../../midleware/super_user');
 //get to admin page
 router.get('/', ctrl_super.admin_page);
 
-
+//ambil data diri admin yang sedang login
+router.get('/config/:key', user_mid.login,super_mid.is_admin,ctrl_super.allconfig);
 
 //update status user minta key,id ,status_ud yang  update 
 router.post('/userstat/update',user_mid.login, super_mid.is_admin, ctrl_super.change_user);

@@ -128,19 +128,19 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span ng-bind="loggedUser.nama"></span> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li>
+                        <li ng-click="gotoUserPage()">
                             <a href=""><i class="fa fa-fw fa-user"></i> Pergi ke Halaman User</a>
                         </li>
-                        <li>
+<!--                         <li>
                             <a href=""><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                         </li>
                         <li>
                             <a href=""><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
+                        </li> -->
                         <li class="divider"></li>
-                        <li>
+                        <li ng-click="logout()">
                             <a href=""><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
@@ -172,6 +172,48 @@
 
         </div>
         <!-- /#page-wrapper -->
+
+        <div class="modal fade modal-new-post" id="failedLoad" tabindex="-1" role="dialog" aria-labelledby="failedLoadLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="panel-title" id="failedLoadLabel"><span class="glyphicon glyphicon-remove"></span> Mohon Maaf... </h4>
+                    </div>
+                    <div class="modal-body" style="padding: 5px;">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
+                                Koneksi internet anda tidak stabil. Proses log-out akan dilakukan. 
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="panel-footer" style="text-align: right;">
+                        <button type="button" class="btn btn-default btn-close" data-dismiss="modal" ng-click="logout()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade modal-new-post" id="failedTemper" tabindex="-1" role="dialog" aria-labelledby="failedTemperLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="panel-title" id="failedTemperLabel"><span class="glyphicon glyphicon-warning-sign"></span> Peringatan! </h4>
+                        </div>
+                        <div class="modal-body" style="padding: 5px;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
+                                    Terjadi percobaan peratasan! Proses log-out akan dilakukan! 
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="panel-footer" style="text-align: right;">
+                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal" ng-click="logout()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
     </div>
     <!-- /#wrapper -->

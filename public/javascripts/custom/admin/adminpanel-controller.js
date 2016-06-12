@@ -1,6 +1,21 @@
 app.controller('adminpanelMainCtrl', ['statusUserDataPasser', '$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function(statusUserDataPasser, $scope, $timeout, $localStorage, $location ,$window, $http) {
      //statusUserDataPasser lihat di public/custom/admin/adminpanel-service.js, anggap seperti kelas statis yg global
+     
+     // Kita dapat mengakses localstorage walaupun disimpan dalam variabel,
+     // karena module ngStorage pada saat statement dibawah, operasi yang dilakukan
+     // hanya memberikan alamat memori (pointer) bukan copy nilai ke variabel storange.
+     $scope.storage = $localStorage;
 
+     $scope.config = {
+          headers : {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          }
+     }
+     $scope.$on("$locationChangeStart", function (event, newUrl, oldUrl) {
+          if($scope.storage.admin === false){
+               $window.location.href = "/ERROR";     
+          }
+     });
      $scope.$on("$routeChangeSuccess", function () {
           if($location.url() == "/" || $location.url() == "/dashboard"){
                $scope.clsmenu1 = "active";
@@ -19,17 +34,52 @@ app.controller('adminpanelMainCtrl', ['statusUserDataPasser', '$scope', '$timeou
           }
      });
 
+     // Peroleh data diri Admin yang sedang login
+     if(typeof $scope.storage.key !== 'undefined' && typeof $scope.storage.admin !== 'undefined'){
+         $http.get("/user/config/" + $scope.storage.key, $scope.config)
+          .then(
+              function(response){
+                    $scope.loggedUser = response.data[0];
+              }, 
+              function(response){
+                    $('#failedLoad').modal('show');
+              }
+           );
+     }
 
-
-     // Kita dapat mengakses localstorage walaupun disimpan dalam variabel,
-     // karena module ngStorage pada saat statement dibawah, operasi yang dilakukan
-     // hanya memberikan alamat memori (pointer) bukan copy nilai ke variabel storange.
-     $scope.storage = $localStorage;
-
-     $scope.config = {
-          headers : {
-              'Content-Type': 'application/x-www-form-urlencoded'
+     // watch (secara realtime) untuk cek logout (baik terduga maupun tak terduga)
+     $scope.$watch("storage.key", function(newVal, oldVal) {
+          // cek apakah kosong (logout)
+          if (typeof newVal === 'undefined') {
+               $scope.logout();
           }
+          // cek apakah key pada localstorage ditemper (percobaan hack)
+          if(newVal != oldVal && (newVal !== "tempered" && typeof newVal !== 'undefined')){
+               $scope.storage.key = "tempered";
+               $('#failedTemper').modal('show');
+          }
+     },true);
+     $scope.$watch("storage.admin", function(newVal, oldVal) {
+          // cek apakah kosong (logout)
+          if (typeof newVal === 'undefined') {
+               $scope.logout();
+          }
+          // cek apakah admin pada localstorage ditemper (percobaan hack)
+          if(newVal != oldVal && (newVal !== null && typeof newVal !== 'undefined')){
+               $scope.storage.admin = null;
+               $('#failedTemper').modal('show');
+          }
+     },true);
+
+     // Fungsi untuk pergi ke beranda (Halaman User)
+     $scope.gotoUserPage = function(){
+          $window.location.href = "user/" + $scope.loggedUser.nama;       
+     }
+
+     // Fungsi Logout
+     $scope.logout = function(){
+          $localStorage.$reset();
+          $window.location.href = "/";
      }
 }]);
 
