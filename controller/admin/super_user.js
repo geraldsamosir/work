@@ -20,7 +20,24 @@ super_user.admin_page = function(req,res){
 //user managemen
 
 super_user.admin_get_users = function(req,res){
-	ctrl_user.search(req,res);
+	//ctrl_user.search(req,res);
+	res.status(200);
+	var user_login = {
+		username : req.params.username,
+		password : req.params.password
+	};
+	if(req.params.cari  =="__alldata__" || req.params.cari =="__alldata__"){
+		req.params.cari ="";
+	}
+	modeluser.detail(user_login).then(function(rows){
+		user_login = rows;
+		user_login.cari = req.params.cari;
+	})
+	.then(function(rows){
+		modeluser.cari_join_status(user_login).then(function(rows){
+			res.json(rows);
+		});
+	})
 };
 
 super_user.change_user = function(req,res){
@@ -33,7 +50,11 @@ super_user.change_user = function(req,res){
 	});
 };
 
-
+super_user.all_status = function(req,res){
+	modeluser.all_status().then(function(rows){
+		res.json(rows);
+	});
+};
 
 //kategori management
 super_user.admin_get_kategori = function(req,res){

@@ -70,6 +70,15 @@ user.cari =  function(user){
 		.orderBy('nama', 'asc');
 
 };
+user.cari_join_status = function(user){
+	return knex.select('user.id','user.nama','user.fotoprofil','user.fotokronologi', 
+		'user.status_id as id_status','status_id.nama as status')
+		.table('user')
+		.innerJoin('status_id','user.status_id','=','status_id.id')
+		.where('user.nama','like','%'+user.cari+'%')
+		.orderBy('user.nama', 'asc');
+
+};
 user.cari_by_id = function(user){
 	return knex.select('id','nama','fotoprofil','fotokronologi')
 		.table('user')
@@ -77,6 +86,9 @@ user.cari_by_id = function(user){
 		.orderBy('nama', 'asc');
 };
 
+user.all_status = function(){
+	return knex('status_id');
+}
 
 
 module.exports =  user;

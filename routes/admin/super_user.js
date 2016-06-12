@@ -12,12 +12,16 @@ var super_mid = require('../../midleware/super_user');
 //get to admin page
 router.get('/', ctrl_super.admin_page);
 
+
+
 //update status user minta key,id ,status_ud yang  update 
 router.post('/userstat/update',user_mid.login, super_mid.is_admin, ctrl_super.change_user);
 
-//ambil semua user
+//ambil semua user untuk semua user  gunakan  cari = __alldata__
 router.get('/user/:key/:cari', user_mid.login,super_mid.is_admin,ctrl_super.admin_get_users);
 
+//ambil semua status user
+router.get('/status/:key/all' , user_mid.login,super_mid.is_admin,ctrl_super.all_status);
 
 //ambil data kategori
 router.get('/kategori/:key/all',user_mid.login,super_mid.is_admin,ctrl_super.admin_get_kategori);
