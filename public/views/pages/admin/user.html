@@ -6,7 +6,7 @@
         </h1>
         <ol class="breadcrumb">
             <li>
-                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                <i class="fa fa-dashboard"></i>  <a href="#dashboard">Dashboard</a>
             </li>
             <li class="active">
                 <i class="fa fa-fw fa-user"></i> User
@@ -20,70 +20,87 @@
     <div class="col-lg-12">
         <header>
             <div class="input-group searchForm pull-right" style="width: 45%">
-              <input type="text" class="form-control" placeholder="Search for...">
+              <input type="text" class="form-control" placeholder="Search for..." ng-model="userSearchBox">
               <span class="input-group-btn">
-                <button class="btn btn-info" type="button" n>Search</button>
+                <button class="btn btn-info" type="button" ng-click="search(userSearchBox)">Search</button>
               </span>
             </div><!-- /input-group -->
-            <h2>Bordered Table</h2>
+            <h2>Daftar User</h2>
         </header>
+
+        <div class="modal fade modal-new-post" id="statusUser" tabindex="-1" role="dialog" aria-labelledby="statusUserLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="panel-title" id="statusUserLabel"><i class="fa fa-fw fa-user"></i> Ubah Status User </h4>
+                    </div>
+                    <div class="modal-body" style="padding: 5px;">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;padding-right: 40px;">
+                                    <p ng-bind="StatusUserModalMsg"></p>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="panel-footer" style="text-align: right;margin-bottom:-14px;">
+                        <button type="button" class="btn btn-default btn-success btn-yes" data-dismiss="modal" ng-click="editStatusUser()">Ya</button>
+
+                        <button type="button" class="btn btn-default btn-danger btn-no" data-dismiss="modal" ng-click="clearStatusUserModalData()">Tidak</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-success hidden alert-user" role="alert" id="success">
+          <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#success')"><span aria-hidden="true">&times;</span></button>
+          Status User berhasil diganti!
+        </div>
+
+        <div class="alert alert-danger hidden alert-user" role="alert" id="failed">
+          <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#failed')"><span aria-hidden="true" ng-click="">&times;</span></button>
+          Operasi gagal! Mohon periksa kembali koneksi internet anda!
+        </div>
         
-        <div class="table-responsive">
+        <div class="table-responsive" style="overflow-x: visible !important; overflow-y: visible !important;">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Page</th>
-                        <th>Visits</th>
-                        <th>% New Visits</th>
-                        <th>Revenue</th>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Status User</th>
+                        <th>Ubah Status Ke...</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>/index.html</td>
-                        <td>1265</td>
-                        <td>32.3%</td>
-                        <td>$321.33</td>
-                    </tr>
-                    <tr>
-                        <td>/about.html</td>
-                        <td>261</td>
-                        <td>33.3%</td>
-                        <td>$234.12</td>
-                    </tr>
-                    <tr>
-                        <td>/sales.html</td>
-                        <td>665</td>
-                        <td>21.3%</td>
-                        <td>$16.34</td>
-                    </tr>
-                    <tr>
-                        <td>/blog.html</td>
-                        <td>9516</td>
-                        <td>89.3%</td>
-                        <td>$1644.43</td>
-                    </tr>
-                    <tr>
-                        <td>/404.html</td>
-                        <td>23</td>
-                        <td>34.3%</td>
-                        <td>$23.52</td>
-                    </tr>
-                    <tr>
-                        <td>/services.html</td>
-                        <td>421</td>
-                        <td>60.3%</td>
-                        <td>$724.32</td>
-                    </tr>
-                    <tr>
-                        <td>/blog/post.html</td>
-                        <td>1233</td>
-                        <td>93.2%</td>
-                        <td>$126.34</td>
+                    <tr dir-paginate="user in filteredusers = (listOfUsers | filter: { nama: searchKeyword }) | itemsPerPage: pageSize" current-page="currentPage" class="categoryTableRow" id="{{user.id}}">
+                        <td ng-bind="($index + 1) + ((currentPage - 1 ) * pageSize)" style="padding: 14px 12px;"></td>
+                        <td>
+                            <input type="text" class="form-control" disabled ng-model="user.nama">
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" disabled ng-model="user.status">
+                        </td>
+
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuStatusUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    Status
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuStatusUser">
+                                    <li ng-repeat="statusUser in listOfStatusUsers" ng-hide="user.id_status == statusUser.id || statusUser.nama == 'guest'" ng-click="showStatusUserModal(user, statusUser.id)"><a href="" ng-bind="statusUser.nama"></a></li>
+                                </ul>    
+                            </div>                         
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+        <div class="text-center">
+            <dir-pagination-controls boundary-links="true" max-size="7" template-url="/javascripts/vendor/angular-utils-pagination/dirPagination.tpl.html"></dir-pagination-controls>
+        </div>
     </div>
 </div>
-<!-- /.row -->
+<!-- /.row

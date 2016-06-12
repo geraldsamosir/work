@@ -1,4 +1,6 @@
-app.controller('adminpanelMainCtrl', ['$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function($scope, $timeout, $localStorage, $location ,$window, $http) {
+app.controller('adminpanelMainCtrl', ['statusUserDataPasser', '$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function(statusUserDataPasser, $scope, $timeout, $localStorage, $location ,$window, $http) {
+     //statusUserDataPasser lihat di public/custom/admin/adminpanel-service.js, anggap seperti kelas statis yg global
+
      $scope.$on("$routeChangeSuccess", function () {
           if($location.url() == "/" || $location.url() == "/dashboard"){
                $scope.clsmenu1 = "active";
@@ -31,11 +33,107 @@ app.controller('adminpanelMainCtrl', ['$scope', '$timeout', '$localStorage', '$l
      }
 }]);
 
-app.controller('userCtrl', ['$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function($scope, $timeout, $localStorage, $location ,$window, $http) {
+app.controller('userCtrl', ['statusUserDataPasser', '$scope', '$compile', '$timeout', '$localStorage', '$location', '$window', '$http', function(statusUserDataPasser, $scope, $compile, $timeout, $localStorage, $location ,$window, $http) {
+     $scope.currentPage = 1; // Digunakan untuk Paging
+     $scope.pageSize = 10; // Digunakan untuk Paging
 
+     $scope.listOfUsers = [];
+     $scope.listOfStatusUsers = [];
+     $scope.updateDataStatusUser = function(){
+               $http.get("/admin/status/" + $scope.storage.key + "/all", $scope.config)
+               .then(
+                   function(response){
+                         $scope.listOfStatusUsers = response.data;
+                   }, 
+                   function(response){
+                         //alert("Load Users failed! Check your internet connection.");
+                         $scope.showAlert('#failed');
+                   }
+               );
+     }
+     $scope.updateDataUsers = function(){
+               $http.get("/admin/user/" + $scope.storage.key + "/__alldata__", $scope.config)
+               .then(
+                   function(response){
+                         $scope.listOfUsers = response.data;
+                         
+                         // Fungsi JS Biasa untuk Sorting berdasarkan Nilai Property pada Array Of Object.
+                         function sortByKey(array, key) {
+                             return array.sort(function(a, b) {
+                                 var x = a[key]; var y = b[key];
+                                 return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                             });
+                         };
+                         sortByKey($scope.listOfUsers, "nama");
+                   }, 
+                   function(response){
+                         //alert("Load Users failed! Check your internet connection.");
+                         $scope.showAlert('#failed');
+                   }
+               );
+     }
+     $scope.$on("$routeChangeSuccess", function () {
+          $scope.updateDataStatusUser();
+          $scope.updateDataUsers();
+     });
+
+     $scope.searchKeyword = "";
+     $scope.search = function(temp){
+          $scope.searchKeyword = temp;
+     };
+
+     $scope.tempInput = {};
+
+     $scope.showAlert = function(id_Div){
+          $('.alert-user').addClass('hidden')
+          $(id_Div).removeClass('hidden');
+     };
+
+     $scope.hideAlert = function(id_Div){
+          $(id_Div).addClass('hidden');
+     };
+
+     $scope.StatusUserModalMsg = "";
+
+     $scope.showStatusUserModal = function(user, status_id){
+          // Campuran Angular dan Jquery
+          $scope.StatusUserModalMsg = "Apakah Anda yakin ingin mengubah Status User yang bernama " + user.nama + " menjadi Status " + $scope.listOfStatusUsers[status_id-1].nama + "?";
+          statusUserDataPasser.setStatusUser({user, status_id});
+          $('#statusUser').modal('show');
+     };
+
+     $scope.editStatusUser = function(){
+          $scope.tempVar = statusUserDataPasser.loadStatusUser();
+          $http.post("admin/userstat/update", $.param(
+          { 
+               key : $scope.storage.key,
+               id :$scope.tempVar.user.id,
+               status_id : $scope.tempVar.status_id
+          }), 
+          $scope.config)
+          .then(
+               function(response){
+                    // Jika post berhasil disubmit maka tampilkan
+                    $scope.showAlert('#success');
+                    //alert("OK");
+                    $scope.clearStatusUserModalData();
+                    $scope.updateDataStatusUser();
+                    $scope.updateDataUsers();
+               }, 
+               function(response){
+                    //alert("Edit Status failed! Check your internet connection.");
+                    $scope.showAlert('#failed');
+               }
+          ); 
+     };
+
+     $scope.clearStatusUserModalData = function(){
+          $scope.StatusUserModalMsg = "";
+          statusUserDataPasser.setStatusUser(null);
+     };
 }]);
 
-app.controller('categoryCtrl', ['$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function($scope, $timeout, $localStorage, $location ,$window, $http) {
+app.controller('categoryCtrl', ['statusUserDataPasser', '$scope', '$timeout', '$localStorage', '$location', '$window', '$http', function(statusUserDataPasser, $scope, $timeout, $localStorage, $location ,$window, $http) {
      $scope.currentPage = 1; // Digunakan untuk Paging
      $scope.pageSize = 10; // Digunakan untuk Paging
 
@@ -59,12 +157,11 @@ app.controller('categoryCtrl', ['$scope', '$timeout', '$localStorage', '$locatio
      $scope.searchKeyword = "";
      $scope.search = function(temp){
           $scope.searchKeyword = temp;
-          //pagesShownFriends = 1;
      }
 
      $scope.newInput = "";
      $scope.tempInput = {};
-     $scope.addInput = function(){
+     $scope.addCategory = function(){
           $http.post("/admin/kategori/add", $.param(
           { 
                key : $scope.storage.key,
@@ -74,6 +171,8 @@ app.controller('categoryCtrl', ['$scope', '$timeout', '$localStorage', '$locatio
           .then(
                function(response){
                     // Jika post berhasil disubmit maka tampilkan
+
+                    // Campuran Angular dan Jquery
                     $scope.showAlert('#success');
                     //alert("OK");
                     $scope.resetInput();
@@ -140,6 +239,7 @@ app.controller('categoryCtrl', ['$scope', '$timeout', '$localStorage', '$locatio
                     //alert("Edited");
                     $scope.tempInput = angular.copy(category);
                     $scope.closeCurrentEditCategory(category.id);
+                    $scope.updateDataCategories();
                }, 
                function(response){
                     //alert("Post failed! Check your internet connection.");
