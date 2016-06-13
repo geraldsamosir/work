@@ -1,22 +1,29 @@
 <div id="panel" class="pannel inner cover registerform">
     <h1 class="cover-heading">LOGIN</h1>
-    <form class="form">
-        <div class="col-md-4">
-            <label>USERNAME</label>
-        </div>
-        <div class="col-md-8">
-            <input id="username" type="text" class="form-control" placeholder ="USERNAME" ng-model="datalogin.username"></input> 
-        </div>
-        <div class="col-md-4">
-            <label>PASSSWORD</label>
-        </div>
-        <div class="col-md-8">
-            <input id="password" type="password" class="form-control" placeholder="PASSWORD" ng-model="datalogin.password"></input> 
-        </div>
+    <div class="alert alert-danger hidden alert-login" role="alert" id="failedLogin1">
+      <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#failedLogin1')"><span aria-hidden="true" ng-click="">&times;</span></button>
+      Username atau Password yang Anda input tidak valid!
+    </div>
+    <div class="alert alert-danger hidden alert-login" role="alert" id="failedLogin2">
+      <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#failedLogin2')"><span aria-hidden="true" ng-click="">&times;</span></button>
+      Login gagal! Mohon periksa kembali koneksi internet anda!
+    </div>
+    <form class="form-horizontal" action="" method="" accept-charset="utf-8" onsubmit="return false;" ng-submit="login()">
+        <div class="form-group">
+            <label class="control-label col-md-2" for="username">USERNAME</label>
+            <div class="col-md-10">
+                <input id="username" type="text" class="form-control" placeholder ="USERNAME" ng-model="datalogin.username" required></input> 
+            </div>
 
-        <br>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="password">PASSWORD</label>
+            <div class="col-md-10">
+                <input id="password" type="password" class="form-control" placeholder="PASSWORD" ng-model="datalogin.password" required></input> 
+            </div>
+        </div>
         <p class="lead">
-            <a href="" class="btn btn-lg btn-primary" ng-click="login()">LOGIN</a>
+            <input type="submit" value="LOGIN" class="btn btn-lg btn-primary" />
         </p>
     </form>
 </div>

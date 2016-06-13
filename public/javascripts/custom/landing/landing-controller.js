@@ -71,7 +71,12 @@ app.controller('landingCtrl', ['$scope', '$location', '$http', '$localStorage', 
                     $window.location.href = "/user/" + $scope.datalogin.username;
                  }, 
                  function(response){
-                   alert(response.data);
+                   if(response.status === 403){
+                      $scope.showAlert(1, "#failedLogin1");
+                   }
+                   else{
+                      $scope.showAlert(1, "#failedLogin2");
+                   }
                  }
           );
      }
@@ -91,8 +96,22 @@ app.controller('landingCtrl', ['$scope', '$location', '$http', '$localStorage', 
                     $window.location.href = "/user/" + $scope.dataregister.username;
                  }, 
                  function(response){
-                   alert(response.data);
+                    $scope.showAlert(2, "#failedRegister1");
                  }
           );
      }
+
+     $scope.showAlert = function(status, id_Div){
+          if(status === 1){
+              $('.alert-login').addClass('hidden');
+          }
+          else if(status === 2){
+              $('.alert-register').addClass('hidden');
+          }
+          $(id_Div).removeClass('hidden');
+     };
+
+     $scope.hideAlert = function(id_Div){
+          $(id_Div).addClass('hidden');
+     };
 }]);

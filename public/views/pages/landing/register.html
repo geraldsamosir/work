@@ -1,28 +1,31 @@
 <div id="panel" class="pannel inner cover registerform">
     <h1 class="cover-heading">REGISTER</h1>
-    <form class="form">
-        <div class="col-md-4">
-            <label for="username">USERNAME</label>
+    <form class="form-horizontal" action="" method="" \accept-charset="utf-8" onsubmit="return false;" ng-submit="register()">
+        <div class="alert alert-danger hidden alert-register" role="alert" id="failedRegister1">
+          <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#failedRegister1')"><span aria-hidden="true" ng-click="">&times;</span></button>
+          Register gagal! Mohon periksa kembali koneksi internet anda!
         </div>
-        <div class="col-md-8">
-            <input id="username" type="text" class="form-control" placeholder ="USERNAME" ng-model="dataregister.username"></input> 
+        <div class="form-group">
+            <label class="control-label col-md-2" for="username">USERNAME</label>
+            <div class="col-md-10">
+                <input id="username" type="text" class="form-control" placeholder ="USERNAME" ng-model="dataregister.username" required></input> 
+            </div>
+
         </div>
-        <div class="col-md-4">
-            <label  for="email">EMAIL</label>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="email">EMAIL</label>
+            <div class="col-md-10">
+                <input id="email" type="email" class="form-control" placeholder ="EMAIL" ng-model="dataregister.email" required></input> 
+            </div>
         </div>
-        <div class="col-md-8">
-            <input id="email" type="email" class="form-control" placeholder ="EMAIL" ng-model="dataregister.email"></input> 
+        <div class="form-group">
+            <label class="control-label col-md-2" for="password">PASSWORD</label>
+            <div class="col-md-10">
+                <input id="password" type="password" class="form-control" placeholder="PASSWORD" ng-model="dataregister.password" required></input> 
+            </div>
         </div>
-        <div class="col-md-4">
-            <label for="password">PASSSWORD</label>
-        </div>
-        <div class="col-md-8">
-            <input id="password" type="password" class="form-control" placeholder="PASSWORD" ng-model="dataregister.password"></input> 
-        </div>
-        <br>
-        <br>
         <p class="lead">
-            <a href="" class="btn btn-lg btn-success" ng-click="register()">REGISTER</a>
+            <input type="submit" value="REGISTER" class="btn btn-lg btn-success" />
         </p>
     </form>
 </div>
