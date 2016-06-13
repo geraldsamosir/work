@@ -135,7 +135,7 @@
 	            <div class="modal-dialog">
 	                <div class="panel panel-danger">
 	                    <div class="panel-heading">
-	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="logout()">×</button>
 	                        <h4 class="panel-title" id="failedLabel2"><span class="glyphicon glyphicon-warning-sign"></span> Peringatan! </h4>
 	                    </div>
                     	<div class="modal-body" style="padding: 5px;">
@@ -156,13 +156,34 @@
 	            <div class="modal-dialog">
 	                <div class="panel panel-danger">
 	                    <div class="panel-heading">
-	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="logout()">×</button>
 	                        <h4 class="panel-title" id="failedLabel3"><span class="glyphicon glyphicon-remove"></span> Mohon Maaf... </h4>
 	                    </div>
                     	<div class="modal-body" style="padding: 5px;">
                     	 	<div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
                                     Koneksi internet anda tidak stabil. Proses log-out akan dilakukan. 
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="panel-footer" style="text-align: right;">
+                            <button type="button" class="btn btn-default btn-close" data-dismiss="modal" ng-click="logout()">Close</button>
+                        </div>
+	                </div>
+	            </div>
+	        </div>
+
+	        <div class="modal fade modal-new-post" id="failed4" tabindex="-1" role="dialog" aria-labelledby="failedLabel4" aria-hidden="true">
+	            <div class="modal-dialog">
+	                <div class="panel panel-danger">
+	                    <div class="panel-heading">
+	                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="logout()">×</button>
+	                        <h4 class="panel-title" id="failedLabel4"><span class="glyphicon glyphicon-remove"></span> Mohon Maaf... </h4>
+	                    </div>
+                    	<div class="modal-body" style="padding: 5px;">
+                    	 	<div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding : 10px; margin-left: 20px;">
+                                    Akun Anda telah diblokir oleh Admin. Proses log-out akan dilakukan. 
                                 </div>
                             </div>
                         </div>  

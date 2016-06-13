@@ -25,7 +25,11 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
           // cek apakah key pada localstorage ditemper (percobaan hack)
           if(newVal != oldVal && (newVal !== "tempered" && typeof newVal !== 'undefined')){
                $scope.storage.key = "tempered";
-               $('#failed2').modal('show');
+               $('#failed2').modal({
+                    backdrop: 'static',
+                    keyboard: false, 
+                    show: true
+               });
           }
      },true);
      $scope.$watch("storage.admin", function(newVal, oldVal) {
@@ -36,7 +40,11 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
           // cek apakah admin pada localstorage ditemper (percobaan hack)
           if(newVal != oldVal && (newVal !== null && typeof newVal !== 'undefined')){
                $scope.storage.admin = null;
-               $('#failed2').modal('show');
+               $('#failed2').modal({
+                    backdrop: 'static',
+                    keyboard: false, 
+                    show: true
+               });
           }
      },true);
 
@@ -54,7 +62,11 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
               }, 
               function(response){
                     //alert("Load failed! Back to homepage");
-                    $('#failed3').modal('show');
+                    $('#failed3').modal({
+                         backdrop: 'static',
+                         keyboard: false, 
+                         show: true
+                    });
                     // $localStorage.$reset();
                     // $window.location.href = "/";
               }
@@ -99,8 +111,17 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
                     }
                }, 
                function(response){
-                    //alert("Load failed! Try to refresh this page.");
-                    $('#failed').modal('show');
+                    //alert("Load failed! Try to refresh this page.");]
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      }
@@ -438,7 +459,16 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
                     // (Tidak ada diterapkan konsep SPA antara Halaman User dan Admin Panel)
                }, 
                function(response){
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );   
      }
@@ -480,7 +510,16 @@ app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout'
                }, 
                function(response){
                     //alert("Load failed! Try to refresh this page.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      }
@@ -520,7 +559,16 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
                }, 
                function(response){
                     //alert("Load failed! Try to refresh this page.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      }
@@ -857,7 +905,16 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
                }, 
                function(response){
                     //alert("Request failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
 
@@ -872,7 +929,16 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
                }, 
                function(response){
                     //alert("Cancellation failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -886,7 +952,16 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
                }, 
                function(response){
                     //alert("Confirm failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -900,7 +975,16 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
                }, 
                function(response){
                     //alert("Reject failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -914,7 +998,16 @@ app.controller('friendsCtrl', ['$scope', '$timeout' , '$http', function($scope, 
                }, 
                function(response){
                     //alert("Delete failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -1025,7 +1118,16 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                }, 
                function(response){
                     //alert("Load failed! Try to refresh this page.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      }
@@ -1572,7 +1674,16 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                }, 
                function(response){
                     //alert("Request failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
 
@@ -1587,7 +1698,16 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                }, 
                function(response){
                     //alert("Cancellation failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -1601,7 +1721,16 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                }, 
                function(response){
                     //alert("Confirm failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -1615,7 +1744,16 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                }, 
                function(response){
                     //alert("Reject failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -1629,7 +1767,16 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                }, 
                function(response){
                     //alert("Delete failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -1695,7 +1842,16 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                }, 
                function(response){
                     //alert("Load failed! Try to refresh this page.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      }
@@ -2245,7 +2401,16 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                }, 
                function(response){
                     //alert("Request failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
 
@@ -2260,7 +2425,16 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                }, 
                function(response){
                     //alert("Cancellation failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -2274,7 +2448,16 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                }, 
                function(response){
                     //alert("Confirm failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -2288,7 +2471,16 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                }, 
                function(response){
                     //alert("Reject failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -2302,7 +2494,16 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                }, 
                function(response){
                     //alert("Delete failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
      };
@@ -2326,8 +2527,17 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                    }, 
                    function(response){
                          //alert("Load Categories failed! Check your internet connection.");
-                         $('#failed').modal('show');
-                   }
+                         if(response.status === 403){
+                              $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                         }
+                         else{
+                              $('#failed').modal('show');
+                         }
+                        }
                );
      }
 
@@ -2383,7 +2593,16 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                          }, 
                          function(response){
                               //alert("Post failed! Check your internet connection.");
-                              $('#failed').modal('show');
+                              if(response.status === 403){
+                                   $('#failed4').modal({
+                                        backdrop: 'static',
+                                        keyboard: false, 
+                                        show: true
+                                   });
+                              }
+                              else{
+                                   $('#failed').modal('show');
+                              }
                          }
                     );     
 
@@ -2408,7 +2627,16 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                          }, 
                          function(response){
                               //alert("Edit failed! Check your internet connection.");
-                              $('#failed').modal('show');
+                              if(response.status === 403){
+                                   $('#failed4').modal({
+                                        backdrop: 'static',
+                                        keyboard: false, 
+                                        show: true
+                                   });
+                              }
+                              else{
+                                   $('#failed').modal('show');
+                              }
                          }
                     ); 
           }
@@ -2430,7 +2658,16 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                }, 
                function(response){
                     //alert("Delete failed! Check your internet connection.");
-                    $('#failed').modal('show');
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
                }
           );
           

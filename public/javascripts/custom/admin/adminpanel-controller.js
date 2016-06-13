@@ -39,7 +39,16 @@ app.controller('adminpanelMainCtrl', ['statusUserDataPasser', '$scope', '$timeou
          $http.get("/user/config/" + $scope.storage.key, $scope.config)
           .then(
               function(response){
-                    $scope.loggedUser = response.data[0];
+                    if(response.data === "false"){
+                         $('#failedAdmin').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $scope.loggedUser = response.data[0];
+                    }
               }, 
               function(response){
                     $('#failedLoad').modal('show');
@@ -56,7 +65,11 @@ app.controller('adminpanelMainCtrl', ['statusUserDataPasser', '$scope', '$timeou
           // cek apakah key pada localstorage ditemper (percobaan hack)
           if(newVal != oldVal && (newVal !== "tempered" && typeof newVal !== 'undefined')){
                $scope.storage.key = "tempered";
-               $('#failedTemper').modal('show');
+               $('#failedTemper').modal({
+                    backdrop: 'static',
+                    keyboard: false, 
+                    show: true
+               });
           }
      },true);
      $scope.$watch("storage.admin", function(newVal, oldVal) {
@@ -67,7 +80,11 @@ app.controller('adminpanelMainCtrl', ['statusUserDataPasser', '$scope', '$timeou
           // cek apakah admin pada localstorage ditemper (percobaan hack)
           if(newVal != oldVal && (newVal !== null && typeof newVal !== 'undefined')){
                $scope.storage.admin = null;
-               $('#failedTemper').modal('show');
+               $('#failedTemper').modal({
+                    backdrop: 'static',
+                    keyboard: false, 
+                    show: true
+               });
           }
      },true);
 
@@ -93,7 +110,16 @@ app.controller('userCtrl', ['statusUserDataPasser', '$scope', '$compile', '$time
                $http.get("/admin/status/" + $scope.storage.key + "/all", $scope.config)
                .then(
                    function(response){
-                         $scope.listOfStatusUsers = response.data;
+                        if(response.data === "false"){
+                              $('#failedAdmin').modal({
+                                   backdrop: 'static',
+                                   keyboard: false, 
+                                   show: true
+                              });
+                         }
+                         else{
+                             $scope.listOfStatusUsers = response.data;
+                         } 
                    }, 
                    function(response){
                          //alert("Load Users failed! Check your internet connection.");
@@ -105,16 +131,25 @@ app.controller('userCtrl', ['statusUserDataPasser', '$scope', '$compile', '$time
                $http.get("/admin/user/" + $scope.storage.key + "/__alldata__", $scope.config)
                .then(
                    function(response){
-                         $scope.listOfUsers = response.data;
+                         if(response.data === "false"){
+                              $('#failedAdmin').modal({
+                                   backdrop: 'static',
+                                   keyboard: false, 
+                                   show: true
+                              });
+                         }
+                         else{
+                             $scope.listOfUsers = response.data;
                          
-                         // Fungsi JS Biasa untuk Sorting berdasarkan Nilai Property pada Array Of Object.
-                         function sortByKey(array, key) {
-                             return array.sort(function(a, b) {
-                                 var x = a[key]; var y = b[key];
-                                 return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-                             });
-                         };
-                         sortByKey($scope.listOfUsers, "nama");
+                              // Fungsi JS Biasa untuk Sorting berdasarkan Nilai Property pada Array Of Object.
+                              function sortByKey(array, key) {
+                                  return array.sort(function(a, b) {
+                                      var x = a[key]; var y = b[key];
+                                      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                                  });
+                              };
+                              sortByKey($scope.listOfUsers, "nama");
+                         } 
                    }, 
                    function(response){
                          //alert("Load Users failed! Check your internet connection.");
@@ -163,12 +198,21 @@ app.controller('userCtrl', ['statusUserDataPasser', '$scope', '$compile', '$time
           $scope.config)
           .then(
                function(response){
-                    // Jika post berhasil disubmit maka tampilkan
-                    $scope.showAlert('#success');
-                    //alert("OK");
-                    $scope.clearStatusUserModalData();
-                    $scope.updateDataStatusUser();
-                    $scope.updateDataUsers();
+                    if(response.data === "false"){
+                         $('#failedAdmin').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         // Jika post berhasil disubmit maka tampilkan
+                         $scope.showAlert('#success');
+                         //alert("OK");
+                         $scope.clearStatusUserModalData();
+                         $scope.updateDataStatusUser();
+                         $scope.updateDataUsers();
+                    }
                }, 
                function(response){
                     //alert("Edit Status failed! Check your internet connection.");
@@ -192,7 +236,16 @@ app.controller('categoryCtrl', ['statusUserDataPasser', '$scope', '$timeout', '$
                $http.get("/admin/kategori/" + $scope.storage.key + "/all", $scope.config)
                .then(
                    function(response){
-                         $scope.listOfCategories = response.data;
+                         if(response.data === "false"){
+                              $('#failedAdmin').modal({
+                                   backdrop: 'static',
+                                   keyboard: false, 
+                                   show: true
+                              });
+                         }
+                         else{
+                              $scope.listOfCategories = response.data;
+                         }
                    }, 
                    function(response){
                          //alert("Load Categories failed! Check your internet connection.");
@@ -220,13 +273,22 @@ app.controller('categoryCtrl', ['statusUserDataPasser', '$scope', '$timeout', '$
           $scope.config)
           .then(
                function(response){
-                    // Jika post berhasil disubmit maka tampilkan
+                    if(response.data === "false"){
+                         $('#failedAdmin').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         // Jika post berhasil disubmit maka tampilkan
 
-                    // Campuran Angular dan Jquery
-                    $scope.showAlert('#success');
-                    //alert("OK");
-                    $scope.resetInput();
-                    $scope.updateDataCategories();
+                         // Campuran Angular dan Jquery
+                         $scope.showAlert('#success');
+                         //alert("OK");
+                         $scope.resetInput();
+                         $scope.updateDataCategories();
+                    }
                }, 
                function(response){
                     //alert("Post failed! Check your internet connection.");
@@ -284,12 +346,22 @@ app.controller('categoryCtrl', ['statusUserDataPasser', '$scope', '$timeout', '$
           $scope.config)
           .then(
                function(response){
-                    // Jika post berhasil di-edit maka tampilkan
-                    $scope.showAlert('#success2');
-                    //alert("Edited");
-                    $scope.tempInput = angular.copy(category);
-                    $scope.closeCurrentEditCategory(category.id);
-                    $scope.updateDataCategories();
+                    if(response.data === "false"){
+                         $('#failedAdmin').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         // Jika post berhasil di-edit maka tampilkan
+                         $scope.showAlert('#success2');
+                         //alert("Edited");
+                         $scope.tempInput = angular.copy(category);
+                         $scope.closeCurrentEditCategory(category.id);
+                         $scope.updateDataCategories();
+                    }
+
                }, 
                function(response){
                     //alert("Post failed! Check your internet connection.");
