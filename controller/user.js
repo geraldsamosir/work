@@ -27,7 +27,8 @@ user.register = function(req,res){
 
 	}while(slash != -1);
 	result ={
-		key : my_key.toString()
+		key : my_key.toString(),
+		admin : false
 	};
 	res.status(200);
 	res.json(result);
