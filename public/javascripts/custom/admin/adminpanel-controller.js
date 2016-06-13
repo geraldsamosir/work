@@ -35,7 +35,14 @@ app.controller('adminpanelMainCtrl', ['statusUserDataPasser', '$scope', '$timeou
      });
 
      // Peroleh data diri Admin yang sedang login
-     if(typeof $scope.storage.key !== 'undefined' && typeof $scope.storage.admin !== 'undefined'){
+     if($scope.storage.key === "tempered" || $scope.storage.admin === null){
+          $('#failedSession').modal({
+               backdrop: 'static',
+               keyboard: false, 
+               show: true
+          });
+     }
+     else if(typeof $scope.storage.key !== 'undefined' && typeof $scope.storage.admin !== 'undefined'){
          $http.get("/user/config/" + $scope.storage.key, $scope.config)
           .then(
               function(response){

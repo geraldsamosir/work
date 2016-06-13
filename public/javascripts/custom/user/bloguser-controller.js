@@ -54,7 +54,14 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
               'Content-Type': 'application/x-www-form-urlencoded'
           }
      }
-     if(typeof $scope.storage.key !== 'undefined' && typeof $scope.storage.admin !== 'undefined'){
+     if($scope.storage.key === "tempered" || $scope.storage.admin === null){
+          $('#failed3').modal({
+               backdrop: 'static',
+               keyboard: false, 
+               show: true
+          });
+     }
+     else if(typeof $scope.storage.key !== 'undefined' && typeof $scope.storage.admin !== 'undefined'){
          $http.get("/user/config/" + $scope.storage.key, $scope.config)
           .then(
               function(response){
