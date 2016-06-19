@@ -1,1 +1,1 @@
-var app = angular.module('bloguser',['ngRoute', 'ngStorage', 'ui.tinymce', 'angularUtils.directives.dirDisqus']);
+var app = angular.module('bloguser',['bloguserCustomFilters', 'ngRoute', 'ngStorage', 'ui.tinymce', 'angularUtils.directives.dirDisqus']);

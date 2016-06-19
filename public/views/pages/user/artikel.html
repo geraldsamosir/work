@@ -5,7 +5,7 @@
                     <div class="post-heading">
                         <h1 ng-bind="post.title"></h1>
                         <!--<h2 class="subheading">Problems look mighty small from 150 miles up</h2> -->
-                        <span class="meta">Posted by <a ng-href="{{ post.id_author == $parent.loggedUser.id ? '#!profil' : '#!person-' + post.id_author }}" ng-bind="post.author"></a> on <span ng-bind="post.date"></span></span>
+                        <span class="meta">Posted by <a ng-href="{{ post.id_author == $parent.loggedUser.id ? '#!profil' : '#!person-' + post.id_author }}" ng-bind="post.author"></a> on <span ng-bind="( post.date | customFilterDateOfISO8601 | date:'d MMMM y, HH:mm:ss.' )"></span></span>
                     </div>
                 </div>
             </div>

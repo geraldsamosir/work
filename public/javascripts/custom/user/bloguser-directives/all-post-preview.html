@@ -3,6 +3,6 @@
         <h2 class="post-title" ng-bind="info.title"></h2>
         <h3 class="post-subtitle" ng-bind="info.subtitle"></h3>
     </a>
-	<p class="post-meta">Posted by <a ng-href="{{ info.id_author == $parent.loggedUser.id ? '#!profil' : '#!person-' + info.id_author }}" ng-bind="info.author"></a> on <span ng-bind="info.date"></span></p>
+	<p class="post-meta">Posted by <a ng-href="{{ info.id_author == $parent.loggedUser.id ? '#!profil' : '#!person-' + info.id_author }}" ng-bind="info.author"></a> on <span ng-bind="( info.date | customFilterDateOfISO8601 | date:'d MMMM y, HH:mm:ss.' )"></span></p>
 </div>
 <hr>
