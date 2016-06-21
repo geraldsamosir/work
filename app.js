@@ -6,11 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
 
-
 //make controler path ...
 var index = require('./routes/index');
 var user = require('./routes/user');
 var post = require('./routes/post');
+var images = require('./routes/image');
 var super_usr = require('./routes/admin/super_user');
 
 
@@ -44,6 +44,8 @@ app.use('/user',user);
 app.use('/post',post);
 
 app.use('/admin', super_usr);
+
+app.use('/images', images);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

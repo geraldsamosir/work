@@ -1,5 +1,6 @@
 var modeluser = require('../model/user');
 var modelpost = require('../model/post');
+var modelimg = require('../model/image');
 var modelketegori = require('../model/kategori');
 
 
@@ -158,10 +159,11 @@ post.delete = function (req,res){
 			console.log(user_login);
 			if(author == true){
 				modelketegori.post_relation_delete(post).then(function(rows){
-				})
+				});
 				modelpost.delete(post).then(function(rows){
-				})
-				res.json('delete');
+					res.json('delete');
+				});
+				
 			}
 			else{
 				res.status(401);
@@ -171,5 +173,6 @@ post.delete = function (req,res){
 		
 	})
 };
+
 
 module.exports = post;
