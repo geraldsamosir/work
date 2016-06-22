@@ -1,5 +1,6 @@
 var modeluser = require('../model/user');
 var modelpost = require('../model/post');
+var ctrl_image = require('./image');
 var modelimg = require('../model/image');
 var modelketegori = require('../model/kategori');
 
@@ -52,6 +53,10 @@ post.detail = function (req,res){
 	.then(function(rows){
 		modeluser.cari_by_id(result).then(function(rows){
 			result.user =  rows[0];
+			
+		})
+		modelimg.select_by_post(result).then(function(rows){
+			result.img = rows;
 			res.json(result);
 		})
 	});
@@ -90,6 +95,8 @@ post.new = function(req,res){
 		   		kategori : req.body.kategori_id
 		   };
 		   modelketegori.post_relation(relation).then(function(rows){
+		   		//console.log(relation);
+		   		ctrl_image.upload_img_post(req,res,relation.post_id);
 		   		res.json('sukses');
 		   });
 		});
