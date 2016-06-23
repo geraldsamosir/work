@@ -506,3 +506,10 @@ body {
  overflow-x: hidden;
 }
 
+/* Fix ukuran gambar untuk template friend-list */
+
+.img-circle.profile-pic{
+    width:135px; 
+    height:135px;
+    margin-bottom: -10px;
+}

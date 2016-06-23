@@ -27,6 +27,8 @@ user.add =function(visitor){
 			nama: visitor.username,
 			email: visitor.email,
 			password : visitor.password,
+			fotoprofil : "/images/app/default-profilepic.jpg", 
+			fotokronologi : "/images/app/default-coverpic.jpg",
 			status_id : 2
 		});
 };
