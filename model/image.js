@@ -4,7 +4,7 @@ var images = {};
 
 
 images.post_new = function(data){
-	console.log('here');
+	//console.log('here');
 	return knex('image').insert({
 		id_post : data.id_post,
 		urlfoto : "/images/app/"+data.urlfoto,

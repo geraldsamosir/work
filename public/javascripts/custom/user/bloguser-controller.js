@@ -2520,7 +2520,7 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
      $scope.currentPost = {
           id : null,
           title : "",
-          // img : [""], //--> Tidak dipakai dulu sementara karena belum ditemukan cara upload image.
+          img : [], 
           body : "",
           kategori_id : null
      }
@@ -2571,7 +2571,13 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           if($("#newPostLabel").text() == "Edit Post"){
                $scope.resetInput(); 
           }
-
+          $scope.currentPost = {
+               id : null,
+               title : "",
+               img : [], 
+               body : "",
+               kategori_id : null
+          }
           $("#newPostLabel").text("Buat Post Baru"); 
           $("#btnSubmit").text('');
           $("#btnSubmit").val('Post');
@@ -2585,18 +2591,60 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           $('#newPost').modal('hide');
           if($scope.getPostButtonText() == "Post"){
                // Insert ke DB, karena id gak ada (Post baru), pakai increment saja.
-               $http.post("/post", $.param(
-                    { 
-                         key : $scope.storage.key,
-                         title : $scope.currentPost.title, 
-                         body : $scope.currentPost.body, 
-                         kategori_id : $scope.currentPost.kategori_id
-                    }), 
-                    $scope.config)
-                    .then(
+               $scope.fd = new FormData();
+               $scope.fd.append("gbrUtamaInputFile", $scope.currentPost.gbrUtamaInputFile[0]);
+               for(var i = 0; i <$scope.currentPost.gbr2SampinganInputFile.length ; i++){
+                    $scope.fd.append("gbr2SampinganInputFile", $scope.currentPost.gbr2SampinganInputFile[i] )
+               }
+               // Upload gambar dulu, kemudian post contentnya.
+               $http.post("/images/upload", $scope.fd, 
+               {
+                 transformRequest: angular.identity,
+                 headers: {'Content-Type': undefined}
+               })
+               .then(
+                         // post content
                          function(response){
-                              // Jika post berhasil disubmit maka tampilkan
-                              $('#success').modal('show');
+                              // Jika gambar berhasil diupload, simpan namanya dalam 1 string
+                              // hal ini disebabkan karena $.params tidak dapat mengirimkan array
+                              // secara langsung
+                              $scope.temp = "";
+                              for(var i = 0; i < response.data.length;i++){
+                                   $scope.temp += response.data[i].originalname;
+                                   if(i != response.data.length - 1){
+                                        $scope.temp += ",";
+                                   }
+                              }
+                              //console.log(temp);
+                              $http.post("/post", $.param(
+                              { 
+                                   key : $scope.storage.key,
+                                   title : $scope.currentPost.title, 
+                                   body : $scope.currentPost.body, 
+                                   kategori_id : $scope.currentPost.kategori_id,
+                                   img : $scope.temp
+                              }), 
+                              $scope.config)
+                              .then(
+                                   function(response){
+                                        // Jika post berhasil disubmit maka tampilkan
+                                        $('#success').modal('show');
+                                        $scope.resetInput();
+                                   }, 
+                                   function(response){
+                                        //alert("Post failed! Check your internet connection.");
+                                        if(response.status === 403){
+                                             $('#failed4').modal({
+                                                  backdrop: 'static',
+                                                  keyboard: false, 
+                                                  show: true
+                                             });
+                                        }
+                                        else{
+                                             $('#failed').modal('show');
+                                        }
+                                   }
+                              );  
                          }, 
                          function(response){
                               //alert("Post failed! Check your internet connection.");
@@ -2611,7 +2659,7 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                                    $('#failed').modal('show');
                               }
                          }
-                    );     
+                    );           
 
           }
           else if ($scope.getPostButtonText() == "Save Changes"){
@@ -2631,6 +2679,7 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                          function(response){
                               // Jika post berhasil di-edit maka tampilkan
                               $('#success2').modal('show');
+                              $scope.resetInput();
                          }, 
                          function(response){
                               //alert("Edit failed! Check your internet connection.");
@@ -2647,7 +2696,6 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                          }
                     ); 
           }
-          $scope.resetInput();
      }
 
      $scope.deletePost = function(){

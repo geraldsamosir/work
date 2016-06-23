@@ -16,9 +16,10 @@ image.fiterby_post = function(req,res){
 }
 
 image.upload_img_post = function(req,res ,id_posting){
-	console.log('here');
-	console.log(req.body.img[0]);
-	console.log(id_posting)
+	//console.log('here');
+	req.body.img = (req.body.img).split(",");
+	//console.log(req.body.img);
+	//console.log(id_posting)
 	for(i=0;i<req.body.img.length; i++){
 		/*file_name.push(req.files[i].fieldname+Date.now()+".jpg");*/
 		var data ={
@@ -27,14 +28,14 @@ image.upload_img_post = function(req,res ,id_posting){
 
 		};
 		var index =  req.body.img[i].indexOf("-");
-		console.log(index);
+		//console.log(index);
 		if(req.body.img[i].substring(0,index) == 'gbrUtamaInputFile'){
 			data.iskronologi = 1;
 		}
 		else{
 			data.iskronologi = 0;	
 		}
-		console.log(data);
+		//console.log(data);
 		modelimg.post_new(data).then(function(rows){
 			
 		});

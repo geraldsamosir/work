@@ -84,7 +84,7 @@
                             	<div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
 						                <label for="gbrUtamaInputFile">Gambar Utama : ** </label>
-						                <input type="file" id="gbrUtamaInputFile" required />
+						                <input type="file" id="gbrUtamaInputFile" required file="currentPost.gbrUtamaInputFile"/>
 						                <p class="help-block">**Berupa 1 File Gambar dan Bersifat wajib.</p>
 						            </div>
                                 </div>                         
@@ -93,7 +93,7 @@
 	                            <div class="col-lg-12 col-md-12 col-sm-12" >
                                     <div class="form-group">
 						                 <label for="gbr2SampinganInputFile">Gambar-Gambar Sampingan : ***</label>
-						                <input type="file" id="gbr2SampinganInputFile" multiple />
+						                <input type="file" id="gbr2SampinganInputFile" multiple file="currentPost.gbr2SampinganInputFile"/>
 						                <p class="help-block">***Bisa lebih dari 1 File Gambar dan Bersifat opsional.</p>
 						            </div>
                                 </div>  
@@ -337,6 +337,9 @@
 
         <!-- Angular Routing User -->
         <script src="/javascripts/custom/user/bloguser-routing.js"></script>
+
+        <!-- Angular File Service Directives untuk User -->
+        <script src="/javascripts/custom/user/bloguser-directives/fileService.js"></script>
 
         <!-- Angular Post Directives untuk User -->
         <script src="/javascripts/custom/user/bloguser-directives/post.js"></script>
