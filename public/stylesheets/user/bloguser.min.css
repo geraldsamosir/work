@@ -199,10 +199,11 @@ hr.small {
     margin-top: 30px;
     margin-bottom: 10px;
 }
-.post-preview>a>.post-subtitle {
+.post-preview>.post-subtitle {
     margin: 0;
     font-weight: 300;
     margin-bottom: 10px;
+    font-size: 18px;
 }
 .post-preview>.post-meta {
     color: gray;
