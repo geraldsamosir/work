@@ -14,12 +14,10 @@ images.post_new = function(data){
 
 images.post_update = function(data){
 	return knex('image').update({
-		urlfoto : "/images/app/"+data.urlfoto,
-		iskronologi : data.iskronologi
+		urlfoto : data.urlfoto,
 	})
 	.where({
-		id_post : data.id_post,
-		urlfoto : data.urlfoto_lama,
+		id : data.id,
 	})
 }
 
@@ -27,6 +25,20 @@ images.select_by_post = function(data){
 	return knex('image').where({
 		id_post : data.id_post,
 	});
+}
+
+images.delete_data  = function(data){
+	return knex('image').where({
+		id : data.id ,
+	})
+	.del();
+}
+
+images.delete_by_post_id = function(data){
+	return knex('image').where({
+		id_post :data.id,
+	})
+	.del();
 }
 
 module.exports =  images;

@@ -135,6 +135,7 @@ post.update = function(req,res){
 		   		kategori : req.body.kategori_id
 		   };
 		   modelketegori.post_relation_update(relation).then(function(rows){
+		   		ctrl_image.upload_img_post_update(req,res,relation.post_id);
 		   		res.json('sukses');
 		   });
 		});
@@ -160,12 +161,14 @@ post.delete = function (req,res){
 			for(var x in rows){
 				if(rows[x].id_post == post.id){
 					author = true;
-					console.log(rows[x].id_post);
+					//console.log(rows[x].id_post);
 				}
 			}
-			console.log(user_login);
+			//console.log(user_login);
 			if(author == true){
 				modelketegori.post_relation_delete(post).then(function(rows){
+				});
+				modelimg.delete_by_post_id(post).then(function(rows){
 				});
 				modelpost.delete(post).then(function(rows){
 					res.json('delete');
