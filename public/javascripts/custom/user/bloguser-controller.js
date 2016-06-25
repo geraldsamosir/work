@@ -1800,11 +1800,19 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
           $scope.readPost(post);
           $('#newPost').modal('show');
           $("#newPostLabel").text('Edit Post');
+          $("#helpgbrUtamaInputFile").text('**Berupa 1 File Gambar.');
           $("#btnSubmit").text('');
-          $("#btnSubmit").val('Save Changes');
-          $("#btnSubmit").text('Save Changes');
+          // Sengaja ubah 2x , agar metode watch di PostCtrl dijalankan.
+          // (timeout digunakan agar event watch dapat berjalan 2x).
+          $("#btnSubmit").val('Post');
+          $("#btnSubmit").text('Post');
+          $timeout(function() {
+               $("#btnSubmit").val('Save Changes');
+               $("#btnSubmit").text('Save Changes');
+          }, 200);
           $('#btnSubmit').removeClass('disabled'); // Enable visually
           $('#btnSubmit').prop('disabled', false); // Enable visually + functionally
+          $('#gbrUtamaInputFile').prop('required', false);
           $("#btnClear").addClass('hidden');
      };
      $scope.showDeletePostModal = function(post){
@@ -2519,9 +2527,9 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
 app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', '$route', function(articleDataPasser, $scope, $timeout, $http, $route) {
      $scope.currentPost = {
           id : null,
-          title : "",
-          img : [], 
+          title : "", 
           body : "",
+          img : [],
           kategori_id : null
      }
      $scope.listOfCategories = [];
@@ -2554,38 +2562,51 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
      // watch (secara realtime) untuk cek kembalian dari fungsi getPostButtonText
      $scope.$watch("getPostButtonText()", function(newVal, oldVal) {
           // cek perubahan nilai
-          if (newVal == "Save Changes" && oldVal == "Post") {
+          if (newVal === "Save Changes" && oldVal === "Post") {
                $scope.tempPost = articleDataPasser.loadArticle();
                $scope.currentPost = {
                     id : $scope.tempPost.id,
                     title : $scope.tempPost.title,
-                    // img : [""], //--> Tidak dipakai dulu sementara karena belum ditemukan cara upload image.
                     body : $scope.tempPost.content,
                     kategori_id : $scope.tempPost.id_kategori
                }
+               $http.get("/post/" + $scope.storage.key + "/" + $scope.currentPost.id, $scope.config)
+               .then(
+                    function(response){
+                         $scope.currentPost.img = response.data.img;
+                    }, 
+                    function(response){
+                         //alert("Load failed! Try to refresh this page.");
+                         if(response.status === 403){
+                              $('#failed4').modal({
+                                   backdrop: 'static',
+                                   keyboard: false, 
+                                   show: true
+                              });
+                         }
+                         else{
+                              $('#failed').modal('show');
+                         }
+                    }
+               );
           }
      },true);
 
 
      $scope.initNewPostModal = function(){
           if($("#newPostLabel").text() == "Edit Post"){
-               $scope.resetInput(); 
+               $scope.resetInput();
           }
-          $scope.currentPost = {
-               id : null,
-               title : "",
-               img : [], 
-               body : "",
-               kategori_id : null
-          }
-          $("#newPostLabel").text("Buat Post Baru"); 
+
+          $("#newPostLabel").text("Buat Post Baru");
+          $("#helpgbrUtamaInputFile").text('**Berupa 1 File Gambar dan Bersifat Wajib.');
           $("#btnSubmit").text('');
           $("#btnSubmit").val('Post');
           $("#btnSubmit").text('Post'); 
           $('#btnSubmit').addClass('disabled'); // Disables visually
           $('#btnSubmit').prop('disabled', true); // Disables visually + functionally
+          $('#gbrUtamaInputFile').prop('required', true);
           $("#btnClear").removeClass('hidden');
-
      }
      $scope.submitPost = function(){
           $('#newPost').modal('hide');
@@ -2593,8 +2614,10 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                // Insert ke DB, karena id gak ada (Post baru), pakai increment saja.
                $scope.fd = new FormData();
                $scope.fd.append("gbrUtamaInputFile", $scope.currentPost.gbrUtamaInputFile[0]);
-               for(var i = 0; i <$scope.currentPost.gbr2SampinganInputFile.length ; i++){
-                    $scope.fd.append("gbr2SampinganInputFile", $scope.currentPost.gbr2SampinganInputFile[i] )
+               if($scope.currentPost.gbr2SampinganInputFile){
+                    for(var i = 0; i <$scope.currentPost.gbr2SampinganInputFile.length ; i++){
+                         $scope.fd.append("gbr2SampinganInputFile", $scope.currentPost.gbr2SampinganInputFile[i] )
+                    }
                }
                // Upload gambar dulu, kemudian post contentnya.
                $http.post("/images/upload", $scope.fd, 
@@ -2664,25 +2687,72 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
           }
           else if ($scope.getPostButtonText() == "Save Changes"){
                // Update ke DB dengan berdasarkan id yang ada
-               $http.post("/post/update", $.param(
-                    { 
-                         key : $scope.storage.key,
-                         id : $scope.currentPost.id,
-                         title : $scope.currentPost.title, 
-                         body : $scope.currentPost.body, 
-                         kategori_id : $scope.currentPost.kategori_id
-                         //img?
-
-                    }), 
-                    $scope.config)
-                    .then(
+               $scope.fd = new FormData();
+               if($scope.currentPost.gbrUtamaInputFile){
+                    $scope.fd.append("gbrUtamaInputFile", $scope.currentPost.gbrUtamaInputFile[0]);
+               }
+               if($scope.currentPost.gbr2SampinganInputFile){
+                    for(var i = 0; i <$scope.currentPost.gbr2SampinganInputFile.length ; i++){
+                         $scope.fd.append("gbr2SampinganInputFile", $scope.currentPost.gbr2SampinganInputFile[i] )
+                    }
+               }
+               if(!($scope.currentPost.gbrUtamaInputFile) && !($scope.currentPost.gbr2SampinganInputFile)){
+                    $scope.fd = null;
+               }
+               // Upload gambar dulu, kemudian post contentnya.
+               $http.post("/images/upload", $scope.fd, 
+               {
+                 transformRequest: angular.identity,
+                 headers: {'Content-Type': undefined}
+               })
+               .then(
+                         // post content
                          function(response){
-                              // Jika post berhasil di-edit maka tampilkan
-                              $('#success2').modal('show');
-                              $scope.resetInput();
+                              // Jika gambar berhasil diupload, simpan namanya dalam 1 string
+                              // hal ini disebabkan karena $.params tidak dapat mengirimkan array
+                              // secara langsung
+                              $scope.temp = "";
+                              for(var i = 0; i < response.data.length;i++){
+                                   $scope.temp += response.data[i].originalname;
+                                   if(i != response.data.length - 1){
+                                        $scope.temp += ",";
+                                   }
+                              }
+                              //console.log(temp);
+                              $http.post("/post/update", $.param(
+                              { 
+                                   key : $scope.storage.key,
+                                   id : $scope.currentPost.id,
+                                   title : $scope.currentPost.title, 
+                                   body : $scope.currentPost.body, 
+                                   kategori_id : $scope.currentPost.kategori_id,
+                                   img : $scope.temp
+
+                              }), 
+                              $scope.config)
+                              .then(
+                                   function(response){
+                                        // Jika post berhasil di-edit maka tampilkan
+                                        $('#success2').modal('show');
+                                        $scope.resetInput();
+                                   }, 
+                                   function(response){
+                                        //alert("Edit failed! Check your internet connection.");
+                                        if(response.status === 403){
+                                             $('#failed4').modal({
+                                                  backdrop: 'static',
+                                                  keyboard: false, 
+                                                  show: true
+                                             });
+                                        }
+                                        else{
+                                             $('#failed').modal('show');
+                                        }
+                                   }
+                              );   
                          }, 
                          function(response){
-                              //alert("Edit failed! Check your internet connection.");
+                              //alert("Post failed! Check your internet connection.");
                               if(response.status === 403){
                                    $('#failed4').modal({
                                         backdrop: 'static',
@@ -2731,7 +2801,7 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
      $scope.resetInput = function(){
           // memakai jquery, karena perlu melakukan reset pada Input Type File juga.
           $('#formNewPost')[0].reset();
-          $scope.currentPost.kategori_id = null;     
+          $scope.currentPost.kategori_id = null;
      }
 
      $scope.getPostButtonText = function(){
