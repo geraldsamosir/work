@@ -1,0 +1,99 @@
+<header class="intro-header" style="background-image: url('http://preview.turbosquid.com/Preview/2015/07/06__13_17_22/serverroom2_002.jpgff99ea28-5047-4dac-806c-404dbc4b5cb7Original.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>Pengaturan</h1>
+                        <h2 class="subheading">Memperbaiki kesalahan pada masa lampau.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    
+    <div class="container">
+      <div class="row">
+         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">        
+            <form action="" method="" id="formNewData" accept-charset="utf-8" onsubmit="return false;" ng-submit="submitData()" class="form-horizontal">
+            <fieldset>
+            
+                <div class="control-group" style="margin-bottom: 24px;">
+                    <label class="control-label" for="username">Username</label>
+                    <div class="controls">
+                        <input type="text" id="username" name="username" placeholder="" class="form-control input-lg">
+                    </div>
+                </div>
+             
+                <div class="control-group" style="margin-bottom: 24px;">
+                    <label class="control-label" for="email">E-mail</label>
+                    <div class="controls">
+                        <input type="email" id="email" name="email" placeholder="" class="form-control input-lg">
+                    </div>
+                </div>
+
+                <div class="control-group" style="margin-bottom: 24px;">
+                    <label class="control-label" for="email_confirm">Konfirmasi Email</label>
+                    <div class="controls">
+                        <input type="email" id="email" name="email_confirm" placeholder="" class="form-control input-lg">
+                    </div>
+                </div>
+             
+                <div class="control-group" style="margin-bottom: 24px;">
+                    <label class="control-label" for="password">Password</label>
+                    <div class="controls">
+                        <input type="password" id="password" name="password" placeholder="" class="form-control input-lg">
+                    </div>
+                </div>
+             
+                <div class="control-group" style="margin-bottom: 24px;">
+                    <label class="control-label" for="password_confirm">Konfirmasi Password</label>
+                    <div class="controls">
+                        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="form-control input-lg">
+                    </div>
+                </div>
+             
+                 <div class="control-group" style="margin-bottom: 24px;">
+                    <label class="control-label" for="email">Edit Foto Profil</label>
+                    <div class="controls">
+                        <img class="img-thumbnail avatar"  src="http://www.w3schools.com/bootstrap/cinqueterre.jpg" height="250" width="250"/>
+                    </div>
+
+                    <div class="controls">
+                        <input type="file" id="fotoProfilInputFile" file="newData.fotoProfilInputFile"/>
+                    </div>
+                </div>
+
+                <div class="control-group" style="margin-bottom: 24px;">
+                    <label class="control-label" for="email">Edit Foto Kronologi</label>
+                    <div class="controls">
+                        <img class="img-thumbnail avatar"  src="http://www.w3schools.com/bootstrap/cinqueterre.jpg" height="250" width="250"/>
+                    </div>
+
+                    <div class="controls">
+                        <input type="file" id="fotoKronologiInputFile" file="newData.fotoKronologiInputFile"/>
+                    </div>
+                </div>
+
+                <div class="control-group" style="margin-bottom: 32px;">
+                    <label class="control-label" for="password_confirm2">Konfirmasi Password Lama*</label>
+                    <div class="controls">
+                        <input type="password" id="password_confirm2" name="password_confirm2" placeholder="" class="form-control input-lg" required>
+                        <p class="help-block">*Wajib diisi apabila ingin melakukan pengubahan data</p>
+                    </div>
+                </div>
+
+                <div class="control-group" style="margin-bottom: 0px;">
+                    <!-- Button -->
+                    <div class="controls">
+                        <input type="submit" formmethod="" value="Save Changes" class="btn btn-success" id="btnSaveData" />
+                        <input type="button" class="btn btn-danger" value="Reset" id="btnResetData" ng-click="resetInput()"/>
+                    </div>
+                </div>
+
+            </fieldset>
+            </form>        
+        </div> 
+      </div>
+    </div>

@@ -17,6 +17,10 @@ app.config(function($routeProvider, $locationProvider) {
                 templateUrl : '/views/pages/user/user-profil.html',
                 controller  : 'profileCtrl'
             })
+            .when('/pengaturan', {
+                templateUrl : '/views/pages/user/pengaturan.html',
+                controller  : 'settingCtrl'
+            })
             .when('/post-:postid', {
                 templateUrl : '/views/pages/user/artikel.html',
                 controller  : 'articleCtrl'

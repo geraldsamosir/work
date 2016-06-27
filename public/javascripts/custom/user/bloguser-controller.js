@@ -2846,3 +2846,123 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
                }
      };
 }]);
+
+app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function($scope, $timeout, $http, $route) {
+     $scope.currentData = {
+          id : null,
+          title : "", 
+          body : "",
+          kategori_id : null
+     }
+
+     $scope.newData = {
+          id : null,
+          title : "", 
+          body : "",
+          kategori_id : null
+     }
+
+     $scope.submitData = function(){
+          // $('#newPost').modal('hide');
+
+          // // Insert ke DB, karena id gak ada (Post baru), pakai increment saja.
+          // $scope.fd = new FormData();
+          // $scope.fd.append("gbrUtamaInputFile", $scope.currentPost.gbrUtamaInputFile[0]);
+          // if($scope.currentPost.gbr2SampinganInputFile){
+          //      for(var i = 0; i <$scope.currentPost.gbr2SampinganInputFile.length ; i++){
+          //           $scope.fd.append("gbr2SampinganInputFile", $scope.currentPost.gbr2SampinganInputFile[i] )
+          //      }
+          // }
+          // // Upload gambar dulu, kemudian post contentnya.
+          // $http.post("/images/upload", $scope.fd, 
+          // {
+          //   transformRequest: angular.identity,
+          //   headers: {'Content-Type': undefined}
+          // })
+          // .then(
+          //           // post content
+          //           function(response){
+          //                // Jika gambar berhasil diupload, simpan namanya dalam 1 string
+          //                // hal ini disebabkan karena $.params tidak dapat mengirimkan array
+          //                // secara langsung
+          //                $scope.temp = "";
+          //                for(var i = 0; i < response.data.length;i++){
+          //                     $scope.temp += response.data[i].originalname;
+          //                     if(i != response.data.length - 1){
+          //                          $scope.temp += ",";
+          //                     }
+          //                }
+          //                //console.log(temp);
+          //                $http.post("/post", $.param(
+          //                { 
+          //                     key : $scope.storage.key,
+          //                     title : $scope.currentPost.title, 
+          //                     body : $scope.currentPost.body, 
+          //                     kategori_id : $scope.currentPost.kategori_id,
+          //                     img : $scope.temp
+          //                }), 
+          //                $scope.config)
+          //                .then(
+          //                     function(response){
+          //                          // Jika post berhasil disubmit maka tampilkan
+          //                          $('#success').modal('show');
+          //                          $scope.resetInput();
+          //                     }, 
+          //                     function(response){
+          //                          //alert("Post failed! Check your internet connection.");
+          //                          if(response.status === 403){
+          //                               $('#failed4').modal({
+          //                                    backdrop: 'static',
+          //                                    keyboard: false, 
+          //                                    show: true
+          //                               });
+          //                          }
+          //                          else{
+          //                               $('#failed').modal('show');
+          //                          }
+          //                     }
+          //                );  
+          //           }, 
+          //           function(response){
+          //                //alert("Post failed! Check your internet connection.");
+          //                if(response.status === 403){
+          //                     $('#failed4').modal({
+          //                          backdrop: 'static',
+          //                          keyboard: false, 
+          //                          show: true
+          //                     });
+          //                }
+          //                else{
+          //                     $('#failed').modal('show');
+          //                }
+          //           }
+          //      );           
+
+     }
+
+     $scope.resetInput = function(){
+          // memakai jquery, karena perlu melakukan reset pada Input Type File juga.
+          $('#formNewData')[0].reset();
+          //$scope.currentPost.kategori_id = null;
+     }
+
+     // $scope.cekValiditas = function(){
+     //      if($scope.currentPost.title.length > 0 && $scope.currentPost.body.length > 0){
+     //           // Jquery
+     //           $('#btnSubmit').removeClass('disabled'); // Enable visually
+     //           $('#btnSubmit').prop('disabled', false); // Enable visually + functionally
+     //      }
+     //      else{
+     //           // Jquery
+     //           $('#btnSubmit').addClass('disabled'); // Disables visually
+     //           $('#btnSubmit').prop('disabled', true); // Disables visually + functionally
+     //      }
+     // }
+
+     // $scope.reloadPage = function(){
+     //      // reload disini bukan REFRESH atau LOADING ULANG semuanya.
+     //      // Syntax ini hanya load ulang bagian ng-View dengan templating dan controllernya
+     //      // pemanggilnya.
+     //      $route.reload();
+     // }
+}]);
