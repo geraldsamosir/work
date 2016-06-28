@@ -34,6 +34,8 @@ router.get('/config/:key',user_mid.login,ctrl_user.allconfig);
 router.delete('/delete/:key/:target',user_mid.login,ctrl_user.deletefriend);
 
 //update informasi configutasi profil user yang sedang login
+//yang diperlukan : username, password, email, fotoprofil (kalau tidak ada, buat null)
+//fotokronologi (kalau tidak ada, buat null).
 router.post('/update/',user_mid.login,ctrl_user.update);
 
 

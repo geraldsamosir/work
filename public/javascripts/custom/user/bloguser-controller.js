@@ -65,7 +65,17 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
          $http.get("/user/config/" + $scope.storage.key, $scope.config)
           .then(
               function(response){
-                    $scope.loggedUser = response.data[0];
+               // Format Data yang dikembalikan : 
+               // {
+               //   "id": 1,
+               //   "nama": "gerald",
+               //   "password": "12345",
+               //   "status_id": 1,
+               //   "fotoprofil": "fotoprofil",
+               //   "fotokronologi": "fotokronologi",
+               //   "email": "adaaja@mail.com"
+               // }
+               $scope.loggedUser = response.data[0];
               }, 
               function(response){
                     //alert("Load failed! Back to homepage");
@@ -2848,103 +2858,349 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
 }]);
 
 app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function($scope, $timeout, $http, $route) {
+     $scope.currentPasswordConfirm = "";
      $scope.currentData = {
-          id : null,
-          title : "", 
-          body : "",
-          kategori_id : null
-     }
+          //username : $scope.loggedUser.nama,
+          password : $scope.loggedUser.password,
+          //email : $scope.loggedUser.email,
+          fotoprofil : $scope.loggedUser.fotoprofil, 
+          fotokronologi : $scope.loggedUser.fotokronologi
+     };
 
      $scope.newData = {
-          id : null,
-          title : "", 
-          body : "",
-          kategori_id : null
-     }
+          username : $scope.loggedUser.nama,
+          password : $scope.loggedUser.password,
+          passwordConfirm : $scope.loggedUser.password,
+          email : $scope.loggedUser.email,
+          emailConfirm : $scope.loggedUser.email,
+          fotoprofil : null,
+          fotokronologi : null
+     };
+
+     $scope.baseOfNewData = angular.copy($scope.newData);
 
      $scope.submitData = function(){
-          // $('#newPost').modal('hide');
+          if($scope.currentPasswordConfirm !== $scope.currentData.password){
+               $scope.showAlert("#failedSetting1");
+          }
+          else if($scope.newData.password !== $scope.newData.passwordConfirm){
+               $scope.showAlert("#failedSetting2");
+          }
+          else if($scope.newData.email !== $scope.newData.emailConfirm){
+               $scope.showAlert("#failedSetting3");
+          }
+          else{
+               $scope.fd = new FormData();
 
-          // // Insert ke DB, karena id gak ada (Post baru), pakai increment saja.
-          // $scope.fd = new FormData();
-          // $scope.fd.append("gbrUtamaInputFile", $scope.currentPost.gbrUtamaInputFile[0]);
-          // if($scope.currentPost.gbr2SampinganInputFile){
-          //      for(var i = 0; i <$scope.currentPost.gbr2SampinganInputFile.length ; i++){
-          //           $scope.fd.append("gbr2SampinganInputFile", $scope.currentPost.gbr2SampinganInputFile[i] )
-          //      }
-          // }
-          // // Upload gambar dulu, kemudian post contentnya.
-          // $http.post("/images/upload", $scope.fd, 
-          // {
-          //   transformRequest: angular.identity,
-          //   headers: {'Content-Type': undefined}
-          // })
-          // .then(
-          //           // post content
-          //           function(response){
-          //                // Jika gambar berhasil diupload, simpan namanya dalam 1 string
-          //                // hal ini disebabkan karena $.params tidak dapat mengirimkan array
-          //                // secara langsung
-          //                $scope.temp = "";
-          //                for(var i = 0; i < response.data.length;i++){
-          //                     $scope.temp += response.data[i].originalname;
-          //                     if(i != response.data.length - 1){
-          //                          $scope.temp += ",";
-          //                     }
-          //                }
-          //                //console.log(temp);
-          //                $http.post("/post", $.param(
-          //                { 
-          //                     key : $scope.storage.key,
-          //                     title : $scope.currentPost.title, 
-          //                     body : $scope.currentPost.body, 
-          //                     kategori_id : $scope.currentPost.kategori_id,
-          //                     img : $scope.temp
-          //                }), 
-          //                $scope.config)
-          //                .then(
-          //                     function(response){
-          //                          // Jika post berhasil disubmit maka tampilkan
-          //                          $('#success').modal('show');
-          //                          $scope.resetInput();
-          //                     }, 
-          //                     function(response){
-          //                          //alert("Post failed! Check your internet connection.");
-          //                          if(response.status === 403){
-          //                               $('#failed4').modal({
-          //                                    backdrop: 'static',
-          //                                    keyboard: false, 
-          //                                    show: true
-          //                               });
-          //                          }
-          //                          else{
-          //                               $('#failed').modal('show');
-          //                          }
-          //                     }
-          //                );  
-          //           }, 
-          //           function(response){
-          //                //alert("Post failed! Check your internet connection.");
-          //                if(response.status === 403){
-          //                     $('#failed4').modal({
-          //                          backdrop: 'static',
-          //                          keyboard: false, 
-          //                          show: true
-          //                     });
-          //                }
-          //                else{
-          //                     $('#failed').modal('show');
-          //                }
-          //           }
-          //      );           
+               // kalau foto profil dan foto kronologi ada perubahan
+               if($scope.newData.fotoprofil && $scope.newData.fotokronologi){
+                    $scope.fd.append("fotoprofil", $scope.newData.fotoprofil[0]);
+                    $scope.fd.append("fotokronologi", $scope.newData.fotokronologi[0]);
 
-     }
+                    // Upload gambar dulu, kemudian update data user baru.
+                    $http.post("/images/upload", $scope.fd, 
+                    {
+                      transformRequest: angular.identity,
+                      headers: {'Content-Type': undefined}
+                    })
+                    .then(
+                         // update data user baru
+                         function(response){
+                              $http.post("/user/update", $.param(
+                              {
+                                   key : $scope.storage.key, 
+                                   nama : $scope.newData.username,
+                                   newpassword : $scope.newData.password, 
+                                   fotoprofil : '/images/app/' + response.data[0].originalname, 
+                                   fotokronologi : '/images/app/' + response.data[1].originalname,
+                                   email : $scope.newData.email
+                              }), 
+                              $scope.config)
+                              .then(
+                                   function(response){
+                                        // Jika update data user berhasil disubmit maka tampilkan
+                                        $scope.showAlert("#successSetting");
+                                             $scope.currentData = {
+                                                  //username : $scope.loggedUser.nama,
+                                                  password : response.data[0].password,
+                                                  //email : $scope.loggedUser.email,
+                                                  fotoprofil : response.data[0].fotoprofil, 
+                                                  fotokronologi : response.data[0].fotokronologi
+                                             };
+                                             $scope.baseOfNewData = {
+                                                  username : response.data[0].nama,
+                                                  password : response.data[0].password,
+                                                  passwordConfirm : response.data[0].password,
+                                                  email : response.data[0].email,
+                                                  emailConfirm : response.data[0].email,
+                                                  fotoprofil : null,
+                                                  fotokronologi : null
+                                             };
+                                             $scope.loggedUser = angular.copy(response.data[0]);
+
+                                             // Kena tempered
+                                             //$scope.storage.key = response.data[1].key;
+                                             $scope.resetInput();
+                                   }, 
+                                   function(response){
+                                        if(response.status === 403){
+                                             $('#failed4').modal({
+                                                  backdrop: 'static',
+                                                  keyboard: false, 
+                                                  show: true
+                                             });
+                                        }
+                                        else{
+                                             $scope.showAlert("#failedSetting4");
+                                        }
+                                   }
+                              );  
+                         }, 
+                         function(response){
+                              if(response.status === 403){
+                                   $('#failed4').modal({
+                                        backdrop: 'static',
+                                        keyboard: false, 
+                                        show: true
+                                   });
+                              }
+                              else{
+                                   $scope.showAlert("#failedSetting4");
+                              }
+                         }
+                    )
+               }
+
+               // kalau foto profil ada perubahan dan foto kronologi tidak ada perubahan
+               else if($scope.newData.fotoprofil && (!($scope.newData.fotokronologi))){
+                    $scope.fd.append("fotoprofil", $scope.newData.fotoprofil[0]);
+
+                    // Upload gambar dulu, kemudian update data user baru.
+                    $http.post("/images/upload", $scope.fd, 
+                    {
+                      transformRequest: angular.identity,
+                      headers: {'Content-Type': undefined}
+                    })
+                    .then(
+                         // update data user baru
+                         function(response){
+                              $http.post("/user/update", $.param(
+                              {
+                                   key : $scope.storage.key, 
+                                   nama : $scope.newData.username,
+                                   newpassword : $scope.newData.password, 
+                                   fotoprofil : '/images/app/' + response.data[0].originalname, 
+                                   fotokronologi : $scope.currentData.fotokronologi,
+                                   email : $scope.newData.email
+                              }), 
+                              $scope.config)
+                              .then(
+                                   function(response){
+                                        // Jika update data user berhasil disubmit maka tampilkan
+                                        $scope.showAlert("#successSetting");
+                                             $scope.currentData = {
+                                                  //username : $scope.loggedUser.nama,
+                                                  password : response.data[0].password,
+                                                  //email : $scope.loggedUser.email,
+                                                  fotoprofil : response.data[0].fotoprofil, 
+                                                  fotokronologi : response.data[0].fotokronologi
+                                             };
+                                             $scope.baseOfNewData = {
+                                                  username : response.data[0].nama,
+                                                  password : response.data[0].password,
+                                                  passwordConfirm : response.data[0].password,
+                                                  email : response.data[0].email,
+                                                  emailConfirm : response.data[0].email,
+                                                  fotoprofil : null,
+                                                  fotokronologi : null
+                                             };
+                                             $scope.loggedUser = angular.copy(response.data[0]);
+
+                                             // Kena tempered
+                                             //$scope.storage.key = response.data[1].key;
+                                             $scope.resetInput();
+                                   }, 
+                                   function(response){
+                                        if(response.status === 403){
+                                             $('#failed4').modal({
+                                                  backdrop: 'static',
+                                                  keyboard: false, 
+                                                  show: true
+                                             });
+                                        }
+                                        else{
+                                             $scope.showAlert("#failedSetting4");
+                                        }
+                                   }
+                              );  
+                         }, 
+                         function(response){
+                              if(response.status === 403){
+                                   $('#failed4').modal({
+                                        backdrop: 'static',
+                                        keyboard: false, 
+                                        show: true
+                                   });
+                              }
+                              else{
+                                   $scope.showAlert("#failedSetting4");
+                              }
+                         }
+                    );
+               }
+
+               // kalau foto profil tidak ada perubahan dan foto kronologi ada perubahan
+               else if((!($scope.newData.fotoprofil)) && $scope.newData.fotokronologi){
+                    $scope.fd.append("fotokronologi", $scope.newData.fotokronologi[0]);
+
+                    // Upload gambar dulu, kemudian update data user baru.
+                    $http.post("/images/upload", $scope.fd, 
+                    {
+                      transformRequest: angular.identity,
+                      headers: {'Content-Type': undefined}
+                    })
+                    .then(
+                         // update data user baru
+                         function(response){
+                              $http.post("/user/update", $.param(
+                              {
+                                   key : $scope.storage.key, 
+                                   nama : $scope.newData.username,
+                                   newpassword : $scope.newData.password, 
+                                   fotoprofil : $scope.currentData.fotoprofil, 
+                                   fotokronologi : '/images/app/' + response.data[0].originalname,
+                                   email : $scope.newData.email
+                              }), 
+                              $scope.config)
+                              .then(
+                                   function(response){
+                                        // Jika update data user berhasil disubmit maka tampilkan
+                                        $scope.showAlert("#successSetting");
+                                             $scope.currentData = {
+                                                  //username : $scope.loggedUser.nama,
+                                                  password : response.data[0].password,
+                                                  //email : $scope.loggedUser.email,
+                                                  fotoprofil : response.data[0].fotoprofil, 
+                                                  fotokronologi : response.data[0].fotokronologi
+                                             };
+                                             $scope.baseOfNewData = {
+                                                  username : response.data[0].nama,
+                                                  password : response.data[0].password,
+                                                  passwordConfirm : response.data[0].password,
+                                                  email : response.data[0].email,
+                                                  emailConfirm : response.data[0].email,
+                                                  fotoprofil : null,
+                                                  fotokronologi : null
+                                             };
+                                             $scope.loggedUser = angular.copy(response.data[0]);
+
+                                             // Kena tempered
+                                             //$scope.storage.key = response.data[1].key;
+                                             $scope.resetInput();
+                                   }, 
+                                   function(response){
+                                        if(response.status === 403){
+                                             $('#failed4').modal({
+                                                  backdrop: 'static',
+                                                  keyboard: false, 
+                                                  show: true
+                                             });
+                                        }
+                                        else{
+                                             $scope.showAlert("#failedSetting4");
+                                        }
+                                   }
+                              );  
+                         }, 
+                         function(response){
+                              if(response.status === 403){
+                                   $('#failed4').modal({
+                                        backdrop: 'static',
+                                        keyboard: false, 
+                                        show: true
+                                   });
+                              }
+                              else{
+                                   $scope.showAlert("#failedSetting4");
+                              }
+                         }
+                    );
+               }
+
+               // kalau foto profil dan foto kronologi tidak ada perubahan
+               else if((!($scope.newData.fotoprofil)) && (!($scope.newData.fotokronologi))){
+                    $http.post("/user/update", $.param(
+                    {
+                         key : $scope.storage.key, 
+                         nama : $scope.newData.username,
+                         newpassword : $scope.newData.password, 
+                         fotoprofil : $scope.currentData.fotoprofil, 
+                         fotokronologi : $scope.currentData.fotokronologi,
+                         email : $scope.newData.email
+                    }), 
+                    $scope.config)
+                    .then(
+                         function(response){
+                              // Jika update data user berhasil disubmit maka tampilkan
+                              $scope.showAlert("#successSetting");
+                                   $scope.currentData = {
+                                        //username : $scope.loggedUser.nama,
+                                        password : response.data[0].password,
+                                        //email : $scope.loggedUser.email,
+                                        fotoprofil : response.data[0].fotoprofil, 
+                                        fotokronologi : response.data[0].fotokronologi
+                                   };
+                                   $scope.baseOfNewData = {
+                                        username : response.data[0].nama,
+                                        password : response.data[0].password,
+                                        passwordConfirm : response.data[0].password,
+                                        email : response.data[0].email,
+                                        emailConfirm : response.data[0].email,
+                                        fotoprofil : null,
+                                        fotokronologi : null
+                                   };
+                                   $scope.loggedUser = angular.copy(response.data[0]);
+
+                                   // Kena tempered
+                                   //$scope.storage.key = response.data[1].key;
+                                   $scope.resetInput();
+                         }, 
+                         function(response){
+                              if(response.status === 403){
+                                   $('#failed4').modal({
+                                        backdrop: 'static',
+                                        keyboard: false, 
+                                        show: true
+                                   });
+                              }
+                              else{
+                                   $scope.showAlert("#failedSetting4");
+                              }
+                         }
+                    );
+               }
+               
+          }         
+     };
 
      $scope.resetInput = function(){
-          // memakai jquery, karena perlu melakukan reset pada Input Type File juga.
-          $('#formNewData')[0].reset();
-          //$scope.currentPost.kategori_id = null;
-     }
+          $('#fotoProfilInputFile').val(null);
+          $('#fotoKronologiInputFile').val(null);
+          $scope.newData = angular.copy($scope.baseOfNewData);
+          $scope.currentPasswordConfirm = "";
+     };
+
+     $scope.showAlert = function(id_Div){
+          $('.alert-setting').addClass('hidden');
+          $(id_Div).removeClass('hidden');
+          $('html, body').animate({
+              scrollTop: ($(id_Div).offset().top - 390)
+          },500);
+     };
+
+     $scope.hideAlert = function(id_Div){
+          $(id_Div).addClass('hidden');
+     };
 
      // $scope.cekValiditas = function(){
      //      if($scope.currentPost.title.length > 0 && $scope.currentPost.body.length > 0){

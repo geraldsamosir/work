@@ -15,71 +15,91 @@
     
     <div class="container">
       <div class="row">
-         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">        
+         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="alert alert-danger alert-setting hidden " role="alert" id="failedSetting1">
+              <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#failedSetting1')"><span aria-hidden="true" ng-click="">&times;</span></button>
+              Password lama yang Anda input tidak valid!
+            </div>
+            <div class="alert alert-danger alert-setting hidden" role="alert" id="failedSetting2">
+              <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#failedSetting2')"><span aria-hidden="true" ng-click="">&times;</span></button>
+              Terjadi ketidakcocokan antara Tempat Input Password dan Konfirmasi Password!
+            </div> 
+            <div class="alert alert-danger alert-setting hidden" role="alert" id="failedSetting3">
+              <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#failedSetting3')"><span aria-hidden="true" ng-click="">&times;</span></button>
+              Terjadi ketidakcocokan antara Tempat Input E-mail dan Konfirmasi E-mail!
+            </div> 
+            <div class="alert alert-danger alert-setting hidden" role="alert" id="failedSetting4">
+              <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#failedSetting4')"><span aria-hidden="true" ng-click="">&times;</span></button>
+              Pengubahan data gagal! Mohon periksa kembali koneksi internet anda!
+            </div>   
+            <div class="alert alert-success alert-setting hidden" role="alert" id="successSetting">
+              <button type="button" class="close" aria-label="Close" ng-click="hideAlert('#successSetting')"><span aria-hidden="true" ng-click="">&times;</span></button>
+              Pengubahan data berhasil!
+            </div>      
             <form action="" method="" id="formNewData" accept-charset="utf-8" onsubmit="return false;" ng-submit="submitData()" class="form-horizontal">
             <fieldset>
             
                 <div class="control-group" style="margin-bottom: 24px;">
                     <label class="control-label" for="username">Username</label>
                     <div class="controls">
-                        <input type="text" id="username" name="username" placeholder="" class="form-control input-lg">
+                        <input type="text" id="username" name="username" placeholder="" class="form-control input-lg" ng-model="newData.username">
                     </div>
                 </div>
              
                 <div class="control-group" style="margin-bottom: 24px;">
                     <label class="control-label" for="email">E-mail</label>
                     <div class="controls">
-                        <input type="email" id="email" name="email" placeholder="" class="form-control input-lg">
+                        <input type="email" id="email" name="email" placeholder="" class="form-control input-lg" ng-model="newData.email">
                     </div>
                 </div>
 
                 <div class="control-group" style="margin-bottom: 24px;">
-                    <label class="control-label" for="email_confirm">Konfirmasi Email</label>
+                    <label class="control-label" for="email_confirm">Konfirmasi E-mail</label>
                     <div class="controls">
-                        <input type="email" id="email" name="email_confirm" placeholder="" class="form-control input-lg">
+                        <input type="email" id="email" name="email_confirm" placeholder="" class="form-control input-lg" ng-model="newData.emailConfirm">
                     </div>
                 </div>
              
                 <div class="control-group" style="margin-bottom: 24px;">
                     <label class="control-label" for="password">Password</label>
                     <div class="controls">
-                        <input type="password" id="password" name="password" placeholder="" class="form-control input-lg">
+                        <input type="password" id="password" name="password" placeholder="" class="form-control input-lg" ng-model="newData.password">
                     </div>
                 </div>
              
                 <div class="control-group" style="margin-bottom: 24px;">
                     <label class="control-label" for="password_confirm">Konfirmasi Password</label>
                     <div class="controls">
-                        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="form-control input-lg">
+                        <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="form-control input-lg" ng-model="newData.passwordConfirm">
                     </div>
                 </div>
              
-                 <div class="control-group" style="margin-bottom: 24px;">
+                <div class="control-group" style="margin-bottom: 24px;">
                     <label class="control-label" for="email">Edit Foto Profil</label>
                     <div class="controls">
-                        <img class="img-thumbnail avatar"  src="http://www.w3schools.com/bootstrap/cinqueterre.jpg" height="250" width="250"/>
+                        <img class="img-thumbnail avatar"  ng-src="{{currentData.fotoprofil}}" height="250" width="250"/>
                     </div>
 
                     <div class="controls">
-                        <input type="file" id="fotoProfilInputFile" file="newData.fotoProfilInputFile"/>
+                        <input type="file" id="fotoProfilInputFile" file="newData.fotoprofil"/>
                     </div>
                 </div>
-
+                
                 <div class="control-group" style="margin-bottom: 24px;">
                     <label class="control-label" for="email">Edit Foto Kronologi</label>
                     <div class="controls">
-                        <img class="img-thumbnail avatar"  src="http://www.w3schools.com/bootstrap/cinqueterre.jpg" height="250" width="250"/>
+                        <img class="img-thumbnail avatar"  ng-src="{{currentData.fotokronologi}}" height="250" width="250"/>
                     </div>
 
                     <div class="controls">
-                        <input type="file" id="fotoKronologiInputFile" file="newData.fotoKronologiInputFile"/>
+                        <input type="file" id="fotoKronologiInputFile" file="newData.fotokronologi"/>
                     </div>
                 </div>
 
                 <div class="control-group" style="margin-bottom: 32px;">
                     <label class="control-label" for="password_confirm2">Konfirmasi Password Lama*</label>
                     <div class="controls">
-                        <input type="password" id="password_confirm2" name="password_confirm2" placeholder="" class="form-control input-lg" required>
+                        <input type="password" id="password_confirm2" name="password_confirm2" placeholder="" class="form-control input-lg" required ng-model="currentPasswordConfirm">
                         <p class="help-block">*Wajib diisi apabila ingin melakukan pengubahan data</p>
                     </div>
                 </div>

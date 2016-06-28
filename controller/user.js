@@ -71,15 +71,26 @@ user.login = function(req,res){
 user.update =  function(req,res){
 	res.status(200);
 	var result = {};
+	var hasil = [];
 	var update ={};
+	do{
+		var my_key = CryptoJS.AES
+					.encrypt(JSON.stringify(visitor.username+":"+visitor.password), 'secret key 123');
+		slash = my_key.toString().indexOf("/");
+
+	}while(slash != -1);
 	var user_update = {
 		nama : req.body.nama,
 		password : req.body.newpassword,
 		status_id : 2,
-		fotoprofil :  req.body.fotoprofil,
-		fotokronologi : req.body.fotokronologi,
-		email : req.body.email
+		fotoprofil :  req.body.fotoprofil || '/images/app/default-profilepic.jpg',
+		fotokronologi : req.body.fotokronologi || '/images/app/default-coverpic.jpg',
+		email : req.body.email,
+		
 	};
+	var token = {
+		key :my_key.toString()
+	}
 	var user_login = {
 		username : req.body.username,
 		password : req.body.password
@@ -96,7 +107,10 @@ user.update =  function(req,res){
 	})
 	.then(function(rows){
 		modeluser.detail(user_login).then(function(rows){
-			res.json('berhasil');
+			hasil[0] = user_update;
+			hasil[1] = token;
+			res.json(hasil);
+
 		})	
 	});
 };
