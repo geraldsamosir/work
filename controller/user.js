@@ -73,11 +73,11 @@ user.update =  function(req,res){
 	var result = {};
 	var hasil = [];
 	var update ={};
+	var slash
 	do{
-		var my_key = CryptoJS.AES
-					.encrypt(JSON.stringify(visitor.username+":"+visitor.password), 'secret key 123');
-		slash = my_key.toString().indexOf("/");
-
+	my_key =CryptoJS.AES
+			.encrypt(JSON.stringify(req.body.nama+":"+req.body.newpassword), 'secret key 123');my_key.toString();
+		slash = my_key.toString().indexOf('/');
 	}while(slash != -1);
 	var user_update = {
 		nama : req.body.nama,
