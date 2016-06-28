@@ -1,20 +1,29 @@
-Blog Engine ~~~~
+#Tugas Pemrograman Web Lanjutan Stambuk 2013 (MW-A SORE)
 
+#Blog Engine
+> Merupakan Web dengan konsep SPA yang berdasarkan pada Ide Perpaduan antara Blogspot dan Media Sosial.
+> User akan memiliki satu buah Blog Pribadi yang dapat dilakukan operasi-operasi yang berhubungan dengan Posting Sebuah Karya Tulis. Selain itu, User dapat melakukan operasi-operasi Pertemanan dengan tujuan mempermudah Pengguna untuk melihat content yang dipost oleh User lain.
 
-updatean terbaru ada tambah bebrapa routing di route user
+#Alamat Web : 
+- http://kantor.dyndns.org:3000 (Jam Operasional dari Pukul 10:00 sampai 17:00 WIB)
 
-yaitu :
-beranda ,
-single post,
-search
+#Teknologi yang digunakan:
+- Frontend : AngularJS v1.4.8 & Jquery 
+- Backend : NodeJS dengan Framework Express
+- API : Disqus
 
-seudah itu template yang diminta sudah di masukkan 
-dan ada
-update di app yaitu dir user
-untuk sementara karena diperlukan untuk desain maka saya buat pake routing 
-hanya kalau bisa untuk di frontend  di buat seperti landing page jadi dia berubah jadi spa 
-jadi beranda,single post,search dan profile merupakan satu konten yang dapat di ganti-ganti 
-dan tambahan untuk profil atau blog utama user boleh di tamahkan dulu form untuk post artikel 
-yang akan muncul bila di klik tombol
-dan tambahan semua url sudah bisa di klik jadi untuk mengetahui url bisa liat urlnya dulu baru cek fungsinya 
-apa bila ada yang ingin di tanya atau ada masukkan contact me  gerald halomoan samosir ^_^ 
+#Dibuat oleh:
+- Gerald Halomoan Samosir - 131113816
+  - Backend Developer (Major)
+- Herris Suhendra - 131113514
+  - Backend Developer (Major) 
+  - Frontend Developer (Halaman Pertemanan dan Operasi-Operasi Pertemanan)
+- Kevin Griffinsu - 131111670 
+  - Backend Developer (Minor) 
+  - Frontend Developer (Halaman Profil User / Teman dan Halaman Pengaturan)
+- Johanes Novenus Demak - 131111203
+  - Backend Developer (Minor) 
+  - Frontend Developer (Halaman Utama / Landing Page, Halaman Admin Panel dan Operasi-Operasi Posting)
+- William Limianto - 131111335
+  - Backend Developer (Minor)
+  - Frontend Developer (Halaman Beranda, Templating & Routing Angular dan Token Security)
