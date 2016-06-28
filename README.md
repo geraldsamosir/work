@@ -1,4 +1,4 @@
-<a href= "https://david-dm.org/geraldsamosir/work"><img src='https://david-dm.org/geraldsamosir/work.svg'></a>
+<a target='_blank' href= "https://david-dm.org/geraldsamosir/work"><img src='https://david-dm.org/geraldsamosir/work.svg'></a>
 
 #Tugas Pemrograman Web Lanjutan Stambuk 2013 (MW-A SORE)
 
@@ -17,6 +17,7 @@
 #Dibuat oleh:
 - Gerald Halomoan Samosir - 131113816
   - Backend Developer (Major)
+  - Frontend Developer (halaman landing page (halaman awal website yang berisi login,register,dll..))
 - Herris Suhendra - 131113514
   - Backend Developer (Major) 
   - Frontend Developer (Halaman Pertemanan dan Operasi-Operasi Pertemanan)
@@ -25,7 +26,7 @@
   - Frontend Developer (Halaman Profil User / Teman dan Halaman Pengaturan)
 - Johanes Novenus Demak - 131111203
   - Backend Developer (Minor) 
-  - Frontend Developer (Halaman Utama / Landing Page, Halaman Admin Panel dan Operasi-Operasi Posting)
+  - Frontend Developer (update Halaman Utama / Landing Page, Halaman Admin Panel dan Operasi-Operasi Posting)
 - William Limianto - 131111335
   - Backend Developer (Minor)
   - Frontend Developer (Halaman Beranda, Templating & Routing Angular dan Token Security)
