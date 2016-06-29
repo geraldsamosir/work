@@ -17,19 +17,52 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
      $scope.storage = $localStorage;
 
      // watch (secara realtime) untuk cek logout (baik terduga maupun tak terduga)
+      // watch (secara realtime) untuk cek logout (baik terduga maupun tak terduga)
      $scope.$watch("storage.key", function(newVal, oldVal) {
           // cek apakah kosong (logout)
           if (typeof newVal === 'undefined') {
                $scope.logout();
           }
-          // cek apakah key pada localstorage ditemper (percobaan hack)
+          // cek apakah key pada localstorage akan diubah
           if(newVal != oldVal && (newVal !== "tempered" && typeof newVal !== 'undefined')){
-               $scope.storage.key = "tempered";
-               $('#failed2').modal({
-                    backdrop: 'static',
-                    keyboard: false, 
-                    show: true
-               });
+               $http.get("/user/update/" + $scope.storage.key + "/" + $scope.loggedUser.id, $scope.config)
+               .then(
+                    function(response){
+                         //jika tergolong percobaan hack (tempered) / token tidak valid / valid
+                         if(response.data === true){
+                              $scope.storage.key = newVal;
+                         }
+                         else{
+                              
+                              $scope.storage.key = "tempered";
+                              $('#failed2').modal({
+                                   backdrop: 'static',
+                                   keyboard: false, 
+                                   show: true
+                              });
+                         }
+                    }, 
+                    function(response){
+                         if(response.status === 403){
+                              $('#failed3').modal({
+                                   backdrop: 'static',
+                                   keyboard: false, 
+                                   show: true
+                              });
+                         }
+                         else if(response.status === 500){
+                              $scope.storage.key = "tempered";
+                              $('#failed2').modal({
+                                   backdrop: 'static',
+                                   keyboard: false, 
+                                   show: true
+                              });
+                         }
+                         else{
+                              $('#failed').modal('show');
+                         }
+                    }
+               );
           }
      },true);
      $scope.$watch("storage.admin", function(newVal, oldVal) {
@@ -2938,8 +2971,7 @@ app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function
                                              };
                                              $scope.loggedUser = angular.copy(response.data[0]);
 
-                                             // Kena tempered
-                                             //$scope.storage.key = response.data[1].key;
+                                             $scope.storage.key = response.data[1].key;
                                              $scope.resetInput();
                                    }, 
                                    function(response){
@@ -3016,8 +3048,7 @@ app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function
                                              };
                                              $scope.loggedUser = angular.copy(response.data[0]);
 
-                                             // Kena tempered
-                                             //$scope.storage.key = response.data[1].key;
+                                             $scope.storage.key = response.data[1].key;
                                              $scope.resetInput();
                                    }, 
                                    function(response){
@@ -3094,8 +3125,7 @@ app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function
                                              };
                                              $scope.loggedUser = angular.copy(response.data[0]);
 
-                                             // Kena tempered
-                                             //$scope.storage.key = response.data[1].key;
+                                             $scope.storage.key = response.data[1].key;
                                              $scope.resetInput();
                                    }, 
                                    function(response){
@@ -3161,8 +3191,7 @@ app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function
                                    };
                                    $scope.loggedUser = angular.copy(response.data[0]);
 
-                                   // Kena tempered
-                                   //$scope.storage.key = response.data[1].key;
+                                   $scope.storage.key = response.data[1].key;
                                    $scope.resetInput();
                          }, 
                          function(response){

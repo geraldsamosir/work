@@ -38,8 +38,8 @@ router.delete('/delete/:key/:target',user_mid.login,ctrl_user.deletefriend);
 //fotokronologi (kalau tidak ada, buat null).
 router.post('/update/',user_mid.login,ctrl_user.update);
 
-
-
+//udpate validation perlu key and id_user
+router.get('/update/:key/:id',user_mid.login,ctrl_user.user_update_valid);
 
 
 module.exports = router;

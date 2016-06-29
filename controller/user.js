@@ -410,5 +410,21 @@ user.deletefriend = function (req,res){
 	});
 };
 
+user.user_update_valid = function(req,res){
+	var user_login = {
+		username : req.params.username,
+		password : req.params.password
+	};
+	modeluser.detail(user_login).then(function(rows){
+		if(rows[0].id ==  req.params.id){
+			res.json(true);
+		}
+		else{
+			res.json(false);
+		}
+	})
+
+};
+
 
 module.exports = user;	
