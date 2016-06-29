@@ -139,6 +139,14 @@ hr.small {
     .intro-header .site-heading, .intro-header .post-heading, .intro-header .page-heading {
     padding: 150px 0;
 }
+/* Text untuk depan Carousel */
+.main-text
+{
+    position: absolute;
+    top: 25;
+    width: 96.66666666666666%;
+    color: #FFF;
+}
 }.intro-header .site-heading, .intro-header .page-heading {
     text-align: center;
 }
@@ -157,6 +165,19 @@ hr.small {
 @media only screen and (min-width:768px) {
     .intro-header .site-heading h1, .intro-header .page-heading h1 {
     font-size: 80px;
+}
+}
+@media only screen and (min-width:0px) {
+    .intro-header .site-heading, .intro-header .post-heading, .intro-header .page-heading {
+    padding: 150px 0;
+}
+/* Text untuk depan Carousel */
+.main-text
+{
+    position: absolute;
+    top: 65;
+    width: 96.66666666666666%;
+    color: #FFF;
 }
 }.intro-header .post-heading h1 {
     font-size: 35px;

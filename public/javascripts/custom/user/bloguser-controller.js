@@ -173,8 +173,8 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
                               "kategori" : response.data[i].nama,
                               // "fotoprofil": "",
                               // "fotokronologi": "",
-                              // IMG sementara
-                              "img" : ["https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg", "https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg"] 
+                              // IMG dengan array kosong (akan diload pada saat article diklik / diproses oleh articleCtrl)
+                              "img" : [] 
                          }
                     }
                }, 
@@ -550,8 +550,7 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
 
 app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout' , '$location', '$http', '$window', function(articleDataPasser, $sce, $scope, $timeout, $location, $http, $window) {
      //articleDataPasser lihat di public/javascripts/custom/user/bloguser-service.js, anggap seperti kelas statis yg global
-     $scope.post = articleDataPasser.loadArticle();
-     
+     $scope.post = articleDataPasser.loadArticle();     
      $scope.updateDataArticle = function(){
           $http.get("/post/" + $scope.storage.key + "/" + $location.path().substring(6), $scope.config)
           .then(
@@ -565,10 +564,14 @@ app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout'
                          "date" : response.data.id_post,
                          "id_kategori" : response.data.id_kategori,
                          "kategori" : response.data.nama,
-                         // IMG sementara
-                         "img" : ["https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg", "https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg"] 
+                         // IMG dengan array kosong (akan diload pada saat article diklik / diproses oleh articleCtrl)
+                         "img" : [] 
+                    }
+                    for(var i = 0 ; i<response.data.img.length;i++){
+                         $scope.post.img[i] = response.data.img[i].urlfoto;
                     }
                     $window.document.title = $scope.post.title;
+
                     $scope.disqusConfig = {
                         disqus_shortname: 'blogengineweb',
                         disqus_identifier: $scope.post.id,
@@ -591,6 +594,32 @@ app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout'
                }
           );
      }
+     $scope.getGambarArticle = function(){
+          $http.get("/post/" + $scope.storage.key + "/" + $location.path().substring(6), $scope.config)
+          .then(
+               function(response){
+                    $scope.post.img = [];
+                    for(var i = 0 ; i<response.data.img.length;i++){
+                         $scope.post.img[i] = response.data.img[i].urlfoto;
+                    }
+               }, 
+               function(response){
+                    //alert("Load failed! Try to refresh this page.");
+                    if(response.status === 403){
+                         $('#failed4').modal({
+                              backdrop: 'static',
+                              keyboard: false, 
+                              show: true
+                         });
+                    }
+                    else{
+                         $('#failed').modal('show');
+                    }
+               }
+          );
+     }
+
+
      if($scope.post == null){
           $scope.updateDataArticle();
      }
@@ -602,6 +631,7 @@ app.controller('articleCtrl', ['articleDataPasser', '$sce', '$scope', '$timeout'
               disqus_url: $location.absUrl(),
               disqus_title: $scope.post.title
           };
+          $scope.getGambarArticle();
      }
 
      //  $sce.trustAsHtml (dengan parameter string) adalah fungsi yang melakukan validasi dari suatu string
@@ -1179,8 +1209,8 @@ app.controller('profileCtrl', ['articleDataPasser', '$scope', '$timeout', '$http
                               "date" : response.data.post[i].id_post,
                               "id_kategori" : response.data.post[i].id_kategori,
                               "kategori" : response.data.post[i].nama,
-                              // IMG sementara
-                              "img" : ["https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg", "https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg"] 
+                              // IMG dengan array kosong (akan diload pada saat article diklik / diproses oleh articleCtrl)
+                              "img" : [] 
                          }
                     }
                }, 
@@ -1910,8 +1940,8 @@ app.controller('friendProfileCtrl', ['articleDataPasser' ,'$scope', '$timeout', 
                               "date" : response.data.post[i].id_post,
                               "id_kategori" : response.data.post[i].id_kategori,
                               "kategori" : response.data.post[i].nama,
-                              // IMG sementara
-                              "img" : ["https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg", "https://raw.githubusercontent.com/geraldsamosir/startbootstrap-clean-blog/gh-pages/img/post-sample-image.jpg"] 
+                              // IMG dengan array kosong (akan diload pada saat article diklik / diproses oleh articleCtrl)
+                              "img" : []
                          }
                     }
                     $window.document.title = $scope.namateman;

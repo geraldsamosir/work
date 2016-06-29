@@ -26,7 +26,7 @@
   - Frontend Developer (Halaman Profil User / Teman dan Halaman Pengaturan)
 - Johanes Novenus Demak - 131111203
   - Backend Developer (Minor) 
-  - Frontend Developer (update Halaman Utama / Landing Page, Halaman Admin Panel dan Operasi-Operasi Posting)
+  - Frontend Developer (Update Halaman Utama / Landing Page, Halaman Detail Artikel (Carousel beserta Load Gambar Utama & Sampingan saja), Halaman Admin Panel dan Operasi-Operasi Posting)
 - William Limianto - 131111335
   - Backend Developer (Minor)
-  - Frontend Developer (Halaman Beranda, Templating & Routing Angular dan Token Security)
+  - Frontend Developer (Halaman Beranda, Halaman Detail Artikel,  Templating & Routing Angular dan Token Security)

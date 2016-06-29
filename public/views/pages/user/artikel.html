@@ -1,13 +1,21 @@
 <header class="intro-header" style="background-image: url('{{ post.img[0] }}')">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="post-heading">
-                        <h1 ng-bind="post.title"></h1>
+        <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;margin-top:-25px;">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li ng-repeat="image in post.img track by $index" data-target="#carousel-example-generic" data-slide-to="{{$index}}" ng-class="{ 'active' : $index == 0 }"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item" ng-class="{ 'active' : $index == 0 }" ng-repeat="image in post.img track by $index">
+                        <img ng-src="{{post.img[$index]}}" alt="No Image :(" style="width:100%;height:70%">
+                    </div>
+                </div>
+            </div>
+            <div class="main-text">
+                <div class="col-md-12 text-center post-heading">
+                    <h1 ng-bind="post.title"></h1>
                         <!--<h2 class="subheading">Problems look mighty small from 150 miles up</h2> -->
                         <span class="meta">Posted by <a ng-href="{{ post.id_author == $parent.loggedUser.id ? '#!profil' : '#!person-' + post.id_author }}" ng-bind="post.author"></a> on <span ng-bind="( post.date | customFilterDateOfISO8601 | date:'d MMMM y, HH:mm:ss.' )"></span></span>
                     </div>
-                </div>
             </div>
         </div>
     </header>
