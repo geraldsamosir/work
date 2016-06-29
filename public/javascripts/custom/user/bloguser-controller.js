@@ -4,11 +4,22 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
      var pagesShown;
      var pageSize;
 
+     // Penanda bahwa terjadi perubahan username akibat dari proses Update User oleh settingCtrl dibawah.
+     $scope.isUsernameChanged = {
+          status : null
+     }
+
      $scope.$on("$routeChangeSuccess", function () {
           pagesShown = 1;
           pageSize = 5;
-          $window.document.title = "BLOG ENGINE"; // Ubah title pada tab browser
-          $scope.updateAllPosts();
+          if($scope.isUsernameChanged.status === false){
+               $window.location.href = "/user/" + $scope.loggedUser.nama; + "#!" + $location.path();
+               $scope.isUsernameChanged.status = null;
+          }
+          else{
+               $window.document.title = "BLOG ENGINE"; // Ubah title pada tab browser
+               $scope.updateAllPosts();
+          }
      });
 
      // Kita dapat mengakses localstorage walaupun disimpan dalam variabel,
@@ -132,7 +143,14 @@ app.controller('bloguserMainCtrl', ['articleDataPasser', '$scope', '$timeout', '
                if(!(($location.absUrl()).match(/user\/\w+/g)[0] == "user/" + $scope.loggedUser.nama)){
                     //alert("Wrong user! Back to homepage");
                     //$localStorage.$reset();
-                    $window.location.href = "/user/" + $scope.loggedUser.nama;
+                    if($scope.isUsernameChanged.status === true){
+                         $scope.isUsernameChanged.status = false;
+                    }
+                    else{
+                         $window.location.href = "/user/" + $scope.loggedUser.nama;
+                    }
+
+                    
                }
           }
      },true);
@@ -2969,7 +2987,16 @@ app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function
                                                   fotoprofil : null,
                                                   fotokronologi : null
                                              };
-                                             $scope.loggedUser = angular.copy(response.data[0]);
+
+                                             // isUsernameChange datang dari bloguserMainCtrl.
+                                             $scope.isUsernameChanged.status = true;
+
+                                             // Update Data Baru ke object loggedUser
+                                             $scope.loggedUser.nama = response.data[0].nama;
+                                             $scope.loggedUser.password = response.data[0].password;
+                                             $scope.loggedUser.fotoprofil = response.data[0].fotoprofil;
+                                             $scope.loggedUser.fotokronologi = response.data[0].fotokronologi;
+                                             $scope.loggedUser.email = response.data[0].email;
 
                                              $scope.storage.key = response.data[1].key;
                                              $scope.resetInput();
@@ -3046,7 +3073,16 @@ app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function
                                                   fotoprofil : null,
                                                   fotokronologi : null
                                              };
-                                             $scope.loggedUser = angular.copy(response.data[0]);
+
+                                             // isUsernameChange datang dari bloguserMainCtrl.
+                                             $scope.isUsernameChanged.status = true;
+
+                                             // Update Data Baru ke object loggedUser
+                                             $scope.loggedUser.nama = response.data[0].nama;
+                                             $scope.loggedUser.password = response.data[0].password;
+                                             $scope.loggedUser.fotoprofil = response.data[0].fotoprofil;
+                                             $scope.loggedUser.fotokronologi = response.data[0].fotokronologi;
+                                             $scope.loggedUser.email = response.data[0].email;
 
                                              $scope.storage.key = response.data[1].key;
                                              $scope.resetInput();
@@ -3123,7 +3159,16 @@ app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function
                                                   fotoprofil : null,
                                                   fotokronologi : null
                                              };
-                                             $scope.loggedUser = angular.copy(response.data[0]);
+
+                                             // isUsernameChange datang dari bloguserMainCtrl.
+                                             $scope.isUsernameChanged.status = true;
+
+                                             // Update Data Baru ke object loggedUser
+                                             $scope.loggedUser.nama = response.data[0].nama;
+                                             $scope.loggedUser.password = response.data[0].password;
+                                             $scope.loggedUser.fotoprofil = response.data[0].fotoprofil;
+                                             $scope.loggedUser.fotokronologi = response.data[0].fotokronologi;
+                                             $scope.loggedUser.email = response.data[0].email;
 
                                              $scope.storage.key = response.data[1].key;
                                              $scope.resetInput();
@@ -3189,7 +3234,16 @@ app.controller('settingCtrl', ['$scope', '$timeout', '$http', '$route', function
                                         fotoprofil : null,
                                         fotokronologi : null
                                    };
-                                   $scope.loggedUser = angular.copy(response.data[0]);
+
+                                   // isUsernameChange datang dari bloguserMainCtrl.
+                                   $scope.isUsernameChanged.status = true;
+
+                                   // Update Data Baru ke object loggedUser
+                                   $scope.loggedUser.nama = response.data[0].nama;
+                                   $scope.loggedUser.password = response.data[0].password;
+                                   $scope.loggedUser.fotoprofil = response.data[0].fotoprofil;
+                                   $scope.loggedUser.fotokronologi = response.data[0].fotokronologi;
+                                   $scope.loggedUser.email = response.data[0].email;
 
                                    $scope.storage.key = response.data[1].key;
                                    $scope.resetInput();
