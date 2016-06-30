@@ -101,6 +101,7 @@ user.update =  function(req,res){
 	})
 	.then(function(rows){
 			user_update.id = user_login[0].id;
+			user_update.status_id = user_login[0].status_id;
 			modeluser.update(user_update).then(function(rows){
 			user_login = user_update;
 		});
