@@ -313,7 +313,7 @@ user.friend_detail = function(req,res){
 				})
 				.then(function(rows){
 				modelpertemanan.semua().then(function(rows){
-					console.log(user_detail);
+					//console.log(user_detail);
 					table.user = friend_friends;
 					table.pertemanan = rows;;
 					friend_detail.pertemanan = user.friendship_filter(user_detail, table);

@@ -42,7 +42,7 @@ pertemanan.confirm = function(user){
 };
 
 pertemanan.remove = function(user){
-	console.log(user);
+	//console.log(user);
 	return knex('pertemanan')
 	.where({
 		id_yang_aprove : user.remover,
