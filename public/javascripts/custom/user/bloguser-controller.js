@@ -1392,8 +1392,15 @@ app.controller('postCtrl', ['articleDataPasser', '$scope', '$timeout', '$http', 
 
      $scope.tinymceOptions = {
                menubar: false,
+               plugins: ['advlist autolink lists link image charmap print preview hr anchor pagebreak',
+               'searchreplace wordcount visualblocks visualchars code fullscreen',
+               'insertdatetime media nonbreaking save table contextmenu directionality',
+               'emoticons template paste textcolor colorpicker textpattern imagetools'],
+               toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+               toolbar2: 'preview media | forecolor backcolor',
                resize: 'vertical',
                height: '240px',
+               image_advtab: true,
                setup : function(ed) {
                   ed.on('keyup', function() {
                     // Cukup naive karena kebetulan editor yang ada hanya 1
