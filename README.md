@@ -25,8 +25,8 @@
 - Backend : NodeJS dengan Framework Express
 - API : Disqus
 
-#Langkah-Langka Instalasi:
-1. Install nodeJS.
+#Langkah-Langkah Instalasi:
+1. Install NodeJS.
 2. Install XAMPP
 3. Import DB dengan Buka XAMPP dan Start Service Apache dan MySQL kemudian klik tombol ADMIN pada bagian MySQL.
 4. Create New Database dengan nama: blogengine
@@ -42,7 +42,7 @@
 4. Access Web dengan mengetikkan localhost:3000.
 5. Sebagai data sampel, Anda bisa melakukan login dengan 2 user, yakni :
   a. Admin : Username : admin & Password : 12345
-	b. User  : Username : user & Password : 12345
+  b. User  : Username : user & Password : 12345
 
 #KNOWN ISSUES :
 1. Pada saat Buat Post Baru, Edit Post ataupun Update Data User (Pengaturan), Mohon ditunggu untuk keluar Alert / Modal Konfirmasi bahwa Operasi berhasil. (Lupa taruh gambar animasi Loading pada Hari-H)
