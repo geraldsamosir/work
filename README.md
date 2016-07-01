@@ -39,7 +39,7 @@
 1. Buka XAMPP dan Start Service Apache dan MySQL.
 2. Buka Terminal/ Command Prompt kemudian lakukan perintah cd ke directory folder hasil Git Clone Anda.
 3. Ketikkan npm start kemudian tekan enter.
-4. Access Web dengan mengetikkan localhost:3000.
+4. Access Web dengan mengetikkan localhost:8000.
 5. Sebagai data sampel, Anda bisa melakukan login dengan 2 user, yakni :
   a. Admin : Username : admin & Password : 12345
   b. User  : Username : user & Password : 12345
